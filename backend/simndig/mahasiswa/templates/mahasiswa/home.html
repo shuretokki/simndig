@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Home Mahasiswa{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Dashboard Mahasiswa</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Selamat datang, {{ request.user.first_name }}!</h5>
+        <p class="card-text">
+            Ini adalah halaman utama untuk mahasiswa. Di sini kamu bisa melihat informasi akademik, jadwal, dan lainnya.
+        </p>
+    </div>
+</div>
+{% endblock %}
