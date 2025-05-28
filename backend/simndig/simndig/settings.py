@@ -56,17 +56,22 @@ ROOT_URLCONF = 'simndig.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'simndig' / 'templates'],  
+        'APP_DIRS': True,  
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',  
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.csrf',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'simndig.wsgi.application'
 
