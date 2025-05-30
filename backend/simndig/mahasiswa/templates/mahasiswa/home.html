@@ -1,31 +1,38 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block title %}Home Mahasiswa{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h2 class="card-title">Dashboard Mahasiswa</h2>
-                <p class="card-text">Welcome, <strong>{{ request.user.username }}</strong>!</p>
-                <p>Ini adalah halaman utama untuk mahasiswa. Di sini kamu bisa melihat informasi akademik, jadwal, dan lainnya.</p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Menu Akses Cepat</h5>
-                <a href="{% url 'protected' %}" class="btn btn-primary mb-3 d-block">Go To Your Protected Page!</a>
-                <form action="{% url 'logout' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Logout</button>
-                </form>
-            </div>
-        </div>
+<h1 class="mb-4">Dashboard Mahasiswa</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Selamat datang, {{ request.user.first_name }}!</h5>
+        <p class="card-text">
+            Ini adalah halaman utama untuk mahasiswa. Di sini kamu bisa melihat informasi akademik, jadwal, dan lainnya.
+        </p>
+        
+        <h6>Informasi Mahasiswa:</h6>
+        <ul>
+            <li>Nama: {{ student.get_nama }}</li>
+            <li>NIM: {{ student.get_nim }}</li>
+            <li>Kelas: {{ student.get_kelas }}</li>
+            <li>Angkatan: {{ student.get_angkatan }}</li>
+            <li>Jurusan: {{ student.get_jurusan }}</li>
+            <li>Email: {{ student.get_email }}</li>
+            <li>DPA: {{ student.get_dpa }}</li>
+            <li>Status: {{ student.get_status }}</li>
+            <li>Semester: {{ student.get_semester }}</li>
+            <li>IPK: {{ student.get_ipk }}</li>
+            <li>UKT: {{ student.get_ukt }}</li>
+        </ul>
+
+        <h6>Update Informasi:</h6>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
     </div>
 </div>
 {% endblock %}
+
