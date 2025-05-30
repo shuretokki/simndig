@@ -85,5 +85,25 @@ target/
 __pycache__/
 local_settings.py
 
+# Environment
 .env
+.venv
+venv/
+ENV/
+virtualenv/
+
+# Database
 db.sqlite3
+db.sqlite3-journal
+
+# Media and static files when using collectstatic
+/media/
+/static/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject

@@ -9,7 +9,7 @@ class UserRegistrationForm(forms.ModelForm):
         ('dosen', 'Dosen'),
         ('admin', 'Admin'),
     ]
-    role = forms.ChoiceField(choices=ROLE_CHOICES, label="Role")
+    role = forms.ChoiceField(choices=ROLE_CHOICES, label="Role", required=True)  # Ensure required=True
 
     class Meta:
         model = User

@@ -15,11 +15,13 @@
   </head>
   <body>
     <div class="container">
-      <h2>Register</h2>
-      <form method="POST" action="{% url 'register' %}">
-        {% csrf_token %} {{form.as_p}}
-      </form>
-      <button type="submit">Register</button>
+        <h2>Register</h2>
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
     </div>
   </body>
 </html>
