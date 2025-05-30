@@ -32,21 +32,21 @@
 
 ## 技术栈
 
-* **后端框架 (Backend Framework)：** Django [填写版本号，例如：4.2.x]
-* **编程语言 (Programming Language)：** Python [填写版本号，例如：3.10+]
-* **数据库 (Database)：** [例如：PostgreSQL 15, MySQL 8.0, SQLite3 (开发环境)]
-* **前端技术 (Frontend Technologies)：** [例如：HTML5, CSS3, JavaScript (ES6+), Bootstrap 5, React 18 / Vue 3 (如使用现代前端框架)]
-* **API 框架 (API Framework)：** [例如：Django REST framework (如提供API)]
-* **缓存 (Caching)：** [例如：Redis, Memcached (如使用)]
-* **任务队列 (Task Queue)：** [例如：Celery (如使用)]
-* **Web 服务器 (Web Server)：** [例如：Gunicorn, Nginx (生产环境)]
-* **其他关键依赖 (Other Key Dependencies)：** [列出其他重要库或工具]
+* **后端框架：** Django [填写版本号，例如：4.2.x]
+* **编程语言：** Python [填写版本号，例如：3.10+]
+* **数据库：** [例如：PostgreSQL 15, MySQL 8.0, SQLite3 (开发环境)]
+* **前端技术：** [例如：HTML5, CSS3, JavaScript (ES6+), Bootstrap 5, React 18 / Vue 3 (如使用现代前端框架)]
+* **API 框架：** [例如：Django REST framework (如提供API)]
+* **缓存：** [例如：Redis, Memcached (如使用)]
+* **任务队列：** [例如：Celery (如使用)]
+* **Web 服务器：** [例如：Gunicorn, Nginx (生产环境)]
+* **其他关键依赖：** [列出其他重要库或工具]
 
 ---
 
 ## 环境要求与快速开始
 
-### 先决条件 (Prerequisites)
+### 先决条件
 
 在开始之前，请确保您的开发环境中已安装以下软件：
 
@@ -55,15 +55,15 @@
 * Git 版本控制工具
 * [如果使用特定数据库，请列出，例如：PostgreSQL 服务]
 
-### 安装与配置指南 (Installation and Configuration Guide)
+### 安装与配置指南
 
-1.  **克隆仓库 (Clone the repository):**
+1.  **克隆仓库:**
     ```bash
     git clone [您的项目仓库URL]
     cd [项目目录名]
     ```
 
-2.  **创建并激活Python虚拟环境 (Create and activate a Python virtual environment):**
+2.  **创建并激活Python虚拟环境:**
     ```bash
     # 对于 Windows
     python -m venv venv
@@ -74,12 +74,12 @@
     source venv/bin/activate
     ```
 
-3.  **安装项目依赖 (Install project dependencies):**
+3.  **安装项目依赖:**
     ```bash
     pip install -r requirements.txt
     ```
 
-4.  **配置环境变量 (Configure environment variables):**
+4.  **配置环境变量:**
     * 复制 `.env.example` 文件为 `.env`：
         ```bash
         cp .env.example .env
@@ -88,25 +88,25 @@
         ```dotenv
         # .env 文件示例
         DEBUG=True
-        SECRET_KEY='your_strong_secret_key_here_please_change_it'
+        SECRET_KEY=''
         DATABASE_URL='postgresql://user:password@host:port/dbname' # 或其他数据库连接字符串
         # ALLOWED_HOSTS=127.0.0.1,localhost
         # 其他必要的环境变量...
         ```
         **重要提示：** `SECRET_KEY` 务必替换为一个强大且唯一的字符串。
 
-5.  **执行数据库迁移 (Apply database migrations):**
+5.  **执行数据库迁移:**
     ```bash
     python manage.py migrate
     ```
 
-6.  **创建超级用户 (Create a superuser) (用于访问后台管理):**
+6.  **创建超级用户(用于访问后台管理):**
     ```bash
     python manage.py createsuperuser
     ```
     (按照提示输入用户名、邮箱和密码)
 
-### 运行开发服务器 (Running the Development Server)
+### 运行开发服务器
 
 * 启动 Django 内置的开发服务器：
     ```bash
@@ -116,7 +116,7 @@
 
 ---
 
-## ✅ 运行测试
+## 运行测试
 
 为确保项目质量，请运行单元测试和集成测试：
 ```bash
