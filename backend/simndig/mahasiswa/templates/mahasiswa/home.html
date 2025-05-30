@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}" />
+</head>
+<body>
+    <div class="container">
+        <h2>Home Mahasiswa</h2>
+        <p>Welcome, <strong>{{ request.user.username }}</strong>!</p>
+        <a href="{% url 'protected' %}" class="button">Go To Your Protected Page!</a>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</body>
+</html>
