@@ -47,25 +47,12 @@ form {
 }
 
 p {
-  margin-top: 20px;
-}
-
-.form-group {
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: initial;
-  justify-content: center;
-}
-
-.password-group {
-  display: flex;
-  margin-bottom: 10px;
-  justify-content: space-between;
+  display: grid;
+  margin: 0px;
+  margin-top: 4px;
 }
 
 label {
-  display: block;
   color: gray;
 }
 
@@ -73,34 +60,12 @@ input[type='text'],
 input[type='password'] {
   width: 100%;
   margin-top: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
   font-size: 24px;
   padding: 20px;
   box-sizing: border-box;
   border: 1px solid gray;
   border-radius: 0px;
-}
-
-.third-party {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.third-party button {
-  background: limegreen;
-  margin: 20px 20px 20px 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.third-party button.facebook {
-  background: #0554ff;
-}
-
-.third-party button.sso {
-  background: gray;
 }
 
 button {
