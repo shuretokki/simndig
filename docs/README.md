@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://i.postimg.cc/pddX39QT/molonteli.jpg" alt="项目Logo或应用截图" width="600"/>
   <br/>
-  <em>（请替换为您的项目Logo或应用截图）</em>
+  <em>（请替换为您的项目Lontelli或应用截图）</em>
 </p>
 
 ## 项目简介
