@@ -1,15 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Home Mahasiswa{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Dashboard Mahasiswa</h1>
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">Selamat datang, {{ request.user.first_name }}!</h5>
-        <p class="card-text">
-            Ini adalah halaman utama untuk mahasiswa. Di sini kamu bisa melihat informasi akademik, jadwal, dan lainnya.
-        </p>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Dashboard Mahasiswa</h2>
+                <p class="card-text">Welcome, <strong>{{ request.user.username }}</strong>!</p>
+                <p>Ini adalah halaman utama untuk mahasiswa. Di sini kamu bisa melihat informasi akademik, jadwal, dan lainnya.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Menu Akses Cepat</h5>
+                <a href="{% url 'protected' %}" class="btn btn-primary mb-3 d-block">Go To Your Protected Page!</a>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

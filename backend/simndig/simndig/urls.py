@@ -16,9 +16,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from authenticate import views as auth_views  # Use alias to avoid confusion
 
 urlpatterns = [
+    # Django admin
     path('admin/', admin.site.urls),
+
+    # Authentication-related views
+    path('accounts/login/', auth_views.login_user, name='login'),
+    path('accounts/logout/', auth_views.logout_user, name='logout'),
+    path('accounts/register/', auth_views.register_user, name='register'),
+
+    # Home redirect based on user role
+    path('home/', auth_views.home_view, name='home'),
+
+    # App-specific dashboards
     path('mahasiswa/', include('mahasiswa.urls')),
-    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+    path('dosen/', include('dosen.urls')),
+    path('atmin/', include('atmin.urls')),  # Your custom admin app
+    path('matakuliah/', include('matakuliah.urls')),  # Add this if available
+
+    # Other authentication URLs (if any)
+    path('', include('authenticate.urls')),  # Keep this last to avoid conflicts
 ]
