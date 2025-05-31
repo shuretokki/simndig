@@ -11,3 +11,7 @@ def home(request):
         'user' : dosen.user,
         'daftar_kelas' : kelas_list
     })
+
+def detail_kela(request, kelas_id):
+    kelas = get_object_or_404(matakuliah, id=kelas_id)
+    return render(request, 'dosen/detail_kelas.html', {'kelas': kelas})
