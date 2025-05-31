@@ -10,6 +10,23 @@ class Dosen(models.Model):
     def __str__(self):
         return self.user.username
     
+    def set_nip(self, new_nip):
+        if len(new_nip) !=18:
+            raise ValueError("NIP harus terdiri dari 18 digit")
+        self.nip = new_nip
+
+    def set_nama(self, nama_baru):
+        self.user.username = nama_baru
+        self.user.save()
+
+    def set_tanggal_mulai_kerja(self, tanggal):
+        self.tanggal_mulai_kerja = tanggal
+
+    def get_lama_kerja(self):
+        if self.tanggal_mulai_kerja:
+            return date.today().year - self.tanggal_mulai_kerja.year
+        return 0
+    
     @property
     def kelas(self):
         """
