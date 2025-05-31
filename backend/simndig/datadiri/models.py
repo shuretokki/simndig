@@ -6,16 +6,12 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nama = models.CharField(max_length=100)
     nim = models.CharField(max_length=20, unique=True)
-    kelas = models.CharField(max_length=50)
-    angkatan = models.PositiveIntegerField()
-    jurusan = models.CharField(max_length=100)
+  
     email = models.EmailField(unique=True)
-    dpa = models.CharField(max_length=100)  
+    
     status = models.CharField(max_length=50)
-    semester = models.PositiveIntegerField()
-    ipk = models.DecimalField(max_digits=4, decimal_places=2)  
-    ukt = models.DecimalField(max_digits=9, decimal_places=2)  
-
+   
+   
     def __str__(self):
         return f"{self.nama} ({self.nim})"
     
@@ -127,7 +123,16 @@ class Student(models.Model):
         return self.bayar_ukt() >= self.ukt
     
 class Mahasiswa(Student):
+    nama = models.CharField(max_length=100)
     nim = models.CharField(max_length=20, unique=True)
+    kelas = models.CharField(max_length=50)  
+    semester = models.PositiveIntegerField()
+    ipk = models.DecimalField(max_digits=4, decimal_places=2)  
+    ukt = models.DecimalField(max_digits=9, decimal_places=2) 
+    dpa = models.CharField(max_length=100) 
+    angkatan = models.PositiveIntegerField()
+    jurusan = models.CharField(max_length=100)
+
     # field khusus mahasiswa
 
 class Dosen(Student):
