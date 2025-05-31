@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'atmin',
     'authenticate',
     'matakuliah',
+    'datadiri',
 ]
 
 MIDDLEWARE = [
