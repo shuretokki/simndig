@@ -34,7 +34,7 @@ urlpatterns = [
     path('mahasiswa/', include('mahasiswa.urls')),
     path('dosen/', include('dosen.urls')),
     path('atmin/', include('atmin.urls')),  # Your custom admin app
-    # path('matakuliah/', include('matakuliah.urls')),  # Add this if available
+    path('matakuliah/', include('matakuliah.urls')),  # Add this if available
 
     # Other authentication URLs (if any)
     path('', include('authenticate.urls')),  # Keep this last to avoid conflicts
