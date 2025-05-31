@@ -10,18 +10,17 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href=" {% static 'styles/register.css' %}"
+      href=" {% static 'styles/styles.css' %}"
     />
   </head>
   <body>
     <div class="container">
-        <h2>Register</h2>
-        <form method="POST" action="{% url 'register' %}">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit">Register</button>
-        </form>
-        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+      <h2>Register</h2>
+      <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %} {{form.as_p}}
+        <button type="submit">Register</button>
+      </form>
+      <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
     </div>
   </body>
 </html>

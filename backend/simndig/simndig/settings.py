@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'livereload',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'simndig.urls'
@@ -123,7 +121,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILESDIRS = (
+STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     BASE_DIR / "static",
 )
