@@ -1,38 +1,61 @@
-{% extends "base.html" %}
+<!-- @format -->
 
-{% block title %}Home Mahasiswa{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles/styles.css' %}"
+    />
+  </head>
+  <body>
+    <div class="parent">
+      <div class="topnav">
+        <a class="active" href="#home">Homes</a>
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+      </div>
+      <div class="container">
+        <h1 class="mb-4">Dashboard Mahasiswa</h1>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              Selamat datang, {{ request.user.first_name }}!
+            </h5>
+            <p class="card-text">
+              Ini adalah halaman utama untuk mahasiswa. Di sini kamu bisa
+              melihat informasi akademik, jadwal, dan lainnya.
+            </p>
 
-{% block content %}
-<h1 class="mb-4">Dashboard Mahasiswa</h1>
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">Selamat datang, {{ request.user.first_name }}!</h5>
-        <p class="card-text">
-            Ini adalah halaman utama untuk mahasiswa. Di sini kamu bisa melihat informasi akademik, jadwal, dan lainnya.
-        </p>
-        
-        <h6>Informasi Mahasiswa:</h6>
-        <ul>
-            <li>Nama: {{ student.get_nama }}</li>
-            <li>NIM: {{ student.get_nim }}</li>
-            <li>Kelas: {{ student.get_kelas }}</li>
-            <li>Angkatan: {{ student.get_angkatan }}</li>
-            <li>Jurusan: {{ student.get_jurusan }}</li>
-            <li>Email: {{ student.get_email }}</li>
-            <li>DPA: {{ student.get_dpa }}</li>
-            <li>Status: {{ student.get_status }}</li>
-            <li>Semester: {{ student.get_semester }}</li>
-            <li>IPK: {{ student.get_ipk }}</li>
-            <li>UKT: {{ student.get_ukt }}</li>
-        </ul>
+            <h6>Informasi Mahasiswa:</h6>
+            <ul>
+              <li>Nama: {{ student.get_nama }}</li>
+              <li>NIM: {{ student.get_nim }}</li>
+              <li>Kelas: {{ student.get_kelas }}</li>
+              <li>Angkatan: {{ student.get_angkatan }}</li>
+              <li>Jurusan: {{ student.get_jurusan }}</li>
+              <li>Email: {{ student.get_email }}</li>
+              <li>DPA: {{ student.get_dpa }}</li>
+              <li>Status: {{ student.get_status }}</li>
+              <li>Semester: {{ student.get_semester }}</li>
+              <li>IPK: {{ student.get_ipk }}</li>
+              <li>UKT: {{ student.get_ukt }}</li>
+            </ul>
 
-        <h6>Update Informasi:</h6>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+            <h6>Update Informasi:</h6>
+            <form method="post">
+              {% csrf_token %} {{ form.as_p }}
+              <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-{% endblock %}
-
+  </body>
+</html>

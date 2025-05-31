@@ -22,7 +22,8 @@ body {
   display: flexbox;
   margin-top: 20px;
   margin-bottom: 20px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
   padding: 60px;
   border-radius: 0px;
   border-color: #000000;
