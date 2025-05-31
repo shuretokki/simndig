@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Catalog Kelas Dosen{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Catalog Kelas yang Saya Ajarkan</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Kelas Wajib</h4>
+            <div class="list-group">
+                {% for mk in kelas_wajib %}
+                <a href="{% url 'matakuliah:kelola_matakuliah_dosen' mk.id 'wajib' %}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ mk.nama }}</h5>
+                        <small>{{ mk.sks }} SKS</small>
+                    </div>
+                    <p class="mb-1">{{ mk.kode_mk }} - Semester {{ mk.semester }}</p>
+                </a>
+                {% empty %}
+                <p class="text-muted">Anda belum mengajar kelas wajib apapun.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4>Kelas Pilihan</h4>
+            <div class="list-group">
+                {% for mk in kelas_pilihan %}
+                <a href="{% url 'matakuliah:kelola_matakuliah_dosen' mk.id 'pilihan' %}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ mk.nama }}</h5>
+                        <small>{{ mk.sks }} SKS</small>
+                    </div>
+                    <p class="mb-1">{{ mk.kode_mk }} - Semester {{ mk.semester }}</p>
+                </a>
+                {% empty %}
+                <p class="text-muted">Anda belum mengajar kelas pilihan apapun.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

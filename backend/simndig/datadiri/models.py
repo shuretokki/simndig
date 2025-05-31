@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -126,8 +127,26 @@ class Student(models.Model):
         return self.bayar_ukt() >= self.ukt
     
 class Mahasiswa(Student):
-    pass
+    nim = models.CharField(max_length=20, unique=True)
+    # field khusus mahasiswa
+
 class Dosen(Student):
-    pass
+    nip = models.CharField(max_length=20, blank=True, null=True)
+    tanggal_mulai_kerja = models.DateField(blank=True, null=True)
+
+    def set_nip(self, new_nip):
+        if len(new_nip) != 18:
+            raise ValueError("NIP harus terdiri dari 18 digit")
+        self.nip = new_nip
+        self.save()
+
+    def get_lama_kerja(self):
+        if self.tanggal_mulai_kerja:
+            return date.today().year - self.tanggal_mulai_kerja.year
+        return 0
+    
+    def __str__(self):
+        return self.nama
+
 class Atmin(Student):
     pass 
