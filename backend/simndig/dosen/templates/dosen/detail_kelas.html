@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detail Kelas</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 30px; }
+        .container { background: white; padding: 30px; border-radius: 10px; }
+        h1, h2 { color: #2c3e50; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 10px; }
+        th { background-color: #34495e; color: white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Detail Kelas: {{ kelas.nama }}</h1>
+    <p><strong>Dosen:</strong> {{ kelas.dosen.username }}</p>
+    <p><strong>Kode MK:</strong> {{ kelas.kode_mk }}</p>
+    <p><strong>Semester:</strong> {{ kelas.semester }}</p>
+
+    <h2>Materi</h2>
+    {% if materi_list %}
+        <table>
+            <tr>
+                <th>Pertemuan</th>
+                <th>Judul</th>
+                <th>Tanggal</th>
+            </tr>
+            {% for materi in materi_list %}
+            <tr>
+                <td>{{ materi.pertemuan_ke }}</td>
+                <td>{{ materi.judul }}</td>
+                <td>{{ materi.tanggal|date:"d M Y" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Tidak ada materi.</p>
+    {% endif %}
+
+    <h2>Tugas</h2>
+    {% if tugas_list %}
+        <table>
+            <tr>
+                <th>Judul</th>
+                <th>Tenggat</th>
+            </tr>
+            {% for tugas in tugas_list %}
+            <tr>
+                <td>{{ tugas.judul }}</td>
+                <td>{{ tugas.tenggat|date:"d M Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Tidak ada tugas.</p>
+    {% endif %}
+</div>
+</body>
+</html>
