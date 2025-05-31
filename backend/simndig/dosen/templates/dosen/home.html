@@ -45,7 +45,7 @@
         <h1>Selamat Datang, {{ user.username }}</h1>
         <p>Berikut adalah daftar kelas yang anda ampu:</p>
 
-        {i% if daftar_kelas %}
+        {% if daftar_kelas %}
             <table>
                 <thead>
                     <tr>
@@ -55,7 +55,7 @@
                     </tr>
                 </thead>
             <tbody>
-                {% for kelas in daftar kelas %}
+                {% for kelas in daftar_kelas %}
                 <tr>
                     <td>{{ kelas.nama }}</td>
 <td>{{ kelas.mata_kuliah.nama }}</td>
