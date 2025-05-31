@@ -99,27 +99,14 @@
         <!-- Absensi -->
         <div class="tab-pane fade" id="absensi" role="tabpanel">
             <div class="mt-3">
-                <h4>Absensi Mahasiswa</h4>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Mahasiswa</th>
-                            <th>Tanggal</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for mahasiswa in mahasiswa_list %}
-                        <tr>
-                            <td>{{ mahasiswa.get_full_name }}</td>
-                            <td> - </td>
-                            <td> - </td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="3" class="text-center">Belum ada mahasiswa terdaftar.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <h4>Daftar Mahasiswa Terdaftar</h4>
+                <ul>
+                    {% for mhs in mata_kuliah.mahasiswa.all %}
+                        <li>{{ mhs.get_full_name }} ({{ mhs.username }})</li>
+                    {% empty %}
+                        <li>Tidak ada mahasiswa terdaftar.</li>
+                    {% endfor %}
+                </ul>
                 <p><em>Fitur absensi detail dan pencatatan bisa dikembangkan lebih lanjut.</em></p>
             </div>
         </div>
