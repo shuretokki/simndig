@@ -11,16 +11,23 @@
         <div class="col-md-6">
             <h4>Mata Kuliah Wajib</h4>
             <div class="list-group">
-                {% for mk in mata_kuliah_wajib %}
-                <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' mk.id 'wajib' %}" 
-                   class="list-group-item list-group-item-action">
+                {% for mk in semua_kelas_wajib %}
+                <div class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ mk.nama }}</h5>
                         <small class="text-primary">{{ mk.sks }} SKS</small>
                     </div>
                     <p class="mb-1">{{ mk.kode_mk }} - Semester {{ mk.semester }}</p>
                     <small>Dosen: {{ mk.dosen.get_full_name }}</small>
-                </a>
+                    <div class="mt-2">
+                        <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' mk.id 'wajib' %}" class="btn btn-info btn-sm">Detail</a>
+                        {% if user not in mk.mahasiswa.all %}
+                            <a href="{% url 'matakuliah:daftar_kelas' mk.id %}" class="btn btn-success btn-sm">Daftar Kelas</a>
+                        {% else %}
+                            <span class="badge badge-secondary">Sudah Terdaftar</span>
+                        {% endif %}
+                    </div>
+                </div>
                 {% empty %}
                 <p class="text-muted">Belum ada mata kuliah wajib.</p>
                 {% endfor %}
@@ -30,16 +37,23 @@
         <div class="col-md-6">
             <h4>Mata Kuliah Pilihan</h4>
             <div class="list-group">
-                {% for mk in mata_kuliah_pilihan %}
-                <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' mk.id 'pilihan' %}" 
-                   class="list-group-item list-group-item-action">
+                {% for mk in semua_kelas_pilihan %}
+                <div class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ mk.nama }}</h5>
                         <small class="text-success">{{ mk.sks }} SKS</small>
                     </div>
                     <p class="mb-1">{{ mk.kode_mk }} - Semester {{ mk.semester }}</p>
                     <small>Dosen: {{ mk.dosen.get_full_name }}</small>
-                </a>
+                    <div class="mt-2">
+                        <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' mk.id 'pilihan' %}" class="btn btn-info btn-sm">Detail</a>
+                        {% if user not in mk.mahasiswa.all %}
+                            <a href="{% url 'matakuliah:daftar_kelas_pilihan' mk.id %}" class="btn btn-success btn-sm">Daftar Kelas</a>
+                        {% else %}
+                            <span class="badge badge-secondary">Sudah Terdaftar</span>
+                        {% endif %}
+                    </div>
+                </div>
                 {% empty %}
                 <p class="text-muted">Belum ada mata kuliah pilihan.</p>
                 {% endfor %}

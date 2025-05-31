@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from abc import ABC, abstractmethod
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+#from .models import Tugas, PengumpulanTugas
+User = get_user_model()
 
 class Nilai(models.Model):
     tugas = models.CharField(max_length=200)
@@ -90,17 +93,43 @@ class MataKuliah(models.Model):
     
     def upload_tugas(self, mahasiswa, tugas_id, file):
         """Public method untuk upload tugas"""
-        # Implementation for file upload
-        pass
+        try:
+            tugas = Tugas.objects.get(id=tugas_id, mata_kuliah=self)
+        except Tugas.DoesNotExist:
+            raise ValidationError("Tugas tidak ditemukan untuk mata kuliah ini.")
+
+        # Cek apakah sudah pernah upload
+        if PengumpulanTugas.objects.filter(mahasiswa=mahasiswa, tugas=tugas).exists():
+            raise ValidationError("Tugas sudah diupload sebelumnya.")
+
+        pengumpulan = PengumpulanTugas.objects.create(
+            mahasiswa=mahasiswa,
+            tugas=tugas,
+            file_jawaban=file
+        )
+        return pengumpulan
     
     def list_tugas(self):
         """Public method untuk list tugas"""
         return self.tugas_set.all()
     
-    def _nilai_tugas(self, tugas_id, mahasiswa_id):
+    def _nilai_tugas(self, tugas_id, mahasiswa_id, nilai, feedback=None):
         """Protected method untuk menilai tugas"""
-        # Implementation for grading
-        pass
+        try:
+            tugas = Tugas.objects.get(id=tugas_id, mata_kuliah=self)
+        except Tugas.DoesNotExist:
+            raise ValidationError("Tugas tidak ditemukan untuk mata kuliah ini.")
+
+        try:
+            pengumpulan = PengumpulanTugas.objects.get(tugas=tugas, mahasiswa_id=mahasiswa_id)
+        except PengumpulanTugas.DoesNotExist:
+            raise ValidationError("Pengumpulan tugas tidak ditemukan.")
+
+        pengumpulan.nilai = nilai
+        if feedback is not None:
+            pengumpulan.feedback = feedback
+        pengumpulan.save()
+        return pengumpulan
     
     def jadwal(self):
         """Public method untuk jadwal"""
@@ -128,11 +157,8 @@ class MataKuliah(models.Model):
 
 class KelasWajib(MataKuliah):
     # Properties khusus kelas wajib
-    #_nama = models.CharField(max_length=200)
-    #_nim = models.CharField(max_length=20)
     nilai = models.IntegerField(default=0)
     presensi = models.IntegerField(default=0)
-    
     is_wajib = models.BooleanField(default=True)
     prasyarat = models.ManyToManyField('self', blank=True)
     
@@ -142,11 +168,8 @@ class KelasWajib(MataKuliah):
 
 class KelasPilihan(MataKuliah):
     # Properties khusus kelas pilihan
-    #_nama = models.CharField(max_length=200)
-    #_nim = models.CharField(max_length=20)
     nilai = models.IntegerField(default=0)
     presensi = models.IntegerField(default=0)
-    
     is_pilihan = models.BooleanField(default=True)
     kuota_mahasiswa = models.IntegerField(default=40)
     minimal_peserta = models.IntegerField(default=10)

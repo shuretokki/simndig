@@ -4,7 +4,7 @@ from datadiri.models import Dosen
 class DosenProfileForm(forms.ModelForm):
     class Meta:
         model = Dosen
-        fields = ['nama', 'nip', 'nim', 'angkatan', 'kelas', 'jurusan', 'email', 'dpa', 'status', 'semester', 'ipk', 'ukt', 'tanggal_mulai_kerja']
+        fields = ['nama', 'nip', 'nim', 'email', 'status', 'tanggal_mulai_kerja']
 
     def clean_nim(self):
         nim = self.cleaned_data['nim']
