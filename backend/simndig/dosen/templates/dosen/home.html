@@ -2,20 +2,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}" />
+    <meta charset="UTF-8">
+    <title>Dashboard Dosen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+        a.button {
+            background-color: #3498db;
+        }
+        a.button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Home Dosen</h2>
-        <p>Welcome, <strong>{{ request.user.username }}</strong>!</p>
-        <a href="{% url 'protected' %}" class="button">Go To Your Protected Page!</a>
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
+        <h1>Selamat Datang, {{ user.username }}</h1>
+        <p>Berikut adalah daftar kelas yang anda ampu:</p>
+
+        {% if daftar_kelas %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama Kelas</th>
+                        <th>Mata Kuliah</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+            <tbody>
+                {% for kelas in daftar_kelas %}
+                <tr>
+                    <td>{{ kelas.nama }}</td>
+<td>{{ kelas.mata_kuliah.nama }}</td>
+                    <td>
+                        <a href="{% url 
+'detail_kelas' kelas.id %}" class="button">Lihat</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Tidak ada kelas yang Anda ampu saat ini.</p>
+    {% endif %}
     </div>
 </body>
 </html>

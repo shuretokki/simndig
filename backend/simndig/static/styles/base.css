@@ -1,0 +1,203 @@
+/** @format */
+
+html {
+  font-size: 100%; /* Base for rem units */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa; /* Light grey background for the page */
+  color: #e5e9ec; /* Dark grey text */
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff; /* Standard link blue */
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Header and Navbar */
+.site-header {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  ); /* Dark blue-grey from styles.css */
+  color: #000000;
+  padding: 0 1.5rem; /* Horizontal padding */
+  backdrop-filter: blur(12px);
+}
+
+.main-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px; /* Navbar height */
+  max-width: 1200px; /* Max width for navbar content */
+  margin: 0 auto; /* Center navbar content */
+}
+
+.main-navbar__brand a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+}
+
+.main-navbar__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.main-navbar__item {
+  margin-left: 1.5rem;
+}
+
+.main-navbar__item:first-child {
+  margin-left: 0; /* For user info if it's the first visible on desktop */
+}
+
+.main-navbar__link,
+.main-navbar__user-info span {
+  color: #000000; /* Lighter text for contrast on dark bg */
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.main-navbar__link:hover {
+  color: #61dafb; /* Light blue for hover, consistent with mahasiswa.css */
+  text-decoration: none;
+}
+
+.main-navbar__user-info span {
+  padding-right: 0.5rem; /* Space before other links */
+}
+
+/* Hamburger Menu Toggle - Hidden by default on larger screens */
+.main-navbar__toggler,
+.main-navbar__toggle-label {
+  display: none; /* Hidden on desktop */
+}
+
+/* Page Container */
+.page-container {
+  flex-grow: 1; /* Allows footer to stick to bottom */
+  max-width: 1140px; /* Common container width */
+  margin: 2rem auto; /* Top/bottom margin, auto horizontal for centering */
+  padding: 0 1.5rem; /* Horizontal padding */
+  width: 100%;
+}
+
+/* Footer */
+.site-footer {
+  background-color: #e9ecef; /* Light grey background */
+  color: #6c757d; /* Muted text color */
+  text-align: center;
+  padding: 1.5rem 1rem;
+  margin-top: auto; /* Pushes footer to bottom if content is short */
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments for Navbar */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 0 1rem; /* Reduce padding on smaller screens */
+  }
+
+  .main-navbar__toggle-label {
+    display: flex; /* Show hamburger icon */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+  }
+
+  .main-navbar__toggle-label span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .main-navbar__menu {
+    display: none; /* Hide menu by default */
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 60px; /* Position below navbar */
+    left: 0;
+    background-color: #101d2c; /* Same as navbar */
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .main-navbar__toggler:checked ~ .main-navbar__menu {
+    display: flex; /* Show menu when toggler is checked */
+  }
+
+  .main-navbar__item {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .main-navbar__link,
+  .main-navbar__user-info span {
+    display: block;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #1a2b3c; /* Separator for mobile links */
+  }
+  .main-navbar__item:last-child .main-navbar__link,
+  .main-navbar__item:last-child .main-navbar__user-info span {
+    border-bottom: none;
+  }
+
+  .main-navbar__user-info {
+    order: -1; /* Move user info to the top in mobile menu */
+    border-bottom: 1px solid #1a2b3c;
+  }
+
+  /* Hamburger animation when active */
+  .main-navbar__toggler:checked ~ .main-navbar__toggle-label span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .main-navbar__toggler:checked ~ .main-navbar__toggle-label span:nth-child(2) {
+    opacity: 0;
+  }
+  .main-navbar__toggler:checked ~ .main-navbar__toggle-label span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .page-container {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+  }
+}

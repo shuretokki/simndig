@@ -1,21 +1,66 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}" />
-</head>
-<body>
-    <div class="container">
-        <h2>Home Mahasiswa</h2>
-        <p>Welcome, <strong>{{ request.user.username }}</strong>!</p>
-        <a href="{% url 'protected' %}" class="button">Go To Your Protected Page!</a>
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-    </div>
-</body>
-</html>
+
+
+{% block title %}Dashboard Mahasiswa - {{ request.user.first_name|default:request.user.username }}{% endblock title %}
+
+{% block head_extra %}
+  <head>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles/mahasiswa.css' %}"
+    />
+  </head>
+{% endblock head_extra %}
+
+{% block navbar_links %}
+  <li class="main-navbar__item"><a href="{% url 'home' %}" class="main-navbar__link active">Dashboard</a></li>
+  <li class="main-navbar__item"><a href="#" class="main-navbar__link">Jadwal Kuliah</a></li> {# Replace # with actual URL name #}
+  <li class="main-navbar__item"><a href="#" class="main-navbar__link">Transkrip Nilai</a></li> {# Replace # with actual URL name #}
+  <li class="main-navbar__item"><a href="#" class="main-navbar__link">Profil</a></li> {# Replace # with actual URL name #}
+{% endblock navbar_links %}
+
+{% block content %}
+    <!-- main-container class is removed as page-container from base.html will be used -->
+      <h1 class="dashboard-title">Dashboard Mahasiswa</h1>
+      <section class="content-card">
+
+      <section class="content-card">
+        <h5>Selamat datang, {{ request.user.first_name|default:request.user.username }}!</h5>
+        <p class="card-text">
+          Ini adalah halaman utama Anda. Di sini Anda bisa melihat informasi
+          akademik, jadwal, dan mengelola data pribadi Anda.
+        </p>
+
+        <h6>Informasi Mahasiswa:</h6>
+        {% if student %}
+        <ul class="info-list">
+          <li><strong>Nama:</strong> {{ student.get_nama }}</li>
+          <li><strong>NIM:</strong> {{ student.get_nim }}</li>
+          <li><strong>Kelas:</strong> {{ student.get_kelas|default:"-" }}</li>
+          <li><strong>Angkatan:</strong> {{ student.get_angkatan|default:"-" }}</li>
+          <li><strong>Jurusan:</strong> {{ student.get_jurusan|default:"-" }}</li>
+          <li><strong>Email:</strong> {{ student.get_email }}</li>
+          <li><strong>DPA:</strong> {{ student.get_dpa|default:"-" }}</li>
+          <li><strong>Status:</strong> {{ student.get_status|default:"-" }}</li>
+          <li><strong>Semester:</strong> {{ student.get_semester|default:"-" }}</li>
+          <li><strong>IPK:</strong> {{ student.get_ipk|default:"-" }}</li>
+          <li><strong>UKT:</strong> {{ student.get_ukt|default:"-" }}</li>
+        </ul>
+        {% else %}
+        <p>Data mahasiswa tidak ditemukan.</p>
+        {% endif %}
+      </section>
+
+      {% if form %}
+      <section class="content-card">
+        <h6>Update Informasi Pribadi:</h6>
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
+          <button type="submit">Update Informasi</button>
+        </div>
+      </section>
+      {% endif %}
+    </main>
+{% endblock content %}

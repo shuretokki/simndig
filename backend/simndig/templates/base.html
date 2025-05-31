@@ -1,25 +1,64 @@
+<!-- @format -->
+
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}My Website{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <header>
-        <nav>
-            <!-- Navigation menu -->
-        </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Mahasiswa App{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles/base.css' %}"
+    />
+    {% block head_extra %}{% endblock head_extra %}
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="main-navbar">
+        <div class="main-navbar__brand">
+          <a href="{% url 'home' %}">SIMNDIG</a>
+        </div>
+
+        <input
+          type="checkbox"
+          id="navbar-toggle"
+          class="main-navbar__toggler"
+        />
+        <label for="navbar-toggle" class="main-navbar__toggle-label">
+          <span></span>
+          <!-- Hamburger icon line 1 -->
+          <span></span>
+          <!-- Hamburger icon line 2 -->
+          <span></span>
+          <!-- Hamburger icon line 3 -->
+        </label>
+
+        <ul class="main-navbar__menu">
+          <li class="main-navbar__item main-navbar__user-info">
+            <span>Halo, {{ request.user.first_name }}!</span>
+          </li>
+          {% block navbar_links %}
+          <!-- App-specific or role-specific links can be inserted here -->
+          <!-- Example: <li class="main-navbar__item"><a href="#" class="main-navbar__link">Dashboard</a></li> -->
+          {% endblock navbar_links %}
+          <li class="main-navbar__item">
+            <a href="{% url 'logout' %}" class="main-navbar__link">Logout</a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
-    <main>
-        {% block content %}
-        <!-- Page-specific content will go here -->
-        {% endblock %}
+    <main class="page-container">
+      {% block content %}
+      <!-- Page-specific content goes here -->
+      {% endblock %}
     </main>
 
-    <footer>
-        <p>© 2025 My Website</p>
+    <footer class="site-footer">
+      <p>© {% now "Y" %} SIMNDIG. All rights reserved.</p>
     </footer>
-</body>
+  </body>
 </html>

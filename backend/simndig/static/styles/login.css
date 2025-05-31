@@ -1,0 +1,158 @@
+/** @format */
+
+html {
+  font-size: 100%;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Arial,
+    sans-serif;
+  font-size: 1rem;
+  background-image: url(https://w.wallhaven.cc/full/jx/wallhaven-jx61j5.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  padding: 75px;
+  border-radius: 0px;
+  border: 1px solid #000000;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  padding-top: 0; /* Remove redundant padding */
+  text-align: center;
+  color: #000000;
+  font-size: 4rem; /* Responsive font size */
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+form {
+  margin: 0px;
+  padding: 0px;
+}
+
+p {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+
+.form-group {
+  display: flex;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: initial;
+  justify-content: center;
+}
+
+.password-group {
+  display: flex;
+  margin-bottom: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+label {
+  display: block;
+  color: gray;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+input[type='text'],
+input[type='password'] {
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  border-radius: 0px;
+}
+
+button {
+  background: #101d2c;
+  color: #fff;
+  border: none;
+  margin-top: 1.5rem;
+  width: 100%;
+  font-size: 2rem;
+  padding: 20px 20px;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+select#id_role {
+  width: 100%;
+  padding: 10px; /* Adjusted padding */
+  font-size: 1rem; /* Responsive font size */
+  border: 1px solid gray;
+}
+
+span#id_username_helptext.helptext {
+  font-size: 0.8rem; /* Adjusted font size */
+  color: gray;
+  margin: 0.25rem 0 0 0; /* Adjusted margin */
+  padding: 0;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 1.125rem; /* Increase base font size slightly (e.g., 18px) */
+  }
+
+  .container {
+    margin: 1rem;
+    padding: 40px;
+    max-width: 500px; /* Slightly larger max-width */
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  input[type='text'],
+  input[type='password'],
+  button,
+  select#id_role {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+}

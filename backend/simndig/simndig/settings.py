@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'atmin',
     'authenticate',
     'matakuliah',
+    'datadiri',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'simndig.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,12 +122,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILESDIRS = (
+STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     BASE_DIR / "static",
 )
 
 LOGIN_URL = '/accounts/login/'  # or your actual login URL path
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
