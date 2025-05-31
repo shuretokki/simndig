@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from abc import ABC, abstractmethod
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from .models import Tugas, PengumpulanTugas
+#from .models import Tugas, PengumpulanTugas
 User = get_user_model()
 
 class Nilai(models.Model):

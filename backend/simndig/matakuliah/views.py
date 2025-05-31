@@ -10,6 +10,7 @@ from .models import MataKuliah, KelasWajib, KelasPilihan, Tugas, Materi, Absensi
 from django.utils import timezone
 from django.core.paginator import Paginator
 from .forms import KelasWajibForm, KelasPilihanForm
+from django.views.decorators.http import require_POST
 
 # Views untuk Mahasiswa
 @login_required
