@@ -45,4 +45,3 @@ def complete_profile(request):
         form = DosenProfileForm(instance=dosen)
 
     return render(request, 'dosen/complete_profile.html', {'form': form})
-

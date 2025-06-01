@@ -4,7 +4,7 @@ from datadiri.models import Dosen
 class DosenProfileForm(forms.ModelForm):
     class Meta:
         model = Dosen
-        fields = ['nama', 'nip', 'nim', 'email', 'status', 'tanggal_mulai_kerja']
+        fields = ['nama', 'nip', 'email', 'status', 'tanggal_mulai_kerja']
 
     def clean_nim(self):
         nim = self.cleaned_data['nim']
@@ -12,5 +12,5 @@ class DosenProfileForm(forms.ModelForm):
         if self.instance.pk:
             qs = qs.exclude(pk=self.instance.pk)
         if qs.exists():
-            raise forms.ValidationError("NIM sudah terdaftar, silakan gunakan NIM lain.")
+            raise forms.ValidationError("NIP sudah terdaftar, silakan gunakan NIM lain.")
         return nim
