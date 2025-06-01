@@ -8,7 +8,7 @@
     <h2>Penilaian Tugas: {{ tugas.judul }}</h2>
     <p><strong>Mata Kuliah:</strong> {{ tugas.mata_kuliah.nama }}</p>
     <p><strong>Tenggat:</strong> {{ tugas.tenggat|date:"d M Y H:i" }}</p>
-    <a href="{% url 'matakuliah:kelola_matakuliah_dosen' tugas.mata_kuliah.id tugas.mata_kuliah.jenis %}" class="btn btn-secondary mb-3">Kembali ke Kelola Mata Kuliah</a>
+    <a href="{% url 'matakuliah:kelola_matakuliah_dosen' tugas.mata_kuliah.id jenis %}" class="btn btn-secondary mb-3">Kembali ke Kelola Mata Kuliah</a>
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead>
