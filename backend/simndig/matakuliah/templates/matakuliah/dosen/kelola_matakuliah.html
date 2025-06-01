@@ -120,7 +120,9 @@
                         <div>
                             <strong>{{ tugas.judul }}</strong> - Tenggat: {{ tugas.tenggat|date:"d M Y H:i" }}
                         </div>
-                        <a href="{% url 'matakuliah:nilai_tugas_dosen' tugas.id %}" class="btn btn-sm btn-primary">Nilai</a>
+                        <a href="{% url 'matakuliah:nilai_tugas_dosen' tugas.id %}" class="btn btn-sm btn-primary">
+                            Nilai Tugas
+                        </a>
                     </li>
                     {% empty %}
                     <li class="list-group-item text-muted">Belum ada tugas untuk dinilai.</li>

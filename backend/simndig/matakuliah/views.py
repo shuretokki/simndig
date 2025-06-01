@@ -182,32 +182,37 @@ def tambah_tugas_dosen(request, mk_id, jenis):
     else:
         messages.error(request, 'Semua field harus diisi!')
 
-    return redirect('kelola_matakuliah_dosen', mk_id=mk_id, jenis=jenis)
+    return redirect('matakuliah:kelola_matakuliah_dosen', mk_id=mk_id, jenis=jenis)
 
 
 @login_required
 def nilai_tugas_dosen(request, tugas_id):
-    """Halaman untuk menilai tugas mahasiswa"""
-    tugas = get_object_or_404(
-        Tugas, id=tugas_id, mata_kuliah__dosen=request.user)
+    tugas = get_object_or_404(Tugas, id=tugas_id, mata_kuliah__dosen=request.user)
     pengumpulan_list = PengumpulanTugas.objects.filter(tugas=tugas)
+
+    # Tentukan jenis kelas
+    if hasattr(tugas.mata_kuliah, 'kelaswajib'):
+        jenis = 'wajib'
+    elif hasattr(tugas.mata_kuliah, 'kelaspilihan'):
+        jenis = 'pilihan'
+    else:
+        jenis = ''  # fallback, sebaiknya tidak terjadi
 
     if request.method == 'POST':
         pengumpulan_id = request.POST.get('pengumpulan_id')
         nilai = request.POST.get('nilai')
         feedback = request.POST.get('feedback')
-
         pengumpulan = get_object_or_404(PengumpulanTugas, id=pengumpulan_id)
         pengumpulan.nilai = nilai
         pengumpulan.feedback = feedback
         pengumpulan.save()
-
         messages.success(request, 'Nilai berhasil disimpan!')
-        return redirect('nilai_tugas_dosen', tugas_id=tugas_id)
+        return redirect('matakuliah:nilai_tugas_dosen', tugas_id=tugas_id)
 
     context = {
         'tugas': tugas,
         'pengumpulan_list': pengumpulan_list,
+        'jenis': jenis,
     }
     return render(request, 'matakuliah/dosen/nilai_tugas.html', context)
 
