@@ -19,8 +19,8 @@ urlpatterns = [
          views.daftar_kelas_pilihan, name='daftar_kelas_pilihan'),
     # Dosen URLs
     path('d/', views.catalog_kelas_dosen, name='catalog_kelas_dosen'),
-    path('d/<int:mk_id>/', views.kelola_matakuliah_dosen,
-         name='kelola_matakuliah_dosen'),
+    path('d/<int:mk_id>/<str:jenis>/', views.kelola_matakuliah_dosen,  # Added <str:jenis>
+         name='kelola_matakuliah_dosen'),  # Ensure view accepts 'jenis'
     path('d/<int:mk_id>/<str:jenis>/materi/',
          views.tambah_materi, name='tambah_materi'),
     path('d/<int:mk_id>/<str:jenis>/tugas/',

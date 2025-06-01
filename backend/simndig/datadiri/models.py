@@ -1,6 +1,8 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
+
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -10,10 +12,10 @@ class Student(models.Model):
 
     def __str__(self):
         return f"{self.nama} ({self.nim})"
-    
+
     class Meta:
         abstract = True
-    
+
     ################### Setter methods ###################
     def set_nama(self, nama):
         self.nama = nama
@@ -26,7 +28,7 @@ class Student(models.Model):
     def set_status(self, status):
         self.status = status
         self.save()
-    
+
     ################### Getter methods ###################
     def get_nama(self):
         return self.nama
@@ -37,13 +39,15 @@ class Student(models.Model):
     def get_status(self):
         return self.status
 
-    
+
 class Mahasiswa(Student):
     nim = models.CharField(max_length=20, unique=True)
-    kelas = models.CharField(max_length=50)  
+    kelas = models.CharField(max_length=50)
     semester = models.PositiveIntegerField(blank=True, null=True)
-    ipk = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)  
-    ukt = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True) 
+    ipk = models.DecimalField(
+        max_digits=4, decimal_places=2, blank=True, null=True)
+    ukt = models.DecimalField(
+        max_digits=9, decimal_places=2, blank=True, null=True)
     dpa = models.CharField(max_length=100, blank=True, null=True)
     angkatan = models.PositiveIntegerField()
     jurusan = models.CharField(max_length=100)
@@ -79,7 +83,7 @@ class Mahasiswa(Student):
     def set_jurusan(self, jurusan):
         self.jurusan = jurusan
         self.save()
-        
+
     def set_dpa(self, dpa):
         self.dpa = dpa
         self.save()
@@ -122,13 +126,13 @@ class Mahasiswa(Student):
         return self.ukt
 
     def ambilKelas(self):
-        
+
         return ["Matematika", "Fisika", "Pemrograman", "Basis Data", "PBO"]
 
     def absen(self):
-        
-        return 92.5  
-    
+
+        return 92.5
+
     def KHS(self):
         return {
             "Matematika": "A",
@@ -138,31 +142,43 @@ class Mahasiswa(Student):
         }
 
     def bayar_ukt(self):
-        
+
         return 2500000.00
 
     def lunas_ukt(self):
-        
+
         return self.bayar_ukt() >= self.ukt
     # field khusus mahasiswa
 
-class Dosen(Student):
-    nip = models.CharField(max_length=20, blank=True, null=True)
-    tanggal_mulai_kerja = models.DateField(blank=True, null=True)
 
-    def set_nip(self, new_nip):
-        if len(new_nip) != 18:
-            raise ValueError("NIP harus terdiri dari 18 digit")
-        self.nip = new_nip
-        self.save()
+class Dosen(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='dosen_profile')
+    # Will be filled in advanced step
+    nama = models.CharField(max_length=255, blank=True, null=True)
+    nip = models.CharField(max_length=20, unique=True,
+                           blank=True, null=True)  # Filled in initial step
+    # Specific work email, filled in initial step
+    email = models.EmailField(blank=True, null=True)
+    # e.g., 'Aktif', 'Cuti', filled in initial step
+    status = models.CharField(max_length=50, blank=True, null=True)
+    tanggal_mulai_kerja = models.DateField(
+        blank=True, null=True)  # Filled in initial step
+    current_semester = models.IntegerField(
+        blank=True, null=True)  # Filled in initial step
 
-    def get_lama_kerja(self):
-        if self.tanggal_mulai_kerja:
-            return date.today().year - self.tanggal_mulai_kerja.year
-        return 0
-    
+    # Fields for advanced profile
+    birth_date = models.DateField(blank=True, null=True)
+    profile_photo = models.ImageField(
+        upload_to='dosen_profile_photos/', blank=True, null=True)
+
+    # Flag to track profile completion
+    advanced_profile_completed = models.BooleanField(default=False)
+    dummy_courses_generated = models.BooleanField(default=False)
+
     def __str__(self):
-        return self.nama
+        return self.nama or self.user.username
+
 
 class Atmin(Student):
-    pass 
+    pass

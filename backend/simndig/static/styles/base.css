@@ -68,6 +68,15 @@ a:hover {
 }
 
 .main-navbar__item {
+  background: #101d2c;
+  color: #fff;
+  border: none;
+  margin-top: 20px;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 0px;
   margin-left: 1.5rem;
 }
 

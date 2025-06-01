@@ -1,112 +1,84 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from datadiri.models import Dosen  # Import directly from datadiri
+from .forms import DosenInitialProfileForm, DosenAdvancedProfileForm
+from matakuliah.models import MataKuliah, KelasWajib, KelasPilihan
 from django.contrib import messages
-from datadiri.models import Dosen  # Corrected: Import Dosen from datadiri app
-from .forms import DosenProfileForm
-from matakuliah.models import MataKuliah  # Use the simplified MataKuliah model
-import random  # For dummy data
+import random
+from django.utils import timezone
+
+
+def generate_dummy_courses(dosen_profile):
+    """
+    Generates a few dummy courses (KelasWajib and KelasPilihan) for a Dosen.
+    Ensures this runs only once.
+    """
+    if dosen_profile.dummy_courses_generated:
+        return
+
+    user = dosen_profile.user
+    base_kode_mk = f"DUMMY{user.id}-"
+
+    # Dummy Kelas Wajib
+    for i in range(1, random.randint(2, 4)):  # Generate 1 to 3 dummy wajib courses
+        kode_mk = f"{base_kode_mk}W{i}"
+        if not KelasWajib.objects.filter(kode_mk=kode_mk).exists():
+            KelasWajib.objects.create(
+                _nama=f"Dummy Mata Kuliah Wajib {i} ({user.username})",
+                kode_mk=kode_mk,
+                sks=random.choice([2, 3, 4]),
+                semester=random.randint(1, 8),
+                dosen=user,
+                _nim=f"NIM-MK-W{i}",  # Placeholder for MataKuliah._nim
+                # Placeholder for MataKuliah.email
+                email=f"mk-w{i}@example.com"
+            )
+
+    # Dummy Kelas Pilihan
+    for i in range(1, random.randint(2, 3)):  # Generate 1 to 2 dummy pilihan courses
+        kode_mk = f"{base_kode_mk}P{i}"
+        if not KelasPilihan.objects.filter(kode_mk=kode_mk).exists():
+            KelasPilihan.objects.create(
+                _nama=f"Dummy Mata Kuliah Pilihan {i} ({user.username})",
+                kode_mk=kode_mk,
+                sks=random.choice([2, 3]),
+                semester=random.randint(3, 8),
+                dosen=user,
+                _nim=f"NIM-MK-P{i}",  # Placeholder for MataKuliah._nim
+                # Placeholder for MataKuliah.email
+                email=f"mk-p{i}@example.com"
+            )
+
+    dosen_profile.dummy_courses_generated = True
+    dosen_profile.save(update_fields=['dummy_courses_generated'])
 
 
 @login_required
 def dosen_home(request):
     try:
-        # Ensure Dosen profile from datadiri.models exists
-        dosen_profile = Dosen.objects.get(user=request.user)
+        dosen = Dosen.objects.get(user=request.user)
+        if not dosen.advanced_profile_completed:
+            # Check if initial profile step was done by checking a field like NIP
+            if not dosen.nip:  # Or another field from the initial form
+                messages.info(request, 'Silakan lengkapi profil awal Anda.')
+                return redirect('dosen:complete_initial_profile')
+            messages.info(request, 'Silakan lengkapi profil lanjutan Anda.')
+            return redirect('dosen:complete_advanced_profile')
     except Dosen.DoesNotExist:
-        # If Dosen profile in datadiri.models doesn't exist,
-        # try to check UserProfile role and redirect to complete_profile.
-        # This relies on the UserProfile being set correctly during registration.
-        if hasattr(request.user, 'userprofile') and request.user.userprofile.role == 'dosen':
-            messages.info(request, "Please complete your Dosen profile.")
-            return redirect('dosen:complete_profile')
-        else:
-            # Not a Dosen or UserProfile issue, redirect to main home or error page
-            messages.error(
-                request, "Dosen profile not found or user role is incorrect.")
-            return redirect('home')  # Or an appropriate error page
-
-    # Fetch real courses taught by the dosen
-    # The 'dosen' field in MataKuliah model links to a User instance.
-    courses_taught_real = MataKuliah.objects.filter(dosen=request.user)
-
-    # Generate dummy content if no real courses or for demonstration
-    dummy_courses_display = []
-    is_dummy = False
-    if not courses_taught_real:  # Or use `if True:` to always show dummy for testing
-        is_dummy = True
-        for i in range(random.randint(2, 4)):
-            dummy_courses_display.append({
-                'id': 0,  # Dummy id, links might not work or should be disabled
-                'nama': f'Kelas {i+1} - {random.choice(["Sistem Orgasme", "Struktur Baka", "Segs", "Gooning"])}',
-                'kode_mk': f'{random.randint(100000, 500000)}',
-                'sks': random.randint(2, 4),
-                'semester': random.randint(1, 4),
-            })
-
-    # Dummy upcoming tasks
-    dummy_tasks = []
-    if not courses_taught_real:  # Or always show dummy tasks
-        for i in range(random.randint(1, 2)):
-            dummy_tasks.append({
-                'title': f'Upcoming Task {i+1}: Review Submissions',
-                'due_date': 'N/A'
-            })
-
-    context = {
-        'dosen_profile': dosen_profile,
-        'courses_taught': courses_taught_real if courses_taught_real else dummy_courses_display,
-        'is_dummy_data': is_dummy,
-        'upcoming_tasks': dummy_tasks  # Add real tasks if you have a model for them
-    }
-    return render(request, 'dosen/home.html', context)
-
-
-def detail_kelas(request, kelas_id):  # This view was also in dosen/models.py
-    # Assuming kelas_id refers to MataKuliah id
-    kelas = get_object_or_404(MataKuliah, id=kelas_id)
-    # Add more context if needed, e.g., materi_list, tugas_list from the mata_kuliah instance
-    return render(request, 'dosen/detail_kelas.html', {'kelas': kelas})
-
-
-@login_required
-def complete_profile(request):
-    # This view creates/updates the Dosen instance in datadiri.models
-    dosen_instance, created = Dosen.objects.get_or_create(
-        user=request.user,
-        defaults={  # Provide sensible defaults for required fields in datadiri.Dosen
-            'nama': request.user.get_full_name() or request.user.username,
-            # Ensure email is present
-            'email': getattr(request.user, 'email', f'{request.user.username}@example.com'),
-            # Dosen model in datadiri has 'nim', which is unusual for a lecturer. Adjust as needed.
-            'nim': f'NIM-{request.user.id}',
-            'status': 'Aktif'  # Default status
-        }
-    )
-    if created:
         messages.info(
-            request, "Your Dosen profile has been initiated. Please complete the details.")
+            request, 'Selamat datang! Silakan lengkapi profil dosen Anda.')
+        return redirect('dosen:complete_initial_profile')
 
-    if request.method == 'POST':
-        form = DosenProfileForm(request.POST, instance=dosen_instance)
-        if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = request.user  # Ensure user is set
-            profile.save()
-            messages.success(request, 'Profile updated successfully!')
-            return redirect('dosen:dosen_home')
-        else:
-            messages.error(request, 'Please correct the errors below.')
-    else:
-        form = DosenProfileForm(instance=dosen_instance)
+        # Generate dummy courses if profile is complete but courses not yet generated
+    if dosen.advanced_profile_completed and not dosen.dummy_courses_generated:
+        generate_dummy_courses(dosen)
+        # Refresh dosen object to get updated dummy_courses_generated status if needed,
+        # though generate_dummy_courses saves it.
 
-    return render(request, 'dosen/complete_profile.html', {'form': form})
-    return redirect('dosen:complete_profile')
+    courses_taught = MataKuliah.objects.filter(
+        dosen=dosen.user).select_related('kelaswajib', 'kelaspilihan')
 
-    kelas_list = MataKuliah.objects.filter(dosen=dosen.user)
-    return render(request, 'dosen/home.html', {
-        'user': dosen.user,
-        'daftar_kelas': kelas_list
-    })
+    return render(request, 'dosen/home.html', {'dosen_profile': dosen, 'courses_taught': courses_taught})
 
 
 def detail_kelas(request, kelas_id):
@@ -115,24 +87,61 @@ def detail_kelas(request, kelas_id):
 
 
 @login_required
-def complete_profile(request):
+def complete_initial_profile(request):
     try:
         dosen = Dosen.objects.get(user=request.user)
-        return redirect('dosen:dosen_home')
+        if dosen.advanced_profile_completed:
+            return redirect('dosen:dosen_home')
+        # If dosen exists but advanced is not complete, they might be here to update initial info
+        # or were redirected. Allow filling this form.
     except Dosen.DoesNotExist:
-        dosen = None
+        dosen = None  # Create a new Dosen profile instance
 
     if request.method == 'POST':
-        form = CompleteDosen(request.POST, instance=dosen)
+        form = DosenInitialProfileForm(request.POST, instance=dosen)
         if form.is_valid():
-            dosen = form.save(commit=False)
-            dosen.user = request.user
-            dosen.save()
+            profile = form.save(commit=False)
+            profile.user = request.user
+            # Ensure advanced_profile_completed is False until the next step is done
+            # This will be handled by the Dosen model's default or explicitly here if needed.
+            # profile.advanced_profile_completed = False
+            profile.save()
+            if not profile.dummy_courses_generated:  # Generate dummy courses upon full profile completion
+                generate_dummy_courses(profile)
+            messages.success(
+                request, 'Profil awal berhasil disimpan. Silakan lengkapi profil lanjutan.')
+            return redirect('dosen:complete_advanced_profile')
+        else:
+            messages.error(request, 'Harap perbaiki kesalahan di bawah ini.')
+    else:
+        form = DosenInitialProfileForm(instance=dosen)
+
+    return render(request, 'dosen/complete_initial_profile.html', {'form': form})
+
+
+@login_required
+def complete_advanced_profile(request):
+    try:
+        dosen = Dosen.objects.get(user=request.user)
+        if dosen.advanced_profile_completed:
+            return redirect('dosen:dosen_home')
+    except Dosen.DoesNotExist:
+        messages.error(
+            request, 'Profil awal tidak ditemukan. Silakan lengkapi profil awal terlebih dahulu.')
+        return redirect('dosen:complete_initial_profile')
+
+    if request.method == 'POST':
+        form = DosenAdvancedProfileForm(
+            request.POST, request.FILES, instance=dosen)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.advanced_profile_completed = True
+            profile.save()
+            messages.success(request, 'Profil berhasil dilengkapi!')
             return redirect('dosen:dosen_home')
         else:
-            # Form tidak valid, error akan ditampilkan di template
-            pass
+            messages.error(request, 'Harap perbaiki kesalahan di bawah ini.')
     else:
-        form = CompleteDosen(instance=dosen)
+        form = DosenAdvancedProfileForm(instance=dosen)
 
-    return render(request, 'dosen/complete_profile.html', {'form': form})
+    return render(request, 'dosen/complete_advanced_profile.html', {'form': form})

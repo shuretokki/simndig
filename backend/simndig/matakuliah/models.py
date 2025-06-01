@@ -58,6 +58,8 @@ class Absensi(models.Model):
 class MataKuliah(models.Model):
     # Properties sesuai requirements
     _nama = models.CharField(max_length=200)  # private nama
+    _nim = models.CharField(max_length=20)    # private nim
+    email = models.EmailField()               # public email
     dosen = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='mata_kuliah_diajar')
     mahasiswa = models.ManyToManyField(
@@ -65,6 +67,9 @@ class MataKuliah(models.Model):
     kode_mk = models.CharField(max_length=10, unique=True)
     sks = models.IntegerField()
     semester = models.IntegerField()
+
+    class Meta:
+        abstract = False
 
     # Getter dan Setter untuk private properties
     @property
@@ -74,6 +79,14 @@ class MataKuliah(models.Model):
     @nama.setter
     def nama(self, value):
         self._nama = value
+
+    @property
+    def nim(self):
+        return self._nim
+
+    @nim.setter
+    def nim(self, value):
+        self._nim = value
 
     # Public methods
     def tambah_tugas(self, judul, deskripsi, tenggat):
@@ -152,6 +165,31 @@ class MataKuliah(models.Model):
 
     def __str__(self):
         return self._nama
+
+
+class KelasWajib(MataKuliah):
+    # Properties khusus kelas wajib
+    nilai = models.IntegerField(default=0)
+    presensi = models.IntegerField(default=0)
+    is_wajib = models.BooleanField(default=True)
+    prasyarat = models.ManyToManyField('self', blank=True)
+
+    class Meta:
+        verbose_name = "Kelas Wajib"
+        verbose_name_plural = "Kelas Wajib"
+
+
+class KelasPilihan(MataKuliah):
+    # Properties khusus kelas pilihan
+    nilai = models.IntegerField(default=0)
+    presensi = models.IntegerField(default=0)
+    is_pilihan = models.BooleanField(default=True)
+    kuota_mahasiswa = models.IntegerField(default=40)
+    minimal_peserta = models.IntegerField(default=10)
+
+    class Meta:
+        verbose_name = "Kelas Pilihan"
+        verbose_name_plural = "Kelas Pilihan"
 
 
 class PengumpulanTugas(models.Model):

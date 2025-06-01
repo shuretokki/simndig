@@ -1,20 +1,86 @@
 /** @format */
 
-/* Dashboard Title - Consistent with mahasiswa.css */
-.dashboard-title {
-  font-size: 2.2rem;
-  color: #101d2c; /* From styles.css */
-  margin-bottom: 1.5rem;
+.profile {
+  display: flex;
+  align-items: center; /* Vertically align items if they have different heights */
+  background-color: #f8f9fa; /* Light background for the profile section */
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0px; /* Consistent with other elements */
+  border: 1px solid #e9ecef;
+  gap: 1.5rem; /* Space between avatar and info */
+}
+
+.profile__avatar-container {
+  flex-shrink: 0; /* Prevents avatar from shrinking */
+}
+
+.profile__avatar-img {
+  width: 120px; /* Slightly larger avatar */
+  height: 120px;
+  border-radius: 50%; /* Circular avatar */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+  border: 3px solid #fff; /* White border around avatar */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem; /* Space between text elements */
+}
+
+.profile__name {
+  font-size: 1.8rem; /* Larger name */
+  color: #101d2c;
+  margin: 0 0 0.25rem 0; /* Adjusted margin */
+}
+
+.profile__status,
+.profile__email {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+#calendar-container {
+  margin-bottom: 2rem; /* Space below the calendar before the next section */
+  padding: 1rem; /* Optional: if you want some padding around the calendar itself */
+  /* Ensure calendar has a white background if content-card doesn't */
+}
+
+.dashboard-main-content {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 1.5rem; /* Space between calendar and courses area */
+}
+
+.dashboard-main-content__calendar-area {
+  flex: 3; /* Takes 60% of the space (3 out of 5 parts) */
+  min-width: 300px; /* Minimum width before wrapping */
+}
+.dashboard-main-content__courses-area {
+  flex: 2; /* Takes 40% of the space (2 out of 5 parts) */
+  min-width: 280px; /* Minimum width before wrapping */
+}
+
+.card-text {
   text-align: center;
 }
 
-/* Content Card - Consistent with mahasiswa.css */
 .content-card {
   background-color: #fff;
-  padding: 1.5rem;
+  padding: 2rem;
   border: black;
-  border-width: 2px;
   margin-bottom: 2rem;
+  display: block;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0px;
+  border: 1px solid #e9ecef;
+  gap: 1.5rem;
 }
 
 .content-card h5 {
@@ -42,20 +108,32 @@
 
 /* Course List Styling */
 .course-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(300px, 1fr)
+  ); /* Responsive grid columns */
+  gap: 1.5rem; /* Space between course items */
   list-style: none;
   padding: 0;
+  margin-top: 1rem; /* Add some space above the course list */
 }
 
 .course-list__item {
-  background-color: #f8f9fa; /* Slightly off-white background for items */
-  padding: 1rem;
-  margin-bottom: 1rem;
+  background-color: #fff; /* White background for a cleaner card look */
+  padding: 1.25rem; /* Increased padding */
   border-radius: 0px;
-  border: 1px solid #e9ecef;
-  width: auto;
+  border: 1px solid #dee2e6; /* Slightly darker border for better definition */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+  display: flex; /* Use flexbox for internal layout of the card */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Pushes button to the bottom if card heights vary */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition for hover */
+}
+
+.course-list__item:hover {
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
 }
 
 .course-list__item strong {
@@ -85,15 +163,160 @@
   border-bottom: none;
 }
 
+button,
+input[type='submit'].button-like {
+  /* Style for actual button elements or inputs styled as buttons */
+  background: #101d2c;
+  color: #fff;
+  border: none;
+  margin-top: 20px;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+/* General Button Styling for <a> tags or <button> elements with class .button */
+.button {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500; /* Medium weight for button text */
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: #007bff; /* Primary blue - default */
+  border: 1px solid transparent;
+  border-radius: 0px; /* Consistent with other elements */
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  margin-top: 0.5rem; /* Default top margin, can be overridden */
+  width: auto; /* Button width to fit content by default */
+}
+
+.button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  text-decoration: none; /* Ensure no underline on hover for links */
+}
+
+/* Modifier for smaller buttons */
+.button--small {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* Modifier for disabled-looking buttons */
+.button--disabled {
+  background-color: #6c757d; /* Grey for disabled */
+  color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none; /* Prevents click events */
+}
+.button--disabled:hover {
+  background-color: #6c757d; /* No change on hover */
+}
+
+.profile-name-container {
+  display: flex;
+  justify-items: center;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-  .dashboard-title {
-    font-size: 1.8rem;
-  }
   .content-card h5 {
     font-size: 1.2rem;
   }
   .course-list__item strong {
     font-size: 1rem;
   }
+  .profile {
+    flex-direction: column; /* Stack avatar and info vertically on smaller screens */
+    text-align: center; /* Center text when stacked */
+    gap: 1rem;
+  }
+  .profile__avatar-img {
+    width: 100px;
+    height: 100px;
+  }
+  .profile__name {
+    font-size: 1.5rem;
+  }
+  #calendar-container {
+    padding: 0.5rem;
+  }
+  .fc .fc-toolbar {
+    font-size: 0.8em;
+  }
+}
+
+:root {
+  --fc-border-color: #dee2e6; /* Match general border colors */
+  --fc-page-bg-color: #fff;
+  --fc-neutral-bg-color: #f8f9fa; /* Light grey for day headers, etc. */
+  --fc-list-event-hover-bg-color: #f8f9fa;
+
+  /* Button theming to match site's .button style */
+  --fc-button-text-color: #000;
+  --fc-button-bg-color: #fff; /* Primary blue from .button */
+  /*! --fc-button-border-color: #007bff; */
+  --fc-button-hover-bg-color: #0056b3; /* Darker blue from .button:hover */
+  --fc-button-hover-border-color: #0056b3;
+  --fc-button-active-bg-color: #ced8ff; /* Even darker blue for active */
+  --fc-button-active-border-color: #004085;
+  --fc-button-border-radius: 0px; /* Remove border radius from calendar buttons */
+
+  /* Today's date highlight */
+  --fc-today-bg-color: rgba(
+    0,
+    123,
+    255,
+    0.1
+  ); /* Lighter shade of primary blue */
+
+  /* Event colors (can be customized further per event type if needed) */
+  --fc-event-bg-color: #7777ff; /* Example: Green for events */
+  --fc-event-border-color: #28a745;
+  --fc-event-text-color: #fff;
+}
+
+/* General calendar container adjustments */
+.fc {
+  display: flex;
+  font-size: 1.2rem; /* Slightly smaller base font for calendar */
+}
+
+/* Toolbar styling */
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 1.2em;
+  padding: 2rem 2rem;
+  /* Light background for toolbar */
+  display: flex; /* Ensure toolbar items are in a line */
+  flex-wrap: wrap;
+  border: 1px solid var(--fc-border-color);
+}
+
+.fc .fc-toolbar .fc-toolbar-chunk {
+  display: flex; /* Make button groups within chunks also flex */
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.4em; /* Adjust title size */
+  color: #101d2c; /* Match site's header text color */
+}
+
+/* Day header styling */
+.fc .fc-col-header-cell-cushion {
+  /* For month and week view day headers */
+  padding: 0.5em 0.4em;
+  font-weight: 500;
+}
+
+.dashboard-main-content {
+  flex-direction: column; /* Stack calendar and courses on smaller screens */
+}
+.dashboard-main-content__calendar-area,
+.dashboard-main-content__courses-area {
+  flex: 1 1 100%; /* Each takes full width when stacked */
 }

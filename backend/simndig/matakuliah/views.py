@@ -1,7 +1,8 @@
 from django.views.decorators.http import require_POST
+from .forms import KelasWajibForm, KelasPilihanForm
 from django.core.paginator import Paginator
 from django.utils import timezone
-from .models import MataKuliah, Tugas, Materi, Absensi, PengumpulanTugas
+from .models import MataKuliah, KelasWajib, KelasPilihan, Tugas, Materi, Absensi, PengumpulanTugas
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
@@ -156,13 +157,8 @@ def tambah_materi(request, mk_id, jenis):
         messages.success(request, 'Materi berhasil ditambahkan!')
     else:
         messages.error(request, 'Semua field harus diisi!')
-<<<<<<< HEAD
 
-    return redirect('kelola_matakuliah_dosen', mk_id=mk_id, jenis=jenis)
-=======
-    
     return redirect('matakuliah:kelola_matakuliah_dosen', mk_id=mk_id, jenis=jenis)
->>>>>>> 1ae713c0d2b203ca6cf76a1abf0b9bdebdd8c0c4
 
 
 @login_required

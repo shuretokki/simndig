@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from authenticate import views as auth_views  # Use alias to avoid confusion
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Django admin
@@ -37,5 +39,10 @@ urlpatterns = [
     path('matakuliah/', include('matakuliah.urls')),  # Add this if available
 
     # Other authentication URLs (if any)
-    path('', include('authenticate.urls')),  # Keep this last to avoid conflicts
+    # Keep this last to avoid conflicts
+    path('', include('authenticate.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

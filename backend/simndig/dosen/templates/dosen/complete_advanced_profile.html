@@ -1,0 +1,19 @@
+<!-- @format -->
+
+<h2>Lengkapi Profil Lanjutan Dosen</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.non_field_errors }} {% for field in form %}
+  <div>
+    {{ field.label_tag }}<br />
+    {{ field }} {% if field.help_text %}
+    <small style="color: grey">{{ field.help_text }}</small>
+    {% endif %} {% if field.errors %}
+    <div style="color: red">
+      {% for error in field.errors %} {{ error }}<br />
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <button type="submit">Simpan dan Lanjutkan</button>
+</form>
