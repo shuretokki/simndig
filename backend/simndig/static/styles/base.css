@@ -37,7 +37,7 @@ a:hover {
 .site-header {
   background-color: rgba(255, 255, 255, 0); /* Dark blue-grey from styles.css */
   color: #000000;
-  padding: 0 1.5rem; /* Horizontal padding */
+  padding: 0; /* Horizontal padding */
   backdrop-filter: blur(4px);
   position: sticky;
   top: 0;
@@ -47,9 +47,12 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 60px; /* Navbar height */
+  min-height: 20px; /* Navbar height */
   max-width: 1200px; /* Max width for navbar content */
   margin: 0 auto; /* Center navbar content */
+  background-color: white;
+  border: 1px solid;
+  padding: 0 40px;
 }
 
 .main-navbar__brand a {
@@ -62,13 +65,12 @@ a:hover {
 .main-navbar__menu {
   list-style: none;
   margin: 0;
-  padding: 12px;
+  padding: 0px;
   display: flex;
-  align-items: center;
 }
 
 .main-navbar__item {
-  background: #101d2c;
+  background: #101d2c00;
   color: #fff;
   border: none;
   margin-top: 20px;
@@ -77,7 +79,8 @@ a:hover {
   padding: 0.5rem;
   cursor: pointer;
   border-radius: 0px;
-  margin-left: 1.5rem;
+  /*! margin-left: 1.5rem; */
+  width: fit-content;
 }
 
 .main-navbar__item:first-child {
@@ -161,7 +164,7 @@ a:hover {
     background-color: #101d2c; /* Same as navbar */
     padding: 1rem 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 1;
   }
 
   .main-navbar__toggler:checked ~ .main-navbar__menu {
@@ -183,6 +186,7 @@ a:hover {
   .main-navbar__item:last-child .main-navbar__link,
   .main-navbar__item:last-child .main-navbar__user-info span {
     border-bottom: none;
+    background-color: #fff;
   }
 
   .main-navbar__user-info {

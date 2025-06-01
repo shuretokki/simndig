@@ -41,6 +41,7 @@
   font-size: 1rem;
   color: #555;
   margin: 0;
+  align-content: center;
 }
 
 #calendar-container {
@@ -180,13 +181,13 @@ input[type='submit'].button-like {
 /* General Button Styling for <a> tags or <button> elements with class .button */
 .button {
   display: inline-block;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.9rem;
+  padding: 0 1rem;
+  font-size: 1rem;
   font-weight: 500; /* Medium weight for button text */
   text-align: center;
   text-decoration: none;
   color: white;
-  background-color: #007bff; /* Primary blue - default */
+  background-color: #000; /* Primary blue - default */
   border: 1px solid transparent;
   border-radius: 0px; /* Consistent with other elements */
   cursor: pointer;
@@ -220,7 +221,8 @@ input[type='submit'].button-like {
 
 .profile-name-container {
   display: flex;
-  justify-items: center;
+  align-content: center;
+  gap: 10px;
 }
 
 /* Responsive Adjustments */
