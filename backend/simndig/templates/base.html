@@ -37,9 +37,6 @@
         </label>
 
         <ul class="main-navbar__menu">
-          <li class="main-navbar__item main-navbar__user-info">
-            <span>Halo, {{ request.user.first_name }}!</span>
-          </li>
           {% block navbar_links %}
           <!-- App-specific or role-specific links can be inserted here -->
           <!-- Example: <li class="main-navbar__item"><a href="#" class="main-navbar__link">Dashboard</a></li> -->

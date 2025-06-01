@@ -4,68 +4,64 @@
 {{ request.user.first_name|default:request.user.username }}{% endblock title %}
 {% block head_extra %}
 <link rel="stylesheet" type="text/css" href="{% static 'styles/dosen.css' %}" />
-{% endblock head_extra %} {% block navbar_links %} {# Assuming 'dosen:home' is
-the URL name for the dosen dashboard #}
+{% endblock head_extra %} {% block navbar_links %}
 <li class="main-navbar__item">
-  <a href="{% url 'dosen:home' %}" class="main-navbar__link active"
-    >Dashboard</a
+  <a href="{% url 'home' %}" class="main-navbar__link active">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+  <a href="{% url 'matakuliah:catalog_kelas_dosen' %}" class="main-navbar__link"
+    >Mata Kuliah Saya</a
   >
 </li>
 <li class="main-navbar__item">
-  <a href="#" class="main-navbar__link">Mata Kuliah Saya</a>
-</li>
-{# Replace # with actual URL name #}
-<li class="main-navbar__item">
   <a href="#" class="main-navbar__link">Input Nilai</a>
 </li>
-{# Replace # with actual URL name #}
 <li class="main-navbar__item">
   <a href="#" class="main-navbar__link">Profil Dosen</a>
 </li>
-{# Replace # with actual URL name #} {% endblock navbar_links %} {% block
-content %}
-<h1 class="dashboard-title">Dashboard Dosen</h1>
+{% endblock %} {% block content %}
 
 <section class="content-card">
+  <h2 class="dashboard-title">Dashboard Dosen</h2>
+  {% if dosen_profile %}
   <h5>
-    Selamat datang, {{ request.user.get_full_name|default:request.user.username
-    }}!
+    Selamat datang, {{ dosen_profile.nama|default:request.user.username }}!
   </h5>
+  {% else %}
+  <h5>Selamat datang, {{ request.user.username }}!</h5>
+  {% endif %}
   <p class="card-text">
     Ini adalah halaman utama Anda. Di sini Anda dapat mengelola mata kuliah,
     memasukkan nilai, dan melihat informasi terkait kegiatan akademik Anda.
   </p>
-</section>
-
-<section class="content-card">
   <h6>Mata Kuliah yang Diampu</h6>
-  {% if courses_taught %}
+  {% if courses_taught %} {# This will now iterate over real MataKuliah objects
+  or dummy dicts #}
   <ul class="course-list">
     {% for course in courses_taught %}
     <li class="course-list__item">
-      <strong>{{ course.nama_matakuliah }}</strong> ({{ course.kode_matakuliah
-      }})
-      <p>Kelas: {{ course.kelas }} - Semester: {{ course.semester }}</p>
-      <a href="#" class="button button--small">Lihat Detail</a> {# Link to
-      course detail page #}
+      <strong>{{ course.nama }}</strong> ({{ course.kode_mk }})
+      <p>SKS: {{ course.sks }} - Semester: {{ course.semester }}</p>
+      <a
+        href="{% if not is_dummy_data %}{% url 'matakuliah:kelola_matakuliah_dosen' course.id 'dosen_view' %}{% else %}#{% endif %}"
+        class="button button--small"
+        >Lihat Detail</a
+      >
     </li>
     {% endfor %}
   </ul>
   {% else %}
   <p>Anda saat ini tidak mengampu mata kuliah apapun.</p>
   {% endif %}
-</section>
-
-<section class="content-card">
   <h6>Pengumuman atau Tugas Penting</h6>
   {% if upcoming_tasks %}
   <ul class="info-list">
     {% for task in upcoming_tasks %}
-    <li>{{ task.title }} - Batas Waktu: {{ task.due_date|date:"d M Y" }}</li>
-    {% endfor %}
+    <li>{{ task.title }} - Batas Waktu: {{ task.due_date }}</li>
+    {# Adjust date formatting if due_date is a date object #} {% endfor %}
   </ul>
   {% else %}
   <p>Tidak ada pengumuman atau tugas penting saat ini.</p>
   {% endif %}
 </section>
-{% endblock content %}
+{%endblock%}

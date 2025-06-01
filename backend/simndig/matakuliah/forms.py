@@ -1,12 +1,10 @@
 from django import forms
-from .models import KelasWajib, KelasPilihan
+from .models import MataKuliah
 
-class KelasWajibForm(forms.ModelForm):
-    class Meta:
-        model = KelasWajib
-        fields = ['_nama', 'kode_mk', 'sks', 'semester', 'prasyarat']
 
-class KelasPilihanForm(forms.ModelForm):
+class MataKuliahForm(forms.ModelForm):
     class Meta:
-        model = KelasPilihan
-        fields = ['_nama', 'kode_mk', 'sks', 'semester', 'kuota_mahasiswa', 'minimal_peserta']
+        model = MataKuliah
+        fields = ['_nama', 'kode_mk', 'sks', 'semester',
+                  'mahasiswa']  # Add other fields as necessary
+        # Use 'nama' if you prefer to expose the property directly in forms, but _nama is the field.
