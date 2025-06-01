@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block title %}Dashboard Mahasiswa - {{ request.user.first_name|default:request.user.username }}{% endblock title %}
 
 {% block head_extra %}
@@ -16,6 +15,7 @@
 
 {% block navbar_links %}
   <li class="main-navbar__item"><a href="{% url 'home' %}" class="main-navbar__link active">Dashboard</a></li>
+  <li class="main-navbar__item"><a href="{% url 'matakuliah:list_matakuliah_mahasiswa' %}" class="main-navbar__link">Daftar Mata Kuliah</a></li>
   <li class="main-navbar__item"><a href="#" class="main-navbar__link">Jadwal Kuliah</a></li> {# Replace # with actual URL name #}
   <li class="main-navbar__item"><a href="#" class="main-navbar__link">Transkrip Nilai</a></li> {# Replace # with actual URL name #}
   <li class="main-navbar__item"><a href="#" class="main-navbar__link">Profil</a></li> {# Replace # with actual URL name #}
@@ -24,8 +24,6 @@
 {% block content %}
     <!-- main-container class is removed as page-container from base.html will be used -->
       <h1 class="dashboard-title">Dashboard Mahasiswa</h1>
-      <section class="content-card">
-
       <section class="content-card">
         <h5>Selamat datang, {{ request.user.first_name|default:request.user.username }}!</h5>
         <p class="card-text">

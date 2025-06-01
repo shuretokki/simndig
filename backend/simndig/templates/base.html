@@ -37,12 +37,26 @@
         </label>
 
         <ul class="main-navbar__menu">
+          <li class="main-navbar__item main-navbar__user-info">
+            <span>
+              Halo, 
+              {% if request.user.is_authenticated %}
+                {{ request.user.get_full_name|default:request.user.username }}
+              {% else %}
+                Guest
+              {% endif %}
+              !
+            </span>
+          </li>
           {% block navbar_links %}
           <!-- App-specific or role-specific links can be inserted here -->
           <!-- Example: <li class="main-navbar__item"><a href="#" class="main-navbar__link">Dashboard</a></li> -->
           {% endblock navbar_links %}
           <li class="main-navbar__item">
-            <a href="{% url 'logout' %}" class="main-navbar__link">Logout</a>
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+            </form>
           </li>
         </ul>
       </nav>

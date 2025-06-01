@@ -8,8 +8,8 @@
         <div class="form-group">
             <label for="jenis">Jenis Kelas</label>
             <select name="jenis" id="jenis" class="form-control" required onchange="this.form.submit()">
-                <option value="wajib" {% if form.__class__.__name__ == 'KelasWajibForm' %}selected{% endif %}>Wajib</option>
-                <option value="pilihan" {% if form.__class__.__name__ == 'KelasPilihanForm' %}selected{% endif %}>Pilihan</option>
+                <option value="wajib" {% if form_type == 'wajib' %}selected{% endif %}>Wajib</option>
+                <option value="pilihan" {% if form_type == 'pilihan' %}selected{% endif %}>Pilihan</option>
             </select>
         </div>
         {{ form.as_p }}

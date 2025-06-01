@@ -123,7 +123,7 @@ def complete_profile(request):
         dosen = None
 
     if request.method == 'POST':
-        form = DosenProfileForm(request.POST, instance=dosen)
+        form = CompleteDosen(request.POST, instance=dosen)
         if form.is_valid():
             dosen = form.save(commit=False)
             dosen.user = request.user
@@ -133,6 +133,6 @@ def complete_profile(request):
             # Form tidak valid, error akan ditampilkan di template
             pass
     else:
-        form = DosenProfileForm(instance=dosen)
+        form = CompleteDosen(instance=dosen)
 
     return render(request, 'dosen/complete_profile.html', {'form': form})
