@@ -182,7 +182,7 @@ def tambah_tugas_dosen(request, mk_id, jenis):
     else:
         messages.error(request, 'Semua field harus diisi!')
 
-    return redirect('kelola_matakuliah_dosen', mk_id=mk_id, jenis=jenis)
+    return redirect('matakuliah:kelola_matakuliah_dosen', mk_id=mk_id, jenis=jenis)
 
 
 @login_required
