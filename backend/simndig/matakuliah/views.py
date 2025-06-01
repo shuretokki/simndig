@@ -80,11 +80,14 @@ def upload_tugas_mahasiswa(request, tugas_id):
 # Views untuk Dosen
 @login_required
 def catalog_kelas_dosen(request):
-    """Halaman catalog kelas yang diajarkan dosen"""
-    if hasattr(request.user, 'profile') and request.user.profile.role == 'dosen':
+    print("User:", request.user)
+    print("Has profile:", hasattr(request.user, 'userprofile'))
+    if hasattr(request.user, 'userprofile'):
+        print("Role:", request.user.userprofile.role)
+
+    if hasattr(request.user, 'userprofile') and request.user.userprofile.role == 'dosen':
         kelas_wajib = KelasWajib.objects.filter(dosen=request.user)
         kelas_pilihan = KelasPilihan.objects.filter(dosen=request.user)
-        
         context = {
             'kelas_wajib': kelas_wajib,
             'kelas_pilihan': kelas_pilihan,
@@ -141,7 +144,7 @@ def tambah_materi(request, mk_id, jenis):
     else:
         messages.error(request, 'Semua field harus diisi!')
     
-    return redirect('kelola_matakuliah_dosen', mk_id=mk_id, jenis=jenis)
+    return redirect('matakuliah:kelola_matakuliah_dosen', mk_id=mk_id, jenis=jenis)
 
 @login_required
 @require_POST
@@ -241,14 +244,16 @@ def daftar_kelas_pilihan(request, kelas_id):
 
 @login_required
 def tambah_kelas(request):
-    if not hasattr(request.user, 'profile') or request.user.profile.role != 'dosen':
+    if not hasattr(request.user, 'userprofile') or request.user.userprofile.role != 'dosen':
         messages.error(request, 'Hanya dosen yang dapat menambah kelas.')
         return redirect('home')
 
+    form_type = 'wajib'
     if request.method == 'POST':
         jenis = request.POST.get('jenis')
         if jenis == 'wajib':
             form = KelasWajibForm(request.POST)
+            form_type = 'wajib'
             if form.is_valid():
                 kelas = form.save(commit=False)
                 kelas.dosen = request.user
@@ -258,6 +263,7 @@ def tambah_kelas(request):
                 return redirect('matakuliah:catalog_kelas_dosen')
         else:
             form = KelasPilihanForm(request.POST)
+            form_type = 'pilihan'
             if form.is_valid():
                 kelas = form.save(commit=False)
                 kelas.dosen = request.user
@@ -267,4 +273,5 @@ def tambah_kelas(request):
                 return redirect('matakuliah:catalog_kelas_dosen')
     else:
         form = KelasWajibForm()
-    return render(request, 'matakuliah/dosen/tambah_kelas.html', {'form': form})
+        form_type = 'wajib'
+    return render(request, 'matakuliah/dosen/tambah_kelas.html', {'form': form, 'form_type': form_type})

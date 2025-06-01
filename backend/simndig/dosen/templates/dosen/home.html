@@ -43,6 +43,8 @@
 <body>
     <div class="container">
         <h1>Selamat Datang, {{ user.username }}</h1>
+        <!-- Tambahkan link ke halaman matakuliah dosen -->
+        <a href="{% url 'matakuliah:catalog_kelas_dosen' %}" class="button" style="margin-bottom:20px;display:inline-block;">Kelola Mata Kuliah Saya</a>
         <p>Berikut adalah daftar kelas yang anda ampu:</p>
 
         {% if daftar_kelas %}
