@@ -39,15 +39,29 @@ class Student(models.Model):
 
     
 class Mahasiswa(Student):
-    nama = models.CharField(max_length=100)
     nim = models.CharField(max_length=20, unique=True)
     kelas = models.CharField(max_length=50)  
-    semester = models.PositiveIntegerField()
-    ipk = models.DecimalField(max_digits=4, decimal_places=2)  
-    ukt = models.DecimalField(max_digits=9, decimal_places=2) 
-    dpa = models.CharField(max_length=100) 
+    semester = models.PositiveIntegerField(blank=True, null=True)
+    ipk = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)  
+    ukt = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True) 
+    dpa = models.CharField(max_length=100, blank=True, null=True)
     angkatan = models.PositiveIntegerField()
     jurusan = models.CharField(max_length=100)
+
+    def save(self, *args, **kwargs):
+        if self.angkatan:
+            today = date.today()
+            year_diff = today.year - self.angkatan
+            # Hitung semester berdasarkan bulan:
+            # Januari - Juli = semester genap (2*year_diff)
+            # Agustus - Desember = semester ganjil (2*year_diff + 1)
+            if today.month >= 8:
+                self.semester = year_diff * 2 + 1
+            else:
+                self.semester = year_diff * 2
+            if self.semester < 1:
+                self.semester = 1
+        super().save(*args, **kwargs)
 
     # Setter
     def set_nim(self, nim):

@@ -1,7 +1,7 @@
 from django import forms
 from datadiri.models import Dosen
 
-class DosenProfileForm(forms.ModelForm):
+class CompleteDosen(forms.ModelForm):
     class Meta:
         model = Dosen
         fields = ['nama', 'nip', 'email', 'status', 'tanggal_mulai_kerja']

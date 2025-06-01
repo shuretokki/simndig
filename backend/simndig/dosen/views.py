@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Dosen
-from .forms import DosenProfileForm
+from .forms import CompleteDosen
 from matakuliah.models import MataKuliah
 
 
@@ -32,7 +32,7 @@ def complete_profile(request):
         dosen = None
 
     if request.method == 'POST':
-        form = DosenProfileForm(request.POST, instance=dosen)
+        form = CompleteDosen(request.POST, instance=dosen)
         if form.is_valid():
             dosen = form.save(commit=False)
             dosen.user = request.user
@@ -42,6 +42,6 @@ def complete_profile(request):
             # Form tidak valid, error akan ditampilkan di template
             pass
     else:
-        form = DosenProfileForm(instance=dosen)
+        form = CompleteDosen(instance=dosen)
 
     return render(request, 'dosen/complete_profile.html', {'form': form})
