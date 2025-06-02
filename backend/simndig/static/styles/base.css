@@ -1,12 +1,10 @@
 /** @format */
 
-@import url('styles.css');
-
+@import url(styles.css);
 html {
   font-size: 100%;
   scroll-behavior: smooth;
 }
-
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -19,25 +17,20 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-
 *,
-*::before,
-*::after {
+::after,
+::before {
   box-sizing: border-box;
 }
-
 a {
   text-decoration: none;
   color: var(--color-primary);
-  transition: color 0.2s ease;
+  transition: color 0.2s;
 }
-
 a:hover {
   color: var(--color-primary-hover);
 }
-
 .sr-only {
-  /* For screen reader only text */
   position: absolute;
   width: 1px;
   height: 1px;
@@ -48,11 +41,8 @@ a:hover {
   white-space: nowrap;
   border: 0;
 }
-
-/* General Button Styles (Primary CTA based on login.css appearance) */
 .button,
 button.button-default-styling {
-  /* Apply to native button elements if they should get this style by default, or use a specific class */
   display: inline-block;
   padding: var(--spacing-unit-sm) var(--spacing-unit-md);
   font-size: var(--font-size-base);
@@ -61,47 +51,37 @@ button.button-default-styling {
   text-decoration: none;
   color: var(--color-text-light);
   background-color: var(--color-primary);
-  border: none; /* Key style from login.css CTA */
-  border-radius: var(
-    --border-radius-main
-  ); /* Matches login.css (0px) and styles.css */
+  border: none;
+  border-radius: var(--border-radius-main);
   cursor: pointer;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  line-height: 1.5; /* Ensure text is vertically centered nicely */
-  /* Remove default margin, apply contextually */
+  transition: background-color 0.2s, box-shadow 0.2s;
+  line-height: 1.5;
 }
-
 .button:hover,
 button.button-default-styling:hover {
   background-color: var(--color-primary-hover);
-  color: var(--color-text-light); /* Ensure text color remains light */
+  color: var(--color-text-light);
   text-decoration: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
 .button:focus-visible,
 button.button-default-styling:focus-visible {
-  /* Modern focus state */
   outline: 2px solid var(--color-primary-hover);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(var(--color-primary-rgb, 16, 29, 44), 0.3); /* Ensure --color-primary-rgb is defined in styles.css */
+  box-shadow: 0 0 0 4px rgba(var(--color-primary-rgb, 16, 29, 44), 0.3);
 }
-
 .button--small {
   padding: var(--spacing-unit-xs) var(--spacing-unit-sm);
   font-size: var(--font-size-sm);
 }
-
 .button--large {
-  /* For more prominent CTAs */
   padding: var(--spacing-unit-md) var(--spacing-unit-lg);
   font-size: var(--font-size-lg);
 }
-
 .button--secondary {
   background-color: var(--color-background-card-light);
   color: var(--color-primary);
-  border: 1px solid var(--color-border-medium); /* Secondary buttons often have a border */
+  border: 1px solid var(--color-border-medium);
 }
 .button--secondary:hover {
   background-color: var(--color-border-light);
@@ -109,28 +89,28 @@ button.button-default-styling:focus-visible {
   color: var(--color-primary-hover);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
+.main-navbar__link.active,
+.main-navbar__profile-toggle:hover .profile-icon,
+.main-navbar__profile-toggle[aria-expanded='true'] .profile-icon {
+  color: var(--color-primary);
+}
 .button--secondary:focus-visible {
   outline-color: var(--color-primary);
   box-shadow: 0 0 0 4px rgba(var(--color-primary-rgb, 16, 29, 44), 0.2);
 }
-
 .button--full-width {
   display: block;
   width: 100%;
 }
-
 .button--disabled,
 button:disabled {
-  /* Apply to native disabled state as well */
   background-color: var(--color-button-disabled-bg) !important;
   color: var(--color-button-disabled-text) !important;
   border: none !important;
   cursor: not-allowed !important;
-  pointer-events: none !important; /* Important to prevent interactions */
+  pointer-events: none !important;
   box-shadow: none !important;
 }
-
-/* Header and Navbar */
 .site-header {
   background-color: var(--color-background-card-white);
   position: sticky;
@@ -138,7 +118,6 @@ button:disabled {
   z-index: 1000;
   border-bottom: 1px solid var(--color-border-default);
 }
-
 .main-navbar {
   display: flex;
   justify-content: space-between;
@@ -148,7 +127,6 @@ button:disabled {
   margin: 0 auto;
   padding: 0 var(--spacing-unit-lg);
 }
-
 .main-navbar__brand a {
   display: flex;
   align-items: center;
@@ -165,7 +143,6 @@ button:disabled {
   height: var(--font-size-xxl);
   width: auto;
 }
-
 .main-navbar__menu {
   list-style: none;
   margin: 0;
@@ -173,11 +150,9 @@ button:disabled {
   display: flex;
   align-items: center;
 }
-
 .main-navbar__item {
   margin-left: var(--spacing-unit-xs);
 }
-
 .main-navbar__link {
   color: var(--color-text-default);
   text-decoration: none;
@@ -188,7 +163,6 @@ button:disabled {
   position: relative;
   display: inline-block;
 }
-
 .main-navbar__link::after {
   content: '';
   position: absolute;
@@ -198,39 +172,35 @@ button:disabled {
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--color-primary);
-  transition: width 0.3s ease;
 }
-
-.main-navbar__link:hover,
-.main-navbar__link.active {
+.main-navbar__link.active,
+.main-navbar__link:hover {
   color: var(--color-primary);
   background-color: var(--color-background-card-light);
 }
 .main-navbar__link.active {
-  color: var(--color-primary);
-  background-color: var(
-    --color-border-light
-  ); /* Slightly more distinct background */
-  font-weight: 700; /* Bolder font for active link */
+  background-color: var(--color-border-light);
+  font-weight: 700;
 }
-
-.main-navbar__link:hover::after,
-.main-navbar__link.active::after {
+.main-navbar__profile-dropdown .dropdown-item:hover,
+.main-navbar__profile-toggle:hover,
+.main-navbar__profile-toggle[aria-expanded='true'] {
+  background-color: var(--color-background-card-light);
+}
+.main-navbar__link.active::after,
+.main-navbar__link:hover::after {
   width: calc(100% - var(--spacing-unit-md) * 2);
 }
-
 .main-navbar__actions {
   display: flex;
   align-items: center;
   margin-left: var(--spacing-unit-md);
 }
-
 .main-navbar__user-profile {
   position: relative;
 }
-
 .main-navbar__profile-toggle {
-  background: none;
+  background: 0 0;
   border: none;
   cursor: pointer;
   padding: var(--spacing-unit-sm);
@@ -238,21 +208,12 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease;
-}
-.main-navbar__profile-toggle:hover,
-.main-navbar__profile-toggle[aria-expanded='true'] {
-  background-color: var(--color-background-card-light);
+  transition: background-color 0.2s;
 }
 .main-navbar__profile-toggle .profile-icon {
   font-size: var(--font-size-xl);
   color: var(--color-text-default);
 }
-.main-navbar__profile-toggle:hover .profile-icon,
-.main-navbar__profile-toggle[aria-expanded='true'] .profile-icon {
-  color: var(--color-primary);
-}
-
 .main-navbar__profile-dropdown {
   position: absolute;
   top: calc(100% + var(--spacing-unit-sm));
@@ -266,9 +227,10 @@ button:disabled {
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
 }
-.main-navbar__profile-dropdown[hidden] {
+.main-navbar__profile-dropdown[hidden],
+.main-navbar__toggler {
   display: none;
 }
 .main-navbar__profile-toggle[aria-expanded='true']
@@ -278,7 +240,6 @@ button:disabled {
   transform: translateY(0);
   display: block;
 }
-
 .main-navbar__profile-dropdown .dropdown-header {
   padding: var(--spacing-unit-sm) var(--spacing-unit-md);
   border-bottom: 1px solid var(--color-border-light);
@@ -290,12 +251,15 @@ button:disabled {
   color: var(--color-text-headings);
   font-size: var(--font-size-base);
 }
+.footer-bottom,
+.site-footer {
+  font-size: var(--font-size-sm);
+}
 .main-navbar__profile-dropdown .dropdown-header .email {
   display: block;
   font-size: var(--font-size-sm);
   color: var(--color-text-default);
 }
-
 .main-navbar__profile-dropdown .dropdown-item {
   display: flex;
   align-items: center;
@@ -306,53 +270,35 @@ button:disabled {
   white-space: nowrap;
 }
 .main-navbar__profile-dropdown .dropdown-item:hover {
-  background-color: var(--color-background-card-light);
   color: var(--color-primary);
 }
 .main-navbar__profile-dropdown .dropdown-item .icon-left {
   margin-right: var(--spacing-unit-sm);
-  width: 1em; /* Use em to scale with font-size of parent */
-  height: 1em; /* Use em to scale with font-size of parent */
-  /* text-align: center; /* Not very effective for SVGs */
-  color: var(
-    --color-text-default
-  ); /* This will be used if SVG has fill="currentColor" */
-  display: inline-block; /* Ensure it behaves like an inline element with block properties */
-  vertical-align: middle; /* Align SVG nicely with text */
-  flex-shrink: 0; /* Prevent SVG from shrinking if text is long */
+  width: 1em;
+  height: 1em;
+  color: var(--color-text-default);
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 .main-navbar__profile-dropdown .dropdown-item:hover .icon-left {
   color: var(--color-primary);
 }
-
 .main-navbar__profile-dropdown .logout-form {
   margin: 0;
 }
 .main-navbar__profile-dropdown .dropdown-item--button {
-  background: none;
+  background: 0 0;
   border: none;
   width: 100%;
   text-align: left;
   cursor: pointer;
   color: red;
-  /* This will inherit .dropdown-item styles for padding, color, font-size */
-  /* If it needs to look like a primary CTA, it would need the .button class instead/additionally */
 }
-/* Example: If logout in dropdown should be a full primary button:
-.main-navbar__profile-dropdown .logout-form .button {
-  width: calc(100% - var(--spacing-unit-md) * 2);
-  margin: var(--spacing-unit-sm) var(--spacing-unit-md);
-}
-*/
-
 .main-navbar__profile-dropdown .dropdown-divider {
   height: 1px;
   background-color: var(--color-border-light);
   margin: var(--spacing-unit-xs) 0;
-}
-
-.main-navbar__toggler {
-  display: none;
 }
 .main-navbar__toggle-label {
   display: none;
@@ -370,7 +316,6 @@ button:disabled {
 .main-navbar__toggle-label .hamburger-line:not(:last-child) {
   margin-bottom: 5px;
 }
-
 .page-container {
   flex-grow: 1;
   max-width: 1200px;
@@ -378,15 +323,12 @@ button:disabled {
   padding: 0 var(--spacing-unit-lg);
   width: 100%;
 }
-
 .site-footer {
   background-color: var(--color-primary);
   color: var(--color-text-light);
   padding: var(--spacing-unit-xl) var(--spacing-unit-lg);
   margin-top: auto;
-  font-size: var(--font-size-sm);
 }
-
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -395,7 +337,6 @@ button:disabled {
   gap: var(--spacing-unit-lg);
   margin-bottom: var(--spacing-unit-lg);
 }
-
 .footer-column .footer-heading {
   font-size: var(--font-size-md);
   color: var(--color-text-light);
@@ -405,25 +346,24 @@ button:disabled {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
 .footer-column p {
   margin-bottom: var(--spacing-unit-sm);
   line-height: 1.7;
   color: #ccc;
 }
-
 .footer-column ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+.errorlist li,
 .footer-column ul li {
   margin-bottom: var(--spacing-unit-xs);
 }
 .footer-column ul li a {
   color: #ccc;
   text-decoration: none;
-  transition: color 0.2s ease, padding-left 0.2s ease;
+  transition: color 0.2s, padding-left 0.2s;
 }
 .footer-column ul li a:hover {
   color: var(--color-text-light);
@@ -433,21 +373,22 @@ button:disabled {
   margin-right: var(--spacing-unit-sm);
   color: var(--color-text-light);
 }
+.footer-bottom a,
 .footer-column a[href^='mailto:'],
 .footer-column a[href^='tel:'] {
   color: #ccc;
 }
+.footer-bottom a:hover,
 .footer-column a[href^='mailto:']:hover,
 .footer-column a[href^='tel:']:hover {
   color: var(--color-text-light);
 }
-
 .footer-social .social-icons a {
   display: inline-block;
   color: #ccc;
   font-size: var(--font-size-lg);
   margin-right: var(--spacing-unit-md);
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s, transform 0.2s;
 }
 .footer-social .social-icons a:last-child {
   margin-right: 0;
@@ -456,21 +397,12 @@ button:disabled {
   color: var(--color-text-light);
   transform: translateY(-2px);
 }
-
 .footer-bottom {
   text-align: center;
   padding-top: var(--spacing-unit-lg);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: var(--font-size-sm);
   color: #aaa;
 }
-.footer-bottom a {
-  color: #ccc;
-}
-.footer-bottom a:hover {
-  color: var(--color-text-light);
-}
-
 @media (max-width: 768px) {
   .main-navbar {
     padding: 0 var(--spacing-unit-md);
@@ -490,7 +422,6 @@ button:disabled {
   .main-navbar__toggler:checked ~ .main-navbar__menu {
     display: flex;
   }
-
   .main-navbar__item {
     margin: 0;
     width: 100%;
@@ -508,17 +439,16 @@ button:disabled {
   .main-navbar__item:last-child .main-navbar__link {
     border-bottom: none;
   }
-  .main-navbar__link:hover,
-  .main-navbar__link.active {
+  .main-navbar__link.active,
+  .main-navbar__link:hover {
     background-color: var(--color-background-card-light);
   }
-
   .main-navbar__toggle-label {
     display: block;
   }
   .main-navbar__toggler:checked
     ~ .main-navbar__toggle-label
-    .hamburger-line:nth-child(1) {
+    .hamburger-line:first-child {
     color: var(--color-primary);
     transform: translateY(8px) rotate(45deg);
   }
@@ -534,7 +464,6 @@ button:disabled {
     color: var(--color-primary);
     transform: translateY(-8px) rotate(-45deg);
   }
-
   .footer-container {
     grid-template-columns: 1fr;
     text-align: center;
@@ -547,22 +476,23 @@ button:disabled {
     display: flex;
   }
 }
-
-.form-wrapper {
-  /* Optional: A wrapper for the form for extra padding/margin if needed */
-  /* margin-top: var(--spacing-unit-lg); */
+.form-control,
+.form-control:focus {
+  background-color: var(--color-background-card-white);
 }
 .form-group {
-  margin-bottom: var(
-    --spacing-unit-lg
-  ); /* Increased margin for better separation */
+  margin-bottom: var(--spacing-unit-lg);
 }
 .form-label {
   display: block;
-  font-weight: 500; /* Changed from 500 to 600 for more prominence */
   font-weight: 600;
   color: var(--color-text-headings);
-  margin-bottom: var(--spacing-unit-sm); /* Increased spacing */
+  margin-bottom: var(--spacing-unit-sm);
+}
+.form-control,
+.form-control:focus,
+.form-text {
+  color: var(--color-text-default);
 }
 .form-control {
   display: block;
@@ -570,29 +500,24 @@ button:disabled {
   padding: var(--spacing-unit-sm) var(--spacing-unit-md);
   font-size: var(--font-size-base);
   line-height: 1.5;
-  color: var(--color-text-default);
-  background-color: var(--color-background-card-white);
   background-clip: padding-box;
   border: 1px solid var(--color-border-medium);
   border-radius: var(--border-radius-main);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-
+.errorlist,
+.form-text {
+  font-size: var(--font-size-sm);
+}
 .form-control:focus {
-  color: var(--color-text-default);
-  background-color: var(--color-background-card-white);
   border-color: var(--color-primary);
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-rgb, 16, 29, 44), 0.25); /* Ensure --color-primary-rgb is set in styles.css */
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-rgb, 16, 29, 44), 0.25);
 }
-
 textarea.form-control {
-  min-height: calc(
-    1.5em + (var(--spacing-unit-sm) * 2) * 3
-  ); /* Default to ~3 lines */
+  min-height: calc(1.5em + (var(--spacing-unit-sm) * 2) * 3);
   resize: vertical;
 }
-
 select.form-control {
   appearance: none;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
@@ -601,30 +526,17 @@ select.form-control {
   background-size: 16px 12px;
   padding-right: calc(var(--spacing-unit-md) * 2.5);
 }
-
 .form-text {
-  /* For help text */
-  display: block; /* Ensure it takes its own line */
-  font-size: var(--font-size-sm);
-  color: var(--color-text-default);
+  display: block;
   opacity: 0.8;
   margin-top: var(--spacing-unit-xs);
 }
-
-/* Error Styling */
 .errorlist {
-  /* Django's default class for list of errors */
   list-style: none;
   padding: 0;
   margin: var(--spacing-unit-xs) 0 0 0;
-  font-size: var(--font-size-sm);
   color: #d8000c;
 }
-.errorlist li {
-  margin-bottom: var(--spacing-unit-xs);
-}
-
-/* For non-field errors (at the top of the form) */
 .form-non-field-errors .errorlist {
   padding: var(--spacing-unit-sm);
   background-color: rgba(216, 0, 12, 0.05);
@@ -632,33 +544,27 @@ select.form-control {
   border-radius: var(--border-radius-main);
   margin-bottom: var(--spacing-unit-md);
 }
-
-/* Styling for file inputs */
 input[type='file'].form-control {
-  padding: var(
-    --spacing-unit-xs
-  ); /* Adjust padding for file input appearance */
+  padding: var(--spacing-unit-xs);
 }
 input[type='file'].form-control::file-selector-button {
   padding: var(--spacing-unit-sm) var(--spacing-unit-md);
-  margin-inline-end: var(--spacing-unit-md); /* Use logical property */
+  margin-inline-end: var(--spacing-unit-md);
   border: 1px solid var(--color-border-medium);
   border-radius: var(--border-radius-main);
   background-color: var(--color-background-card-light);
   color: var(--color-primary);
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 input[type='file'].form-control::file-selector-button:hover {
   background-color: var(--color-border-light);
   border-color: var(--color-primary);
 }
-
-/* Form actions (submit button area) */
 .form-actions {
   margin-top: var(--spacing-unit-lg);
-  text-align: right; /* Or center, or left, depending on design */
+  text-align: right;
 }
 .form-actions .button {
-  min-width: 120px; /* Ensure buttons have a decent minimum width */
+  min-width: 120px;
 }

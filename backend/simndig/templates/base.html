@@ -1,17 +1,18 @@
 <!-- @format -->
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
   <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}SIMNDIG{% endblock %}</title>
+    <title>
+      {% block title %}SIMNDIG{% endblock %}
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    {% block head_extra %}{% endblock head_extra %}
+    {% block head_extra %}
+    {% endblock head_extra %}
   </head>
 
   <body>
@@ -20,35 +21,29 @@
         <div class="main-navbar__brand">
           <a href="{% url 'home' %}" title="SIMNDIG Home">
             <span class="logotype-placeholder" <picture>
-
               <img src="{% static 'img/simnau-light.svg' %}" alt="SIMNDIG Logo" />
-
               </picture>
             </span>
           </a>
         </div>
-
         <input type="checkbox" id="navbar-toggle" class="main-navbar__toggler" />
         <label for="navbar-toggle" class="main-navbar__toggle-label">
           <span class="hamburger-line"></span>
           <span class="hamburger-line"></span>
           <span class="hamburger-line"></span>
         </label>
-
         <ul class="main-navbar__menu">
           {% block navbar_links %}
           {% endblock navbar_links %}
         </ul>
-
         <div class="main-navbar__actions">
           <div class="main-navbar__user-profile">
             <button type="button" class="main-navbar__profile-toggle" id="profile-toggle-button" aria-expanded="false"
               aria-controls="profile-dropdown-menu" title="User menu">
               <i class="fas fa-user-circle profile-icon" aria-hidden="true"></i>
               <span class="profile-toggle-username sr-only">{{
-                default:request.user.get_full_name|default:request.user.username
-                }}</span>
-              {# Screen reader only text #}
+                default:'Dosen'|default:request.user.username
+              }}</span>
             </button>
             <div class="main-navbar__profile-dropdown" id="profile-dropdown-menu" hidden>
               {% if request.user.is_authenticated %}
@@ -62,7 +57,8 @@
                   aria-hidden="true" fill="currentColor">
                   <circle cx="12" cy="6" r="4" />
                   <path d="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5Z" />
-                </svg> My Profile
+                </svg>
+                My Profile
               </a>
               <a href="#" class="dropdown-item">
                 <i class="fas fa-cog icon-left" aria-hidden="true"></i> Settings
@@ -90,26 +86,37 @@
         </div>
       </nav>
     </header>
-
-    <main class="page-container">{% block content %} {% endblock %}</main>
-
+    <main class="page-container">
+      {% block content %}{% endblock %}
+    </main>
     <footer class="site-footer">
       <div class="footer-container">
         <div class="footer-column footer-about">
           <h4 class="footer-heading">SIMNDIG</h4>
           <p>
-            Empowering education through innovative digital solutions. Join us
-            in shaping the future of learning.
+            SIMNDIG dirancang untuk beroperasi dalam ekosistem teknologi yang telah ada di universitas, memanfaatkan
+            kerangka kerja
+            dan protokol yang kompatibel dengan platform SINDIG.
           </p>
         </div>
         <div class="footer-column footer-links">
           <h4 class="footer-heading">Quick Links</h4>
           <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="#">All Courses</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li>
+              <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>
+              <a href="#">All Courses</a>
+            </li>
+            <li>
+              <a href="#">About Us</a>
+            </li>
+            <li>
+              <a href="#">Contact</a>
+            </li>
+            <li>
+              <a href="#">FAQ</a>
+            </li>
           </ul>
         </div>
         <div class="footer-column footer-contact">
@@ -124,7 +131,9 @@
           </p>
           <p>
             <i class="fas fa-map-marker-alt icon-left" aria-hidden="true"></i>
-            Address: 123 EduStreet, Knowledge City, ID
+            Address: Jl. Gatot Subroto No.1, RT.1/RW.3, Senayan, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah
+            Khusus Ibukota Jakarta
+            10270
           </p>
         </div>
         <div class="footer-column footer-social">
@@ -144,7 +153,6 @@
         </p>
       </div>
     </footer>
-
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         const profileToggle = document.getElementById('profile-toggle-button');
@@ -197,7 +205,8 @@
         }
       });
     </script>
-    {% block body_extra_js %}{% endblock body_extra_js %}
+    {% block body_extra_js %}
+    {% endblock body_extra_js %}
   </body>
 
 </html>

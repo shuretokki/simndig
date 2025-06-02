@@ -8,12 +8,6 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-            {% endif %}
-
             {% if form.non_field_errors %}
             <div class="form-non-field-errors">
                 <ul class="errorlist">

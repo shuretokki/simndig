@@ -25,12 +25,12 @@
   --spacing-unit-lg: 1.5rem;
   --spacing-unit-xl: 2rem;
 
---font-size-sm: 0.875rem; /* Previously 0.8rem */
-  --font-size-base: 1.1rem;  /* Previously 1rem - This will make most body text larger */
-  --font-size-md: 1.25rem; /* Previously 1.1rem */
-  --font-size-lg: 1.5rem;  /* Previously 1.2rem - Good for sub-headings */
-  --font-size-xl: 1.85rem; /* Previously 1.4rem - Good for secondary titles */
-  --font-size-xxl: 2.3rem; /* Previously 1.8rem - Good for main titles in co
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1.1rem;
+  --font-size-md: 1.25rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 1.85rem;
+  --font-size-xxl: 2.3rem;
 }
 
 :root {

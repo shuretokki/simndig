@@ -3,10 +3,24 @@
 
 {% block title %}Mata Kuliah Saya{% endblock %}
 
+{% block navbar_links %}
+<li class="main-navbar__item">
+    <a href="{% url 'mahasiswa:mahasiswa_home' %}"
+        class="main-navbar__link {% if request.resolver_match.view_name == 'mahasiswa:mahasiswa_home' or request.resolver_match.url_name == 'mahasiswa_home' %}active{% endif %}">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+    <a href="{% url 'matakuliah:list_matakuliah_mahasiswa' %}"
+        class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:list_matakuliah_mahasiswa' %}active{% endif %}">Mata
+        Kuliah Saya</a>
+</li>
+{# Update placeholder URLs when these pages are implemented #}
+<li class="main-navbar__item"><a href="#" class="main-navbar__link">Jadwal Kuliah</a></li>
+{% endblock navbar_links %}
+
 {% block content %}
 <div class="container mt-4">
     <h2>Mata Kuliah Saya</h2>
-    
+
     <div class="row">
         <div class="col-md-6">
             <h4>Mata Kuliah Wajib</h4>
@@ -20,11 +34,13 @@
                     <p class="mb-1">{{ mk.kode_mk }} - Semester {{ mk.semester }}</p>
                     <small>Dosen: {{ mk.dosen.get_full_name }}</small>
                     <div class="mt-2">
-                        <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' mk.id 'wajib' %}" class="btn btn-info btn-sm">Detail</a>
+                        <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' mk.id 'wajib' %}"
+                            class="btn btn-info btn-sm">Detail</a>
                         {% if user not in mk.mahasiswa.all %}
-                            <a href="{% url 'matakuliah:daftar_kelas' mk.id %}" class="btn btn-success btn-sm">Daftar Kelas</a>
+                        <a href="{% url 'matakuliah:daftar_kelas' mk.id %}" class="btn btn-success btn-sm">Daftar
+                            Kelas</a>
                         {% else %}
-                            <span class="badge badge-secondary">Sudah Terdaftar</span>
+                        <span class="badge badge-secondary">Sudah Terdaftar</span>
                         {% endif %}
                     </div>
                 </div>
@@ -33,7 +49,7 @@
                 {% endfor %}
             </div>
         </div>
-        
+
         <div class="col-md-6">
             <h4>Mata Kuliah Pilihan</h4>
             <div class="list-group">
@@ -46,11 +62,13 @@
                     <p class="mb-1">{{ mk.kode_mk }} - Semester {{ mk.semester }}</p>
                     <small>Dosen: {{ mk.dosen.get_full_name }}</small>
                     <div class="mt-2">
-                        <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' mk.id 'pilihan' %}" class="btn btn-info btn-sm">Detail</a>
+                        <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' mk.id 'pilihan' %}"
+                            class="btn btn-info btn-sm">Detail</a>
                         {% if user not in mk.mahasiswa.all %}
-                            <a href="{% url 'matakuliah:daftar_kelas_pilihan' mk.id %}" class="btn btn-success btn-sm">Daftar Kelas</a>
+                        <a href="{% url 'matakuliah:daftar_kelas_pilihan' mk.id %}"
+                            class="btn btn-success btn-sm">Daftar Kelas</a>
                         {% else %}
-                            <span class="badge badge-secondary">Sudah Terdaftar</span>
+                        <span class="badge badge-secondary">Sudah Terdaftar</span>
                         {% endif %}
                     </div>
                 </div>

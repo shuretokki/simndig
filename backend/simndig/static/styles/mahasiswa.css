@@ -5,161 +5,120 @@
 /* Profile Section Styling (Adopt from dosen.css if suitable) */
 .profile.mahasiswa-profile {
   display: flex;
-  align-items: flex-start; /* Align items to the start for better text flow */
+  align-items: center; /* Key change: Aligns avatar and info block vertically centered */
   background-color: var(--color-background-card-white, #fff);
   padding: var(--spacing-unit-lg, 1.5rem);
   margin-bottom: var(--spacing-unit-xl, 2rem);
   border-radius: var(
     --border-radius-main,
     8px
-  ); /* Use consistent border-radius */
+  ); /* Using 8px as a common modern default */
   border: 1px solid var(--color-border-default, #e9ecef);
-  gap: var(--spacing-unit-lg, 1.5rem);
+  gap: var(--spacing-unit-lg, 1.5rem); /* Space between avatar and info block */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .profile__avatar-container {
   flex-shrink: 0;
-  margin-top: var(
-    --spacing-unit-xs
-  ); /* Align avatar nicely if info text wraps */
 }
 
 .profile__avatar-img {
-  width: 100px; /* Slightly larger avatar for profile section */
-  height: 100px;
+  width: 80px; /* Matched to dosen.css */
+  height: 80px; /* Matched to dosen.css */
   border-radius: var(--border-radius-round, 50%);
   object-fit: cover;
   border: 3px solid var(--color-background-body, #f5f5f5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow as in dosen.css */
 }
 
 .profile__info {
   display: flex;
   flex-direction: column;
   gap: var(
-    --spacing-unit-sm,
-    0.5rem
-  ); /* Increased gap for better readability */
+    --spacing-unit-xs,
+    0.25rem
+  ); /* Matched to dosen.css for tighter info stacking */
   flex-grow: 1;
 }
 
 .profile-name-container {
   display: flex;
-  align-items: center; /* Vertically center name and status */
+  align-items: baseline; /* Matched to dosen.css for aligning name and status */
   flex-wrap: wrap;
-  gap: var(--spacing-unit-md, 1rem); /* Space between name and status */
-  margin-bottom: var(--spacing-unit-xs, 0.25rem);
+  gap: var(--spacing-unit-sm, 0.5rem); /* Matched to dosen.css */
+  margin-bottom: var(--spacing-unit-sm, 0.5rem); /* Added some bottom margin */
 }
 
 .profile__name {
-  font-size: var(--font-size-xxl); /* Uses updated global variable */
+  font-size: var(
+    --font-size-xl
+  ); /* Was --font-size-xxl, now aligns with Dosen profile name size if using global vars */
   color: var(--color-text-headings);
   font-weight: 600;
   margin: 0;
+  line-height: 1.3;
 }
 
 .profile__status {
+  /* Student's status (e.g., "Aktif") */
   font-size: var(--font-size-sm); /* Uses updated global variable */
   font-weight: 500;
-  color: var(--color-secondary-accent);
-  background-color: rgba(0, 86, 179, 0.1); /* Example accent background */
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--border-radius-main);
+  color: var(--color-secondary-accent, #0056b3);
+  background-color: rgba(
+    var(--color-secondary-accent-rgb, 0, 86, 179),
+    0.1
+  ); /* Using dosen's approach for status bg */
+  padding: calc(var(--spacing-unit-xs, 0.25rem) / 2 + 1px)
+    var(--spacing-unit-sm, 0.5rem); /* Minor padding adjustment */
+  border-radius: var(--border-radius-main, 4px); /* Consistent border radius */
   margin: 0;
+  white-space: nowrap;
+  line-height: 1.4;
 }
 
 .profile__meta {
-  font-size: var(--font-size-base); /* Uses updated global variable */
-  color: var(--color-text-default);
-  margin: 0;
+  /* For NIM, Email, Kelas, Jurusan etc. */
+  font-size: var(
+    --font-size-sm
+  ); /* Was --font-size-base, making it smaller like dosen's email */
+  color: var(--color-text-default, #555);
+  margin: 0 0 var(--spacing-unit-xs, 0.25rem) 0; /* Small margin between meta items */
   line-height: 1.5;
 }
 .profile__meta strong {
-  font-weight: 500;
+  font-weight: 500; /* Use 500 or 600 for emphasis */
+  color: var(--color-text-headings, #333); /* Darker color for the label part */
+  margin-right: var(--spacing-unit-xs);
+}
+
+.profile__edit-button.button--small {
+  align-self: flex-start;
+  margin-top: var(--spacing-unit-md, 1rem); /* More space above edit button */
+}
+
+/* Keep other mahasiswa.css styles for dashboard content, course lists, etc. */
+/* Ensure .dashboard-title and other headings are appropriately sized by global vars or specific rules. */
+.dashboard-title {
+  font-size: var(--font-size-xxl); /* Uses updated global variable */
   color: var(--color-text-headings);
+  margin-bottom: var(--spacing-unit-lg);
+  text-align: center;
 }
 
-.profile__edit-button {
-  /* Specific styling for edit button in profile context */
-  align-self: flex-start; /* Align to left */
+.content-card h5 {
+  /* Example: card titles within mahasiswa home */
+  font-size: var(--font-size-xl); /* Uses updated global variable */
+  color: var(--color-text-headings);
+  /* ... */
+}
+.content-card h6 {
+  /* Example: sub-headings */
+  font-size: var(--font-size-lg); /* Uses updated global variable */
+  color: var(--color-text-headings);
+  /* ... */
 }
 
-/* Dashboard Main Content (Adopt from dosen.css for consistency) */
-.dashboard-main-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-unit-lg);
-}
-
-.dashboard-main-content__primary-area {
-  flex: 3 1 600px; /* Main content area (e.g., courses) */
-  min-width: 300px;
-}
-.dashboard-main-content__secondary-area {
-  flex: 2 1 300px; /* Sidebar-like area (e.g., announcements) */
-  min-width: 280px;
-}
-
-/* Course List Styling (Adopt from dosen.css) */
-.course-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--spacing-unit-lg) 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--spacing-unit-md);
-}
-
-.course-list__item {
-  background-color: var(--color-background-card-light);
-  padding: var(--spacing-unit-md);
-  border-radius: var(--border-radius-main);
-  border: 1px solid var(--color-border-default);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
-}
-.course-list__item:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-primary);
-}
-.course-list__item strong {
-  font-size: var(--font-size-md); /* Uses updated global variable */
-  color: var(--color-primary);
-  font-weight: 600;
-  margin-bottom: var(--spacing-unit-xs);
-}
-.course-list__item p {
-  font-size: var(--font-size-base); /* Uses updated global variable */
-  color: var(--color-text-default);
-  margin-top: var(--spacing-unit-xs);
-  margin-bottom: var(--spacing-unit-md);
-  line-height: 1.5;
-  flex-grow: 1; /* Allows button to stick to bottom if content varies */
-}
-.course-list__item .button {
-  margin-top: auto;
-  width: 100%; /* Make button full width of card */
-}
-
-/* Info List Styling (Adopt from dosen.css) */
-.info-list {
-  list-style: none;
-  padding: 0;
-  margin-top: 0;
-}
-.info-list li {
-  padding: var(--spacing-unit-sm) 0;
-  font-size: var(--font-size-base); /* Uses updated global variable */
-  color: var(--color-text-default);
-  border-bottom: 1px solid var(--color-border-light);
-}
-.info-list li:last-child {
-  border-bottom: none;
-}
-
-/* Existing .dashboard-title, .content-card h5, h6 will use new global font sizes */
-/* Add responsive adjustments similar to dosen.css if needed */
+/* Responsive adjustments for Mahasiswa Profile */
 @media (max-width: 768px) {
   .profile.mahasiswa-profile {
     flex-direction: column;
@@ -167,16 +126,17 @@
     text-align: center;
   }
   .profile__avatar-img {
-    width: 80px; /* Adjust avatar for mobile */
-    height: 80px;
+    width: 70px; /* Dosen mobile is also around this */
+    height: 70px;
   }
   .profile-name-container {
-    justify-content: center; /* Center name and status */
+    justify-content: center;
   }
-  .profile__edit-button {
-    align-self: center; /* Center edit button */
-    width: auto;
-    min-width: 150px;
+  .profile__name {
+    font-size: var(--font-size-lg); /* Adjust for mobile if XL is too large */
+  }
+  .profile__edit-button.button--small {
+    align-self: center;
   }
   .dashboard-main-content {
     flex-direction: column;

@@ -1,7 +1,10 @@
 /** @format */
 
-@import url('styles.css');
-
+@import url(styles.css);
+body,
+select {
+  background-repeat: no-repeat;
+}
 #cta picture,
 #cta picture img {
   position: absolute;
@@ -15,7 +18,6 @@ form {
   margin: 0;
   padding: 0;
 }
-
 html {
   font-size: 90%;
 }
@@ -28,7 +30,6 @@ body {
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Arial,
     sans-serif;
   font-size: var(--font-size-lg);
-  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -92,13 +93,11 @@ label {
   color: gray;
   margin-bottom: 0.25rem;
 }
-
-/* Updated to cover all relevant input types */
-input[type='text'],
-input[type='password'],
-input[type='email'],
 input[type='date'],
+input[type='email'],
 input[type='number'],
+input[type='password'],
+input[type='text'],
 select {
   width: 100%;
   margin-top: 0.25rem;
@@ -111,19 +110,15 @@ select {
   background-color: #fff;
   color: #333;
 }
-
-/* Custom styling for select dropdown */
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 1.5em 1.5em;
   padding-right: 3rem;
 }
-
 button {
   background: #101d2c;
   color: #fff;
@@ -138,7 +133,6 @@ button {
 button:hover {
   background: #0056b3;
 }
-
 span#id_username_helptext.helptext {
   font-size: 0.8rem;
   color: gray;
@@ -150,8 +144,6 @@ span#id_username_helptext.helptext {
   padding-top: 0.5rem;
   margin-top: 0.5rem;
 }
-
-/* Media queries updated to include new input types */
 @media (max-width: 768px) {
   body {
     font-size: 1.125rem;
@@ -165,11 +157,11 @@ span#id_username_helptext.helptext {
     font-size: 2.5rem;
   }
   button,
+  input[type='date'],
+  input[type='email'],
+  input[type='number'],
   input[type='password'],
   input[type='text'],
-  input[type='email'],
-  input[type='date'],
-  input[type='number'],
   select {
     font-size: 1.1rem;
     padding: 0.75rem;
