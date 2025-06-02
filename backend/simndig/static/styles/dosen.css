@@ -1,324 +1,533 @@
 /** @format */
 
+@import url('styles.css');
+
 .profile {
   display: flex;
-  align-items: center; /* Vertically align items if they have different heights */
-  background-color: #f8f9fa; /* Light background for the profile section */
-  padding: 2rem;
-  margin-bottom: 2rem;
-  border-radius: 0px; /* Consistent with other elements */
-  border: 1px solid #e9ecef;
-  gap: 1.5rem; /* Space between avatar and info */
+  align-items: center;
+  background-color: var(--color-background-card-white);
+  padding: var(--spacing-unit-lg);
+  margin-bottom: var(--spacing-unit-xl);
+  border-radius: var(--border-radius-main);
+  border: 1px solid var(--color-border-default);
+  gap: var(--spacing-unit-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .profile__avatar-container {
-  flex-shrink: 0; /* Prevents avatar from shrinking */
+  flex-shrink: 0;
 }
 
 .profile__avatar-img {
-  width: 120px; /* Slightly larger avatar */
-  height: 120px;
-  border-radius: 50%; /* Circular avatar */
-  object-fit: cover; /* Ensures the image covers the area without distortion */
-  border: 3px solid #fff; /* White border around avatar */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 80px;
+  height: 80px;
+  border-radius: var(--border-radius-round);
+  object-fit: cover;
+  border: 3px solid var(--color-background-body);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .profile__info {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem; /* Space between text elements */
-}
-
-.profile__name {
-  font-size: 1.8rem; /* Larger name */
-  color: #101d2c;
-  margin: 0 0 0.25rem 0; /* Adjusted margin */
-}
-
-.profile__status,
-.profile__email {
-  font-size: 1rem;
-  color: #555;
-  margin: 0;
-  align-content: center;
-}
-
-#calendar-container {
-  margin-bottom: 2rem; /* Space below the calendar before the next section */
-  padding: 1rem; /* Optional: if you want some padding around the calendar itself */
-  /* Ensure calendar has a white background if content-card doesn't */
-}
-
-.dashboard-main-content {
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  gap: 1.5rem; /* Space between calendar and courses area */
-}
-
-.dashboard-main-content__calendar-area {
-  flex: 3; /* Takes 60% of the space (3 out of 5 parts) */
-  min-width: 300px; /* Minimum width before wrapping */
-}
-.dashboard-main-content__courses-area {
-  flex: 2; /* Takes 40% of the space (2 out of 5 parts) */
-  min-width: 280px; /* Minimum width before wrapping */
-}
-
-.card-text {
-  text-align: center;
-}
-
-.content-card {
-  background-color: #fff;
-  padding: 2rem;
-  border: black;
-  margin-bottom: 2rem;
-  display: block;
-  align-items: center;
-  background-color: #f8f9fa;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  border-radius: 0px;
-  border: 1px solid #e9ecef;
-  gap: 1.5rem;
-}
-
-.content-card h5 {
-  /* Card Title */
-  font-size: 1.4rem;
-  color: #101d2c;
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.content-card p.card-text {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.content-card h6 {
-  /* Sub-section title */
-  font-size: 1.2rem;
-  color: #333;
-  margin-top: 1.5rem;
-  margin-bottom: 0.8rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.4rem;
-}
-
-/* Course List Styling */
-.course-list {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(300px, 1fr)
-  ); /* Responsive grid columns */
-  gap: 1.5rem; /* Space between course items */
-  list-style: none;
-  padding: 0;
-  margin-top: 1rem; /* Add some space above the course list */
-}
-
-.course-list__item {
-  background-color: #fff; /* White background for a cleaner card look */
-  padding: 1.25rem; /* Increased padding */
-  border-radius: 0px;
-  border: 1px solid #dee2e6; /* Slightly darker border for better definition */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
-  display: flex; /* Use flexbox for internal layout of the card */
-  flex-direction: column; /* Stack content vertically */
-  justify-content: space-between; /* Pushes button to the bottom if card heights vary */
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition for hover */
-}
-
-.course-list__item:hover {
-  transform: translateY(-2px); /* Slight lift on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
-}
-
-.course-list__item strong {
-  font-size: 1.1rem;
-  color: #0056b3; /* A primary blue for course names */
-}
-
-.course-list__item p {
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 0.3rem;
-  margin-bottom: 0.8rem;
-}
-
-/* General Info List - Consistent with mahasiswa.css */
-.info-list {
-  list-style: none;
-  padding: 0;
-}
-
-.info-list li {
-  padding: 0.4rem 0;
-  font-size: 0.95rem;
-  border-bottom: 1px solid #f0f0f0;
-}
-.info-list li:last-child {
-  border-bottom: none;
-}
-
-button,
-input[type='submit'].button-like {
-  /* Style for actual button elements or inputs styled as buttons */
-  background: #101d2c;
-  color: #fff;
-  border: none;
-  margin-top: 20px;
-  width: 100%;
-  font-size: 1rem;
-  padding: 0.5rem;
-  cursor: pointer;
-  border-radius: 0px;
-}
-
-/* General Button Styling for <a> tags or <button> elements with class .button */
-.button {
-  display: inline-block;
-  padding: 0 1rem;
-  font-size: 1rem;
-  font-weight: 500; /* Medium weight for button text */
-  text-align: center;
-  text-decoration: none;
-  color: white;
-  background-color: #000; /* Primary blue - default */
-  border: 1px solid transparent;
-  border-radius: 0px; /* Consistent with other elements */
-  cursor: pointer;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
-  margin-top: 0.5rem; /* Default top margin, can be overridden */
-  width: auto; /* Button width to fit content by default */
-}
-
-.button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  text-decoration: none; /* Ensure no underline on hover for links */
-}
-
-/* Modifier for smaller buttons */
-.button--small {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem;
-}
-
-/* Modifier for disabled-looking buttons */
-.button--disabled {
-  background-color: #6c757d; /* Grey for disabled */
-  color: #ccc;
-  cursor: not-allowed;
-  pointer-events: none; /* Prevents click events */
-}
-.button--disabled:hover {
-  background-color: #6c757d; /* No change on hover */
+  gap: var(--spacing-unit-xs);
+  flex-grow: 1;
 }
 
 .profile-name-container {
   display: flex;
-  align-content: center;
-  gap: 10px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--spacing-unit-sm);
+  margin-bottom: var(--spacing-unit-xs);
 }
 
-/* Responsive Adjustments */
+.profile__name {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-headings);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.profile__status {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-secondary-accent);
+  padding: calc(var(--spacing-unit-xs) / 2) var(--spacing-unit-sm);
+  margin: 0;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.profile__email {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-default);
+  margin: 0 0 var(--spacing-unit-sm) 0;
+  display: flex;
+  align-items: center;
+}
+
+.profile__edit-button.button--small {
+  align-self: flex-start;
+  margin-top: var(--spacing-unit-xs);
+  padding: var(--spacing-unit-xs) var(--spacing-unit-md);
+  font-size: var(--font-size-sm);
+}
+
+#calendar-container {
+  margin-bottom: var(--spacing-unit-xl);
+}
+
+.dashboard-main-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-unit-lg);
+}
+
+.dashboard-main-content__calendar-area {
+  flex: 3 1 600px;
+  min-width: 300px;
+}
+.dashboard-main-content__courses-area {
+  flex: 2 1 300px;
+  min-width: 280px;
+}
+
+.content-card {
+  display: block;
+  background-color: var(--color-background-card-white);
+  padding: var(--spacing-unit-lg);
+  margin-bottom: var(--spacing-unit-xl);
+  border-radius: var(--border-radius-main);
+  border: 1px solid var(--color-border-default);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.content-card h5 {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-headings);
+  margin-top: 0;
+  margin-bottom: var(--spacing-unit-md);
+  font-weight: 600;
+}
+
+.content-card p.card-text {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-unit-lg);
+  color: var(--color-text-default);
+}
+
+.content-card h6 {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-headings);
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: var(--spacing-unit-md);
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: var(--spacing-unit-sm);
+}
+.content-card > *:first-child h6 {
+  margin-top: 0;
+}
+
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-unit-md);
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: var(--spacing-unit-lg);
+}
+
+.course-list__item {
+  background-color: var(--color-background-card-light);
+  padding: var(--spacing-unit-md);
+  border-radius: var(--border-radius-main);
+  border: 1px solid var(--color-border-default);
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.course-list__item:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.course-list__item strong {
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: var(--spacing-unit-xs);
+}
+
+.course-list__item p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-default);
+  margin-top: var(--spacing-unit-xs);
+  margin-bottom: var(--spacing-unit-md);
+  line-height: 1.5;
+}
+
+.course-list__item .button {
+  margin-top: auto;
+  width: 100%;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+}
+
+.info-list li {
+  padding: var(--spacing-unit-sm) 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-default);
+  border-bottom: 1px solid var(--color-border-light);
+  line-height: 1.5;
+}
+.info-list li:last-child {
+  border-bottom: none;
+}
+.info-list li strong {
+  color: var(--color-text-headings);
+  font-weight: 500;
+}
+
+button,
+input[type='submit'].button-like,
+.button {
+  display: inline-block;
+  padding: var(--spacing-unit-sm) var(--spacing-unit-md);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  color: var(--color-text-light);
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius-main);
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out, color 0.15s ease-in-out;
+
+  width: auto;
+}
+
+button:hover,
+input[type='submit'].button-like:hover,
+.button:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: var(--color-text-light);
+  text-decoration: none;
+}
+
+.button--small {
+  padding: var(--spacing-unit-xs) var(--spacing-unit-sm);
+  font-size: var(--font-size-sm);
+}
+
+.button--secondary {
+  background-color: var(--color-background-card-white);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border-medium);
+}
+.button--secondary:hover {
+  background-color: var(--color-background-card-light);
+  border-color: var(--color-border-medium);
+  color: var(--color-primary-hover);
+}
+
+.button--disabled,
+button:disabled,
+input[type='submit'].button-like:disabled {
+  background-color: var(--color-button-disabled-bg);
+  color: var(--color-button-disabled-text);
+  border-color: var(--color-button-disabled-bg);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.button--disabled:hover,
+button:disabled:hover,
+input[type='submit'].button-like:disabled:hover {
+  background-color: var(--color-button-disabled-bg);
+  color: var(--color-button-disabled-text);
+}
+
 @media (max-width: 768px) {
-  .content-card h5 {
-    font-size: 1.2rem;
-  }
-  .course-list__item strong {
-    font-size: 1rem;
-  }
   .profile {
-    flex-direction: column; /* Stack avatar and info vertically on smaller screens */
-    text-align: center; /* Center text when stacked */
-    gap: 1rem;
+    flex-direction: column;
+    text-align: center;
+    padding: var(--spacing-unit-md);
+    gap: var(--spacing-unit-md);
   }
+
   .profile__avatar-img {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto var(--spacing-unit-xs) auto;
   }
+
+  .profile-name-container {
+    justify-content: center;
+    gap: var(--spacing-unit-xs);
+  }
+
   .profile__name {
-    font-size: 1.5rem;
+    font-size: var(--font-size-lg);
   }
+
+  .profile__status {
+  }
+
+  .profile__email {
+    justify-content: center;
+    font-size: var(--font-size-sm);
+  }
+
+  .profile__edit-button.button--small {
+    align-self: center;
+    width: auto;
+    min-width: 120px;
+  }
+
   #calendar-container {
-    padding: 0.5rem;
+    padding: var(--spacing-unit-xs);
   }
   .fc .fc-toolbar {
-    font-size: 0.8em;
+    font-size: 0.75em;
+    flex-direction: column;
+  }
+  .fc .fc-toolbar .fc-toolbar-chunk {
+    margin-bottom: var(--spacing-unit-xs);
+  }
+  .fc .fc-toolbar-title {
+    font-size: 1.2em;
+  }
+
+  .dashboard-main-content {
+    flex-direction: column;
+  }
+  .dashboard-main-content__calendar-area,
+  .dashboard-main-content__courses-area {
+    flex: 1 1 100%;
+  }
+
+  .content-card h5 {
+    font-size: var(--font-size-lg);
+  }
+  .content-card h6 {
+    font-size: var(--font-size-md);
+  }
+  .course-list__item strong {
+    font-size: var(--font-size-base);
   }
 }
 
 :root {
-  --fc-border-color: #dee2e6; /* Match general border colors */
-  --fc-page-bg-color: #fff;
-  --fc-neutral-bg-color: #f8f9fa; /* Light grey for day headers, etc. */
-  --fc-list-event-hover-bg-color: #f8f9fa;
+  --fc-border-color: var(--color-border-medium);
+  --fc-page-bg-color: var(--color-background-card-white);
+  --fc-neutral-bg-color: var(--color-background-card-light);
+  --fc-list-event-hover-bg-color: var(--color-background-card-light);
 
-  /* Button theming to match site's .button style */
-  --fc-button-text-color: #000;
-  --fc-button-bg-color: #fff; /* Primary blue from .button */
-  /*! --fc-button-border-color: #007bff; */
-  --fc-button-hover-bg-color: #0056b3; /* Darker blue from .button:hover */
-  --fc-button-hover-border-color: #0056b3;
-  --fc-button-active-bg-color: #ced8ff; /* Even darker blue for active */
-  --fc-button-active-border-color: #004085;
-  --fc-button-border-radius: 0px; /* Remove border radius from calendar buttons */
+  --fc-button-text-color: var(--color-primary);
+  --fc-button-bg-color: var(--color-background-card-white);
+  --fc-button-border-color: var(--color-border-medium);
+  --fc-button-hover-bg-color: var(--color-background-card-light);
+  --fc-button-hover-border-color: var(--color-border-medium);
+  --fc-button-active-bg-color: var(--color-border-light);
+  --fc-button-active-border-color: var(--color-border-medium);
 
-  /* Today's date highlight */
-  --fc-today-bg-color: rgba(
-    0,
-    123,
-    255,
-    0.1
-  ); /* Lighter shade of primary blue */
+  --fc-today-bg-color: rgba(var(--color-secondary-accent-rgb, 0, 86, 179), 0.1);
 
-  /* Event colors (can be customized further per event type if needed) */
-  --fc-event-bg-color: #7777ff; /* Example: Green for events */
-  --fc-event-border-color: #28a745;
-  --fc-event-text-color: #fff;
+  --fc-event-bg-color: var(--color-secondary-accent);
+  --fc-event-border-color: var(--color-secondary-accent);
+  --fc-event-text-color: var(--color-text-light);
 }
 
-/* General calendar container adjustments */
 .fc {
-  display: flex;
-  font-size: 1.2rem; /* Slightly smaller base font for calendar */
+  font-size: var(--font-size-base);
 }
 
-/* Toolbar styling */
 .fc .fc-toolbar.fc-header-toolbar {
-  margin-bottom: 1.2em;
-  padding: 2rem 2rem;
-  /* Light background for toolbar */
-  display: flex; /* Ensure toolbar items are in a line */
-  flex-wrap: wrap;
-  border: 1px solid var(--fc-border-color);
-}
-
-.fc .fc-toolbar .fc-toolbar-chunk {
-  display: flex; /* Make button groups within chunks also flex */
+  margin-bottom: var(--spacing-unit-md);
+  padding: var(--spacing-unit-sm) 0;
 }
 
 .fc .fc-toolbar-title {
-  font-size: 1.4em; /* Adjust title size */
-  color: #101d2c; /* Match site's header text color */
+  font-size: var(--font-size-lg);
+  color: var(--color-text-headings);
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
-/* Day header styling */
 .fc .fc-col-header-cell-cushion {
-  /* For month and week view day headers */
-  padding: 0.5em 0.4em;
+  padding: var(--spacing-unit-sm) var(--spacing-unit-xs);
+  font-size: var(--font-size-sm);
   font-weight: 500;
+  color: var(--color-text-default);
 }
 
-.dashboard-main-content {
-  flex-direction: column; /* Stack calendar and courses on smaller screens */
+.fc .fc-daygrid-day-number {
+  padding: var(--spacing-unit-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-default);
 }
-.dashboard-main-content__calendar-area,
-.dashboard-main-content__courses-area {
-  flex: 1 1 100%; /* Each takes full width when stacked */
+
+.fc .fc-day-today .fc-daygrid-day-number {
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.fc .fc-dayGridMonth-button,
+.fc .fc-timeGridWeek-button,
+.fc .fc-timeGridDay-button,
+.fc .fc-listWeek-button {
+  text-transform: capitalize;
+}
+
+.fc .fc-event-title,
+.fc-event-main .fc-event-title {
+  text-transform: capitalize;
+}
+
+.fc-list-event-title a {
+  text-transform: capitalize;
+}
+
+.fc .fc-col-header-cell-cushion {
+  text-transform: capitalize;
+}
+
+.fc .fc-button,
+.fc .fc-button-primary {
+  text-transform: capitalize;
+}
+
+.fc .fc-scrollgrid-sync-inner {
+  text-transform: capitalize;
+}
+
+.class-meta p {
+  font-size: var(--font-size-base);
+  color: var(--color-text-default);
+  margin-bottom: var(--spacing-unit-xs);
+}
+.class-meta p strong {
+  color: var(--color-text-headings);
+  min-width: 100px;
+  display: inline-block;
+}
+
+.class-section {
+  margin-bottom: var(--spacing-unit-xl);
+}
+
+.class-section h2 {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-headings);
+  margin-bottom: var(--spacing-unit-md);
+  padding-bottom: var(--spacing-unit-sm);
+  border-bottom: 1px solid var(--color-border-light);
+  font-weight: 600;
+}
+
+.custom-table {
+  width: 100%;
+  margin-top: var(--spacing-unit-sm);
+  border-collapse: collapse;
+  font-size: var(--font-size-base);
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid var(--color-border-medium);
+  padding: var(--spacing-unit-sm) var(--spacing-unit-md);
+  text-align: left;
+  vertical-align: top;
+}
+
+.custom-table thead th {
+  background-color: var(--color-background-card-light);
+  color: var(--color-text-headings);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: var(--color-background-card-light);
+}
+.custom-table tbody tr:hover {
+  background-color: var(--color-border-light);
+}
+
+.custom-table td[data-label]::before {
+  content: attr(data-label);
+  font-weight: bold;
+  display: none;
+  margin-right: var(--spacing-unit-sm);
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .custom-table thead {
+    display: none;
+  }
+  .custom-table tr {
+    display: block;
+    margin-bottom: var(--spacing-unit-md);
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--border-radius-main);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  .custom-table td {
+    display: block;
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid var(--color-border-light);
+    padding-left: 50%;
+    position: relative;
+  }
+  .custom-table td:last-child {
+    border-bottom: none;
+  }
+  .custom-table td[data-label]::before {
+    display: inline-block;
+    position: absolute;
+    left: var(--spacing-unit-sm);
+    top: var(--spacing-unit-sm);
+    width: calc(50% - var(--spacing-unit-md) - var(--spacing-unit-sm));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-text-headings);
+  }
+  .class-meta p strong {
+    display: block;
+    margin-bottom: var(--spacing-unit-xs);
+  }
+}
+
+.mb-4 {
+  margin-bottom: var(--spacing-unit-lg);
+}
+.mt-4 {
+  margin-top: var(--spacing-unit-lg);
+}
+.text-muted {
+  color: var(--color-text-default);
+  opacity: 0.8;
 }

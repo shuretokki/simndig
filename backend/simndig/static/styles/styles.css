@@ -1,158 +1,128 @@
 /** @format */
 
-html {
-  font-size: 100%;
+:root {
+  --color-primary: #101d2c;
+  --color-primary-hover: #0056b3;
+  --color-secondary-accent: #0056b3;
+  --color-text-default: #555;
+  --color-text-headings: #101d2c;
+  --color-text-light: #fff;
+  --color-background-body: #f5f5f5;
+  --color-background-card-light: #f8f9fa;
+  --color-background-card-white: #fff;
+  --color-border-default: #e9ecef;
+  --color-border-medium: #dee2e6;
+  --color-border-light: #f0f0f0;
+  --color-button-disabled-bg: #6c757d;
+  --color-button-disabled-text: #ccc;
+
+  --border-radius-main: 0px;
+  --border-radius-round: 50%;
+
+  --spacing-unit-xs: 0.25rem;
+  --spacing-unit-sm: 0.5rem;
+  --spacing-unit-md: 1rem;
+  --spacing-unit-lg: 1.5rem;
+  --spacing-unit-xl: 2rem;
+
+  --font-size-sm: 0.8rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.1rem;
+  --font-size-lg: 1.2rem;
+  --font-size-xl: 1.4rem;
+  --font-size-xxl: 1.8rem;
 }
 
-*::before,
-*::after {
-  box-sizing: border-box;
+:root {
+  --fc-border-color: var(--color-border-medium);
+  --fc-page-bg-color: var(--color-background-card-white);
+  --fc-neutral-bg-color: var(--color-background-card-light);
+  --fc-list-event-hover-bg-color: var(--color-background-card-light);
+
+  --fc-button-text-color: var(--color-primary);
+  --fc-button-bg-color: var(--color-background-card-white);
+  --fc-button-border-color: var(--color-border-medium);
+  --fc-button-hover-bg-color: var(--color-background-card-light);
+  --fc-button-hover-border-color: var(--color-border-medium);
+  --fc-button-active-bg-color: var(--color-border-light);
+  --fc-button-active-border-color: var(--color-border-medium);
+
+  --fc-today-bg-color: rgba(var(--color-secondary-accent-rgb, 0, 86, 179), 0.1);
+
+  --fc-event-bg-color: var(--color-secondary-accent);
+  --fc-event-border-color: var(--color-secondary-accent);
+  --fc-event-text-color: var(--color-text-light);
+  --fc-event-selected-opacity: 1;
 }
 
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Arial,
-    sans-serif;
-  font-size: 1rem;
-  background-image: url(https://pbs.twimg.com/media/GsHpk8jaUAAtorb?format=jpg&name=4096x4096);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100vw;
+.fc {
+  font-size: var(--font-size-base);
+  color: var(--color-text-default);
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  margin: 20px auto;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  padding: 75px;
-  border-radius: 0px;
-  border: 1px solid #000000;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: var(--spacing-unit-md);
+  padding: var(--spacing-unit-sm) 0;
 }
 
-h2 {
-  padding-top: 0; /* Remove redundant padding */
-  text-align: center;
-  color: #000000;
-  font-size: 4rem; /* Responsive font size */
+.fc .fc-toolbar-title {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-headings);
+  font-weight: 600;
+}
+
+.fc .fc-col-header-cell-cushion {
+  padding: var(--spacing-unit-sm) var(--spacing-unit-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-default);
+  text-decoration: none;
+}
+
+.fc .fc-daygrid-day-number {
+  padding: var(--spacing-unit-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-default);
+  text-decoration: none;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
   font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
+  color: var(--color-primary);
 }
 
-form {
-  margin: 0px;
-  padding: 0px;
+.fc .fc-button {
+  font-size: var(--font-size-sm);
+
+  border-radius: var(--border-radius-main);
+}
+.fc .fc-button .fc-icon {
+  font-size: var(--font-size-base);
 }
 
-p {
-  font-size: 0.9rem;
-  margin-top: 1rem;
-  line-height: 1.6;
-}
-
-.form-group {
-  display: flex;
-  margin-bottom: 1rem;
-  flex-direction: column;
-  align-items: initial;
-  justify-content: center;
-}
-
-.password-group {
-  display: flex;
-  margin-bottom: 0.5rem;
-  justify-content: space-between;
-  align-items: center;
-}
-
-label {
-  display: block;
-  color: gray;
-  margin-bottom: 0.25rem;
-  font-size: 0.9rem;
-}
-
-input[type='text'],
-input[type='password'] {
-  width: 100%;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-  font-size: 1.5rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  border: 1px solid gray;
-  border-radius: 0px;
-}
-
-button {
-  background: #101d2c;
-  color: #fff;
-  border: none;
-  margin-top: 1.5rem;
-  width: 100%;
-  font-size: 2rem;
-  padding: 20px 20px;
-  cursor: pointer;
-  border-radius: 0px;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-select#id_role {
-  width: 100%;
-  padding: 10px; /* Adjusted padding */
-  font-size: 1rem; /* Responsive font size */
-  border: 1px solid gray;
-}
-
-span#id_username_helptext.helptext {
-  font-size: 0.8rem; /* Adjusted font size */
-  color: gray;
-  margin: 0.25rem 0 0 0; /* Adjusted margin */
-  padding: 0;
-}
-
-.error {
-  color: red;
-  font-size: 0.9rem;
-  padding-top: 0.5rem;
-  margin-top: 0.5rem;
+.fc-event {
+  border-radius: calc(var(--border-radius-main) + 2px);
+  padding: 2px var(--spacing-unit-xs);
+  font-size: var(--font-size-sm);
 }
 
 @media (max-width: 768px) {
-  body {
-    font-size: 1.125rem; /* Increase base font size slightly (e.g., 18px) */
+  .fc .fc-toolbar.fc-header-toolbar {
+    font-size: 0.75em;
+    flex-direction: column;
+    align-items: center;
   }
-
-  .container {
-    margin: 1rem;
-    padding: 40px;
-    max-width: 500px; /* Slightly larger max-width */
+  .fc .fc-toolbar .fc-toolbar-chunk {
+    margin-bottom: var(--spacing-unit-xs);
   }
-
-  h2 {
-    font-size: 2.5rem;
+  .fc .fc-toolbar-title {
+    font-size: 1.2em;
+    margin-bottom: var(--spacing-unit-xs);
   }
-
-  input[type='text'],
-  input[type='password'],
-  button,
-  select#id_role {
-    font-size: 1.1rem;
-    padding: 15px;
+  .fc .fc-button {
+    padding: var(--spacing-unit-xs) var(--spacing-unit-sm);
+  }
+  .fc-event {
+    font-size: calc(var(--font-size-sm) - 0.1rem);
   }
 }
