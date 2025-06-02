@@ -8,41 +8,47 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/dosen.css' %}" />
 {% endblock head_extra %} {% block navbar_links %}
 <li class="main-navbar__item">
-  <a href="{% url 'home' %}" class="main-navbar__link active">Dashboard</a>
+  <a href="{% url 'home' %}"
+    class="main-navbar__link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Dashboard</a>
 </li>
 <li class="main-navbar__item">
-  <a href="{% url 'matakuliah:catalog_kelas_dosen' %}" class="main-navbar__link"
-    >Mata Kuliah Saya</a
-  >
+  <a href="{% url 'matakuliah:catalog_kelas_dosen' %}"
+    class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:catalog_kelas_dosen' %}active{% endif %}">Mata
+    Kuliah Saya</a>
 </li>
 {% endblock %} {% block content %}
 
 <section class="profile">
-    <div class="profile__avatar-container">
+  <div class="profile__avatar-container">
     {% if dosen_profile.profile_photo %}
-      <img src="{{ dosen_profile.profile_photo.url }}" alt="Foto Profil {{ dosen_profile.nama|default:'Dosen' }}" class="profile__avatar-img">
+    <img src="{{ dosen_profile.profile_photo.url }}" alt="Foto Profil {{ dosen_profile.nama|default:'Dosen' }}"
+      class="profile__avatar-img">
     {% else %}
-      <img src="{% static 'img/default_profile.png' %}" alt="Default Profile" class="profile__avatar-img">
+    <img src="{% static 'img/default_profile.png' %}" alt="Default Profile" class="profile__avatar-img">
     {% endif %}
   </div>
-  
+
   <div class="profile__info">
     <div class="profile-name-container">
-    <h2 class="profile__name">{{ dosen_profile.nama|default:request.user.get_full_name|default:request.user.username }}</h2>
-    {% if dosen_profile.status %}
+      <h2 class="profile__name">
+        {{ dosen_profile.nama|default:request.user.get_full_name|default:request.user.username }}</h2>
+      {% if dosen_profile.status %}
       <p class="profile__status">{{ dosen_profile.status }}</p>
-    {% endif %}
+      {% endif %}
     </div>
     {% if dosen_profile.email %}
-      <p class="profile__email">{{ dosen_profile.email }}</p>
+    <p class="profile__email">
+      {{ dosen_profile.email }}
+    </p>
     {% endif %}
     {# Add a link to an actual edit profile page if you have one #}
-    <a href="#" class="button">Edit Profile</a>
+    <a href="#" class="button button--small profile__edit-button">Edit Profile</a>
   </div>
+
 </section>
 
 <section class="content-card">
-  
+
   <div class="dashboard-main-content">
     <div class="dashboard-main-content__calendar-area">
       <div id='calendar-container'>
@@ -59,17 +65,20 @@
         <li class="course-list__item">
           <strong>{{ course.nama }}</strong> ({{ course.kode_mk }})
           <p>SKS: {{ course.sks }} - Semester: {{ course.semester }}</p>
-          {% comment %} The URL for kelola_matakuliah_dosen needs 'jenis'. We determine 'jenis' based on the course type.
-                      This assumes your matakuliah:kelola_matakuliah_dosen URL pattern is like:
-                      path('d/<int:mk_id>/<str:jenis>/', views.kelola_matakuliah_dosen, name='kelola_matakuliah_dosen')
-          {% endcomment %}
-          {% if course.kelaswajib %}
-            <a href="{% url 'matakuliah:kelola_matakuliah_dosen' course.id 'wajib' %}" class="button button--small">Lihat Detail (Wajib)</a>
-          {% elif course.kelaspilihan %}
-            <a href="{% url 'matakuliah:kelola_matakuliah_dosen' course.id 'pilihan' %}" class="button button--small">Lihat Detail (Pilihan)</a>
-          {% else %}
-            <span class="button button--small button--disabled">Detail Tidak Tersedia</span>
-          {% endif %}
+          {% comment %} The URL for kelola_matakuliah_dosen needs 'jenis'. We determine 'jenis' based on the course
+          type.
+          This assumes your matakuliah:kelola_matakuliah_dosen URL pattern is like:
+          path('d/<int:mk_id>/<str:jenis>/', views.kelola_matakuliah_dosen, name='kelola_matakuliah_dosen')
+              {% endcomment %}
+              {% if course.kelaswajib %}
+              <a href="{% url 'matakuliah:kelola_matakuliah_dosen' course.id 'wajib' %}"
+                class="button button--small">Lihat Detail (Wajib)</a>
+              {% elif course.kelaspilihan %}
+              <a href="{% url 'matakuliah:kelola_matakuliah_dosen' course.id 'pilihan' %}"
+                class="button button--small">Lihat Detail (Pilihan)</a>
+              {% else %}
+              <span class="button button--small button--disabled">Detail Tidak Tersedia</span>
+              {% endif %}
         </li>
         {% endfor %}
       </ul>
@@ -91,7 +100,7 @@
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth', // Display month view initially

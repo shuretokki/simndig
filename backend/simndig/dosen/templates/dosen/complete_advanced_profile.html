@@ -1,19 +1,42 @@
-<!-- @format -->
+{% extends "base.html" %}
+{% load static %}
 
-<h2>Lengkapi Profil Lanjutan Dosen</h2>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %} {{ form.non_field_errors }} {% for field in form %}
-  <div>
-    {{ field.label_tag }}<br />
-    {{ field }} {% if field.help_text %}
-    <small style="color: grey">{{ field.help_text }}</small>
-    {% endif %} {% if field.errors %}
-    <div style="color: red">
-      {% for error in field.errors %} {{ error }}<br />
-      {% endfor %}
+{% block title %}Lengkapi Profil Lanjutan{% endblock title %}
+
+{% block head_extra %}
+{% endblock head_extra %}
+
+{% block content %}
+<div class="content-card">
+  <h2 class="mb-4">Lengkapi Profil Lanjutan Dosen</h2>
+  <form method="post" enctype="multipart/form-data" class="form-wrapper">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="form-non-field-errors">
+      {{ form.non_field_errors }}
     </div>
     {% endif %}
-  </div>
-  {% endfor %}
-  <button type="submit">Simpan dan Lanjutkan</button>
-</form>
+
+    {% for field in form %}
+    <div class="form-group">
+      <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+      {{ field.as_widget(attrs={"class": "form-control"}) }}
+      {% if field.help_text %}
+      <small class="form-text">{{ field.help_text|safe }}</small>
+      {% endif %}
+      {% if field.errors %}
+      <div class="errorlist">
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <div class="form-actions">
+      <button type="submit" class="button button--large">Simpan dan Lanjutkan</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
