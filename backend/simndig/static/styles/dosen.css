@@ -531,3 +531,182 @@ input[type='submit'].button-like:disabled:hover {
   color: var(--color-text-default);
   opacity: 0.8;
 }
+
+.auth-style-form-wrapper {
+  padding: var(--spacing-unit-md) 0; /* Add some internal padding if needed */
+}
+
+.auth-style-form-wrapper h2,
+.auth-style-form-wrapper .form-title {
+  /* Class for the main form title */
+  padding-top: 0;
+  text-align: center; /* As in auth.css */
+  color: #000; /* From auth.css h2 */
+  font-size: 2.25rem; /* Adjusted from auth.css 4rem for in-page context, still prominent */
+  font-weight: 700; /* From auth.css h2 */
+  margin-top: 0;
+  margin-bottom: var(--spacing-unit-xl); /* Increased bottom margin */
+}
+
+.auth-style-form-wrapper .form-group {
+  /* Based on auth.css .form-group */
+  display: flex;
+  margin-bottom: var(--spacing-unit-lg); /* Increased spacing */
+  flex-direction: column;
+  align-items: initial; /* Or flex-start */
+}
+
+.auth-style-form-wrapper label {
+  /* Based on auth.css label */
+  display: block;
+  color: #555; /* Slightly darker than auth.css 'gray' for better contrast */
+  margin-bottom: var(
+    --spacing-unit-xs
+  ); /* Consistent with base.css form-label */
+  font-size: 0.95rem; /* From auth.css label */
+  font-weight: 500;
+}
+
+/* Input fields styling based on auth.css */
+.auth-style-form-wrapper input[type='text'],
+.auth-style-form-wrapper input[type='email'],
+.auth-style-form-wrapper input[type='password'],
+.auth-style-form-wrapper input[type='url'],
+.auth-style-form-wrapper input[type='tel'],
+.auth-style-form-wrapper input[type='number'],
+.auth-style-form-wrapper input[type='date'],
+.auth-style-form-wrapper textarea,
+.auth-style-form-wrapper select {
+  width: 100%;
+  margin-top: 0.25rem; /* From auth.css input[type='text'] */
+  margin-bottom: 0.25rem; /* From auth.css input[type='text'] */
+  font-size: 1.1rem; /* Slightly reduced from auth.css 1.5rem for better fit */
+  padding: 0.8rem 1rem; /* Slightly reduced from auth.css 1rem, but still substantial */
+  box-sizing: border-box; /* From auth.css input[type='text'] */
+  border: 1px solid #999; /* Darker gray than default 'gray' for better definition */
+  border-radius: 0; /* Key style from auth.css input[type='text'] */
+  background-color: #fff; /* Ensure explicit background */
+  color: #333; /* Ensure explicit text color */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-style-form-wrapper input[type='text']:focus,
+.auth-style-form-wrapper input[type='email']:focus,
+.auth-style-form-wrapper input[type='password']:focus,
+.auth-style-form-wrapper input[type='url']:focus,
+.auth-style-form-wrapper input[type='tel']:focus,
+.auth-style-form-wrapper input[type='number']:focus,
+.auth-style-form-wrapper input[type='date']:focus,
+.auth-style-form-wrapper textarea:focus,
+.auth-style-form-wrapper select:focus {
+  border-color: #101d2c; /* Use primary color for focus */
+  box-shadow: 0 0 0 3px rgba(16, 29, 44, 0.15); /* Use primary color RGB for glow */
+  outline: none;
+}
+
+.auth-style-form-wrapper textarea {
+  min-height: 80px; /* Basic height for textareas */
+  resize: vertical;
+}
+
+/* Ensure select elements in this form style don't inherit custom arrows from base.css */
+.auth-style-form-wrapper select {
+  appearance: auto; /* Or 'menulist' depending on desired default */
+  background-image: none;
+  padding-right: 0.8rem; /* Default padding if no arrow */
+}
+
+.auth-style-form-wrapper input[type='file'] {
+  padding: 0.6rem; /* File inputs often need different padding */
+  border: 1px dashed #999; /* Different border to indicate drop zone or file area */
+  background-color: #f9f9f9;
+}
+.auth-style-form-wrapper input[type='file']::file-selector-button {
+  background: #e9ecef;
+  color: #101d2c;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: 0;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: background-color 0.2s ease;
+}
+.auth-style-form-wrapper input[type='file']::file-selector-button:hover {
+  background: #dee2e6;
+}
+
+.auth-style-form-wrapper .form-text,
+.auth-style-form-wrapper small.helptext {
+  /* Targeting Django's default help text tag if rendered as small */
+  display: block;
+  font-size: 0.8rem; /* From auth.css span#id_username_helptext */
+  color: gray; /* From auth.css span#id_username_helptext */
+  margin-top: 0.35rem;
+}
+
+.auth-style-form-wrapper .errorlist, /* Django field errors */
+.auth-style-form-wrapper .form-field-errors {
+  /* Custom class for field errors */
+  color: red; /* From auth.css .error */
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  padding-left: 0; /* Remove default list padding */
+  list-style-position: inside; /* If using list-style type */
+  list-style-type: none; /* Usually errors are plain text */
+}
+.auth-style-form-wrapper .errorlist li {
+  margin-bottom: 0.2rem;
+}
+
+.auth-style-form-wrapper .form-non-field-errors .errorlist {
+  /* Non-field errors from Django */
+  color: red;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background-color: rgba(255, 0, 0, 0.03);
+  border: 1px solid rgba(255, 0, 0, 0.15);
+  border-radius: 0;
+}
+
+/* Button styling based on auth.css button */
+.auth-style-form-wrapper button[type='submit'] {
+  background: #101d2c; /* From auth.css button */
+  color: #fff; /* From auth.css button */
+  border: none; /* From auth.css button */
+  margin-top: 2rem; /* Increased top margin */
+  width: 100%; /* From auth.css button */
+  font-size: 1.25rem; /* Adjusted from auth.css 2rem */
+  font-weight: 500;
+  padding: 0.9rem 1.5rem; /* Adjusted from auth.css 20px */
+  cursor: pointer; /* From auth.css button */
+  border-radius: 0; /* From auth.css button */
+  transition: background-color 0.2s ease;
+}
+
+.auth-style-form-wrapper button[type='submit']:hover {
+  background: #0056b3; /* From auth.css button:hover */
+}
+
+/* Responsive adjustments for these forms, adapted from auth.css */
+@media (max-width: 768px) {
+  .auth-style-form-wrapper h2,
+  .auth-style-form-wrapper .form-title {
+    font-size: 1.8rem; /* Adjusted from auth.css */
+  }
+  .auth-style-form-wrapper input[type='text'],
+  .auth-style-form-wrapper input[type='email'],
+  .auth-style-form-wrapper input[type='password'],
+  .auth-style-form-wrapper input[type='url'],
+  .auth-style-form-wrapper input[type='tel'],
+  .auth-style-form-wrapper input[type='number'],
+  .auth-style-form-wrapper input[type='date'],
+  .auth-style-form-wrapper textarea,
+  .auth-style-form-wrapper select {
+    font-size: 1rem; /* Adjusted from auth.css */
+    padding: 0.75rem; /* From auth.css */
+  }
+  .auth-style-form-wrapper button[type='submit'] {
+    font-size: 1.1rem; /* From auth.css */
+    padding: 0.8rem; /* Slightly adjusted */
+  }
+}

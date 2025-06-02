@@ -1,0 +1,240 @@
+/** @format */
+
+@import url('styles.css');
+@import url('auth.css');
+
+/*
+  Enhanced Profile Form Styles
+  ----------------------------
+  Utilizes CSS variables from your global styles.css.
+  Applies frosted glass background effect to .content-card.
+  Makes date inputs more compact.
+*/
+
+/* Form Wrapper - analogous to .container in auth.css */
+/* This assumes .content-card provides the overall card appearance */
+.auth-style-form-wrapper {
+  padding: var(--spacing-unit-lg); /* e.g., 1.5rem */
+  border-radius: var(--border-radius-main); /* e.g., 0px */
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* Styling for the outer card, .content-card */
+.content-card {
+  /* Frosted glass effect from auth.css */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* For Safari */
+
+  /* Other card styles */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-border-light, #f0f0f0); /* Fallback if variable not defined */
+  border-radius: var(--border-radius-main); /* Consistent radius */
+  padding: var(--spacing-unit-md); /* Outer padding for the card */
+  margin-bottom: var(--spacing-unit-xl); /* Space below the card */
+}
+
+/* Form Title */
+.auth-style-form-wrapper h2.form-title,
+.auth-style-form-wrapper h2 {
+  padding-top: 0;
+  text-align: center;
+  color: var(--color-text-headings, #101d2c);
+  font-size: var(--font-size-xxl, 1.8rem);
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: var(--spacing-unit-xl, 2rem);
+}
+
+/* Form Grouping */
+.auth-style-form-wrapper .form-group {
+  display: flex;
+  margin-bottom: var(--spacing-unit-lg, 1.5rem);
+  flex-direction: column;
+  align-items: initial;
+  justify-content: center;
+}
+
+/* Labels */
+.auth-style-form-wrapper label {
+  display: block;
+  color: var(
+    --color-text-headings,
+    #101d2c
+  ); /* Using headings color for stronger labels */
+  margin-bottom: var(--spacing-unit-sm, 0.5rem);
+  font-size: var(--font-size-base, 1rem);
+  font-weight: 600;
+}
+
+/* Input Fields, Textarea, Select */
+.auth-style-form-wrapper input[type='text'],
+.auth-style-form-wrapper input[type='password'],
+.auth-style-form-wrapper input[type='email'],
+.auth-style-form-wrapper input[type='number'],
+.auth-style-form-wrapper input[type='url'],
+.auth-style-form-wrapper input[type='tel'],
+.auth-style-form-wrapper input[type='search'],
+.auth-style-form-wrapper input[type='date'],
+.auth-style-form-wrapper input[type='file'],
+.auth-style-form-wrapper textarea,
+.auth-style-form-wrapper select {
+  width: 100%;
+  margin-top: var(--spacing-unit-xs, 0.25rem);
+  margin-bottom: var(--spacing-unit-xs, 0.25rem);
+  font-size: var(--font-size-base, 1rem);
+  padding: calc(
+    var(--spacing-unit-sm, 0.5rem) + var(--spacing-unit-xs, 0.25rem)
+  ); /* 0.75rem */
+  box-sizing: border-box;
+  border: 1px solid var(--color-border-medium, #dee2e6);
+  border-radius: var(--border-radius-main, 0px);
+  background-color: var(--color-background-card-white, #fff);
+  color: var(--color-text-default, #555);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Focus styles for inputs */
+.auth-style-form-wrapper input[type='text']:focus,
+.auth-style-form-wrapper input[type='password']:focus,
+.auth-style-form-wrapper input[type='email']:focus,
+.auth-style-form-wrapper input[type='number']:focus,
+.auth-style-form-wrapper input[type='url']:focus,
+.auth-style-form-wrapper input[type='tel']:focus,
+.auth-style-form-wrapper input[type='search']:focus,
+.auth-style-form-wrapper input[type='date']:focus,
+.auth-style-form-wrapper input[type='file']:focus,
+.auth-style-form-wrapper textarea:focus,
+.auth-style-form-wrapper select:focus {
+  border-color: var(
+    --color-primary-hover,
+    #0056b3
+  ); /* Or --color-secondary-accent */
+  outline: 0;
+  /* Using RGB derived from --color-secondary-accent (#0056b3 -> rgb(0, 86, 179)) */
+  box-shadow: 0 0 0 0.2rem rgba(0, 86, 179, 0.25);
+}
+
+.auth-style-form-wrapper textarea {
+  min-height: 120px;
+}
+
+/* Compact Date Inputs */
+.auth-style-form-wrapper input[type='date'] {
+  padding-top: var(--spacing-unit-xs, 0.25rem);
+  padding-bottom: var(--spacing-unit-xs, 0.25rem);
+  padding-left: calc(
+    var(--spacing-unit-sm, 0.5rem) + var(--spacing-unit-xs, 0.25rem)
+  ); /* Match other inputs L/R */
+  padding-right: calc(
+    var(--spacing-unit-sm, 0.5rem) + var(--spacing-unit-xs, 0.25rem)
+  );
+  font-size: var(--font-size-sm, 0.8rem); /* Smaller font for date */
+  /* Adjust height if necessary, often 'auto' or a specific value might be needed
+     if the padding changes affect it disproportionately.
+     For now, relying on padding and font-size. */
+}
+
+.auth-style-form-wrapper input[type='file'] {
+  padding-top: var(
+    --spacing-unit-sm,
+    0.5rem
+  ); /* Adjust padding for file input */
+  padding-bottom: var(--spacing-unit-sm, 0.5rem);
+  /* File inputs are hard to style consistently. This provides basic consistency. */
+}
+
+/* Help Text */
+.auth-style-form-wrapper .form-text,
+.auth-style-form-wrapper small {
+  font-size: var(--font-size-sm, 0.8rem);
+  color: var(--color-text-default, #555);
+  margin-top: var(--spacing-unit-sm, 0.5rem);
+  display: block;
+}
+
+/* Error Messages */
+.auth-style-form-wrapper .form-non-field-errors .errorlist,
+.auth-style-form-wrapper .form-group .errorlist,
+.auth-style-form-wrapper .field-errors {
+  list-style-type: none;
+  padding: 0;
+  margin: var(--spacing-unit-sm, 0.5rem) 0 0 0;
+  color: #dc3545; /* Fallback/direct use of danger color. Consider using a CSS variable like --color-danger-default */
+  font-size: var(--font-size-sm, 0.8rem);
+}
+
+.auth-style-form-wrapper .form-non-field-errors .errorlist li,
+.auth-style-form-wrapper .form-group .errorlist li {
+  padding: var(--spacing-unit-xs, 0.25rem) 0;
+}
+
+.auth-style-form-wrapper .field-errors div,
+.auth-style-form-wrapper .field-errors p {
+  margin-bottom: var(--spacing-unit-xs, 0.25rem);
+}
+
+/* Buttons */
+.auth-style-form-wrapper button[type='submit'] {
+  background: var(--color-primary, #101d2c);
+  color: var(--color-text-light, #fff);
+  border: none;
+  margin-top: var(--spacing-unit-xl, 2rem);
+  width: 100%;
+  font-size: var(--font-size-md, 1.1rem);
+  font-weight: 500;
+  padding: var(--spacing-unit-md, 1rem); /* e.g., 1rem */
+  cursor: pointer;
+  border-radius: var(--border-radius-main, 0px);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.auth-style-form-wrapper button[type='submit']:hover {
+  background: var(--color-primary-hover, #0056b3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .auth-style-form-wrapper {
+    padding: var(--spacing-unit-md, 1rem);
+  }
+
+  .auth-style-form-wrapper h2.form-title,
+  .auth-style-form-wrapper h2 {
+    font-size: var(--font-size-xl, 1.4rem); /* Smaller title on small screens */
+    margin-bottom: var(--spacing-unit-lg, 1.5rem);
+  }
+
+  .auth-style-form-wrapper input[type='text'],
+  .auth-style-form-wrapper input[type='password'],
+  .auth-style-form-wrapper input[type='email'],
+  .auth-style-form-wrapper input[type='number'],
+  .auth-style-form-wrapper input[type='url'],
+  .auth-style-form-wrapper input[type='tel'],
+  .auth-style-form-wrapper input[type='search'],
+  .auth-style-form-wrapper input[type='date'],
+  .auth-style-form-wrapper input[type='file'],
+  .auth-style-form-wrapper textarea,
+  .auth-style-form-wrapper select {
+    font-size: var(--font-size-base, 1rem); /* Maintain base for readability */
+    padding: var(--spacing-unit-sm, 0.5rem); /* Smaller padding */
+  }
+
+  /* Adjust compact date input padding for small screens if needed */
+  .auth-style-form-wrapper input[type='date'] {
+    padding-top: var(--spacing-unit-xs, 0.25rem);
+    padding-bottom: var(--spacing-unit-xs, 0.25rem);
+    padding-left: var(--spacing-unit-sm, 0.5rem);
+    padding-right: var(--spacing-unit-sm, 0.5rem);
+    font-size: var(--font-size-sm, 0.8rem);
+  }
+
+  .auth-style-form-wrapper button[type='submit'] {
+    font-size: var(--font-size-base, 1rem); /* Adjusted button font size */
+    padding: calc(
+      var(--spacing-unit-sm, 0.5rem) + var(--spacing-unit-xs, 0.25rem)
+    ); /* 0.75rem */
+  }
+}

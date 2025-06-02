@@ -2,6 +2,17 @@
 {% load static %}
 
 {% block title %}Catalog Kelas Dosen{% endblock %}
+{% block navbar_links %}
+<li class="main-navbar__item">
+    <a href="{% url 'home' %}"
+        class="main-navbar__link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+    <a href="{% url 'matakuliah:catalog_kelas_dosen' %}"
+        class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:catalog_kelas_dosen' %}active{% endif %}">Mata
+        Kuliah Saya</a>
+</li>
+{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -12,7 +23,8 @@
             <h4>Kelas Wajib</h4>
             <div class="list-group">
                 {% for mk in kelas_wajib %}
-                <a href="{% url 'matakuliah:kelola_matakuliah_dosen' mk.id 'wajib' %}" class="list-group-item list-group-item-action">
+                <a href="{% url 'matakuliah:kelola_matakuliah_dosen' mk.id 'wajib' %}"
+                    class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ mk.nama }}</h5>
                         <small>{{ mk.sks }} SKS</small>
@@ -28,7 +40,8 @@
             <h4>Kelas Pilihan</h4>
             <div class="list-group">
                 {% for mk in kelas_pilihan %}
-                <a href="{% url 'matakuliah:kelola_matakuliah_dosen' mk.id 'pilihan' %}" class="list-group-item list-group-item-action">
+                <a href="{% url 'matakuliah:kelola_matakuliah_dosen' mk.id 'pilihan' %}"
+                    class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ mk.nama }}</h5>
                         <small>{{ mk.sks }} SKS</small>

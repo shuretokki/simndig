@@ -154,13 +154,10 @@ class Mahasiswa(Student):
 class Dosen(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='dosen_profile')
-    # Will be filled in advanced step
     nama = models.CharField(max_length=255, blank=True, null=True)
     nip = models.CharField(max_length=20, unique=True,
                            blank=True, null=True)  # Filled in initial step
-    # Specific work email, filled in initial step
     email = models.EmailField(blank=True, null=True)
-    # e.g., 'Aktif', 'Cuti', filled in initial step
     status = models.CharField(max_length=50, blank=True, null=True)
     tanggal_mulai_kerja = models.DateField(
         blank=True, null=True)  # Filled in initial step
@@ -172,8 +169,8 @@ class Dosen(models.Model):
     profile_photo = models.ImageField(
         upload_to='dosen_profile_photos/', blank=True, null=True)
 
-    # Flag to track profile completion
-    advanced_profile_completed = models.BooleanField(default=False)
+    # Flags to track profile status
+    initial_profile_completed = models.BooleanField(default=False)
     dummy_courses_generated = models.BooleanField(default=False)
 
     def __str__(self):
