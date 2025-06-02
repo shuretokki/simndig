@@ -1,6 +1,8 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'styles/auth.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'styles/auth.css' %}" />
+
 
 <section id="cta">
   <picture>
@@ -11,37 +13,85 @@
   </picture>
 </section>
 
-<div class="container">
-  <h2 class="form-title">Lengkapi Profil</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+<div class="container content-card"> {# Added content-card for consistency if using profile_form.css #}
+  <div class="auth-style-form-wrapper"> {# Wrapper for form styling consistency #}
+    <h2 class="form-title">Lengkapi Profil</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
 
-    {% if form.non_field_errors %}
-    <div class="form-non-field-errors">
-      <ul class="errorlist">
-        {% for error in form.non_field_errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
+      {% if form.non_field_errors %}
+      <div class="form-non-field-errors">
+        <ul class="errorlist">
+          {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
 
-    {% for field in form %}
-    <div class="form-group">
-      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-      {{ field }}
-      {% if field.help_text %}
-      <small class="form-text">{{ field.help_text|safe }}</small>
-      {% endif %}
-      {% if field.errors %}
-      <ul class="errorlist">
-        {% for error in field.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div>
-    {% endfor %}
-    <button type="submit">Simpan</button>
-  </form>
+      {% for field in form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.name == 'profile_photo' %}
+        <img id="profile_photo_preview"
+          src="{% if form.instance.profile_photo %}{{ form.instance.profile_photo.url }}{% else %}{% static 'img/default_profile.png' %}{% endif %}"
+          alt="Profile photo preview"
+          style="max-width: 150px; max-height: 150px; margin-top: 10px; display: block; border-radius: 50%; object-fit: cover; border: 2px solid #eee;" />
+        {% endif %}
+        {% if field.help_text %}
+        <small class="form-text helptext">{{ field.help_text|safe }}</small>
+        {# Added helptext class for styling if needed #}
+        {% endif %}
+        {% if field.errors %}
+        <ul class="errorlist">
+          {% for error in field.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <button type="submit">Simpan</button>
+    </form>
+  </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Assuming the ID of the profile photo input is 'id_profile_photo'
+    // Django typically generates IDs as 'id_<fieldname>'
+    const photoInput = document.getElementById('id_profile_photo');
+    const photoPreview = document.getElementById('profile_photo_preview');
+
+    // Use the same default image path as in dosen/home.html for consistency
+    const defaultProfileImage = "{% static 'img/default_profile.png' %}";
+
+    if (photoInput && photoPreview) {
+      photoInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+          // Create a temporary URL for the selected file and set it as the preview source
+          photoPreview.src = URL.createObjectURL(file);
+        } else {
+          // If no file is selected (e.g., user clears selection, if browser allows),
+          // revert to the current profile photo if it exists, otherwise to the default.
+          {% if form.instance.profile_photo and form.instance.profile_photo.url %}
+          photoPreview.src = "{{ form.instance.profile_photo.url }}";
+          {% else %}
+          photoPreview.src = defaultProfileImage;
+          {% endif %}
+        }
+      });
+
+      // Ensure the preview shows the default if no image is initially set and src is empty/broken
+      if (!photoPreview.src || photoPreview.src === window.location.href) { // Check if src is not properly set
+        {% if form.instance.profile_photo and form.instance.profile_photo.url %}
+        // Already handled by the src attribute in the img tag
+        {% else %}
+        photoPreview.src = defaultProfileImage;
+        {% endif %}
+      }
+    }
+  });
+</script>
