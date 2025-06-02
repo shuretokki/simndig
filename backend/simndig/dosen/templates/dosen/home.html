@@ -8,16 +8,17 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/dosen.css' %}" />
 {% endblock head_extra %} {% block navbar_links %}
 <li class="main-navbar__item">
-  <a href="{% url 'home' %}"
-    class="main-navbar__link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Dashboard</a>
+  <a href="{% url 'dosen:dosen_home' %}"
+    class="main-navbar__link {% if request.resolver_match.url_name == 'dosen_home' %}active{% endif %}">Dashboard</a>
 </li>
 <li class="main-navbar__item">
   <a href="{% url 'matakuliah:catalog_kelas_dosen' %}"
     class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:catalog_kelas_dosen' %}active{% endif %}">Mata
     Kuliah Saya</a>
 </li>
-{% endblock %} {% block content %}
+{% endblock %}
 
+{% block content %}
 <section class="profile">
   <div class="profile__avatar-container">
     {% if dosen_profile.profile_photo %}
@@ -41,14 +42,10 @@
       {{ dosen_profile.email }}
     </p>
     {% endif %}
-    {# Add a link to an actual edit profile page if you have one #}
-    <a href="#" class="button button--small profile__edit-button">Edit Profile</a>
   </div>
-
 </section>
 
 <section class="content-card">
-
   <div class="dashboard-main-content">
     <div class="dashboard-main-content__calendar-area">
       <div id='calendar-container'>

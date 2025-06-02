@@ -1,64 +1,108 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Dashboard Mahasiswa - {{ request.user.first_name|default:request.user.username }}{% endblock title %}
+{% block title %}Dashboard Mahasiswa -
+{{ mahasiswa_profile.get_nama|default:request.user.username }}{% endblock title %}
 
 {% block head_extra %}
-  <head>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'styles/mahasiswa.css' %}"
-    />
-  </head>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/mahasiswa.css' %}" />
 {% endblock head_extra %}
 
 {% block navbar_links %}
-  <li class="main-navbar__item"><a href="{% url 'home' %}" class="main-navbar__link active">Dashboard</a></li>
-  <li class="main-navbar__item"><a href="{% url 'matakuliah:list_matakuliah_mahasiswa' %}" class="main-navbar__link">Daftar Mata Kuliah</a></li>
-  <li class="main-navbar__item"><a href="#" class="main-navbar__link">Jadwal Kuliah</a></li> {# Replace # with actual URL name #}
-  <li class="main-navbar__item"><a href="#" class="main-navbar__link">Transkrip Nilai</a></li> {# Replace # with actual URL name #}
-  <li class="main-navbar__item"><a href="#" class="main-navbar__link">Profil</a></li> {# Replace # with actual URL name #}
+<li class="main-navbar__item">
+  <a href="{% url 'mahasiswa:mahasiswa_home' %}"
+    class="main-navbar__link {% if request.resolver_match.view_name == 'mahasiswa:mahasiswa_home' or request.resolver_match.url_name == 'mahasiswa_home' %}active{% endif %}">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+  <a href="{% url 'matakuliah:list_matakuliah_mahasiswa' %}"
+    class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:list_matakuliah_mahasiswa' %}active{% endif %}">Mata
+    Kuliah Saya</a>
+</li>
+{# Update placeholder URLs when these pages are implemented #}
+<li class="main-navbar__item"><a href="#" class="main-navbar__link">Jadwal Kuliah</a></li>
 {% endblock navbar_links %}
 
 {% block content %}
-    <!-- main-container class is removed as page-container from base.html will be used -->
-      <h1 class="dashboard-title">Dashboard Mahasiswa</h1>
-      <section class="content-card">
-        <h5>Selamat datang, {{ request.user.first_name|default:request.user.username }}!</h5>
-        <p class="card-text">
-          Ini adalah halaman utama Anda. Di sini Anda bisa melihat informasi
-          akademik, jadwal, dan mengelola data pribadi Anda.
-        </p>
+{% if messages %}
+<div class="messages-container" style="padding: 1rem 0; margin-bottom: 1rem;">
+  {% for message in messages %}
+  {# Basic alert styling, ideally move to a global CSS file like base.css or styles.css #}
+  <div class="alert alert-{{ message.tags|lower }}" role="alert"
+    style="padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: var(--border-radius-main, 4px); color: #fff; 
+                    background-color: {% if message.tags == 'success' %}var(--color-success-bg, #28a745){% elif message.tags == 'error' %}var(--color-error-bg, #dc3545){% elif message.tags == 'warning' %}var(--color-warning-bg, #ffc107); color: var(--color-text-headings, #212529);{% else %}var(--color-info-bg, #17a2b8){% endif %};">
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
 
-        <h6>Informasi Mahasiswa:</h6>
-        {% if student %}
-        <ul class="info-list">
-          <li><strong>Nama:</strong> {{ student.get_nama }}</li>
-          <li><strong>NIM:</strong> {{ student.get_nim }}</li>
-          <li><strong>Kelas:</strong> {{ student.get_kelas|default:"-" }}</li>
-          <li><strong>Angkatan:</strong> {{ student.get_angkatan|default:"-" }}</li>
-          <li><strong>Jurusan:</strong> {{ student.get_jurusan|default:"-" }}</li>
-          <li><strong>Email:</strong> {{ student.get_email }}</li>
-          <li><strong>DPA:</strong> {{ student.get_dpa|default:"-" }}</li>
-          <li><strong>Status:</strong> {{ student.get_status|default:"-" }}</li>
-          <li><strong>Semester:</strong> {{ student.get_semester|default:"-" }}</li>
-          <li><strong>IPK:</strong> {{ student.get_ipk|default:"-" }}</li>
-          <li><strong>UKT:</strong> {{ student.get_ukt|default:"-" }}</li>
-        </ul>
-        {% else %}
-        <p>Data mahasiswa tidak ditemukan.</p>
-        {% endif %}
-      </section>
-
-      {% if form %}
-      <section class="content-card">
-        <h6>Update Informasi Pribadi:</h6>
-        <form method="post">
-          {% csrf_token %} {{ form.as_p }}
-          <button type="submit">Update Informasi</button>
-        </div>
-      </section>
+<section class="profile mahasiswa-profile"> {# Ensure this class matches your CSS #}
+  <div class="profile__avatar-container">
+    {% if mahasiswa_profile.profile_photo and mahasiswa_profile.profile_photo.url %}
+    <img src="{{ mahasiswa_profile.profile_photo.url }}" alt="Foto Profil {{ mahasiswa_profile.get_nama }}"
+      class="profile__avatar-img">
+    {% else %}
+    <img src="{% static 'img/default_profile.png' %}" alt="Default Profile" class="profile__avatar-img">
+    {% endif %}
+  </div>
+  <div class="profile__info">
+    <div class="profile-name-container">
+      <h2 class="profile__name">{{ mahasiswa_profile.get_nama|default:request.user.username }}</h2>
+      {% if mahasiswa_profile.get_status %}
+      <p class="profile__status">{{ mahasiswa_profile.get_status }}</p>
       {% endif %}
-    </main>
+    </div>
+    {# Displaying other meta information using p.profile__meta #}
+    {% if mahasiswa_profile.get_nim %}
+    <p class="profile__meta"><strong></strong> {{ mahasiswa_profile.get_nim }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{# The rest of the student dashboard content (course list, announcements, etc.) from previous response can be kept here #}
+<section class="content-card">
+  <div class="dashboard-main-content">
+    <div class="dashboard-main-content__primary-area">
+      <h6>Mata Kuliah yang Diikuti Semester Ini</h6>
+      {% if daftar_kelas %}
+      <ul class="course-list">
+        {% for course in daftar_kelas %}
+        <li class="course-list__item">
+          <strong>{{ course.nama }}</strong> ({{ course.kode_mk }})
+          <p>Dosen: {{ course.dosen.get_full_name|default:course.dosen.username }}</p>
+          <p>SKS: {{ course.sks }} - Semester Mata Kuliah: {{ course.semester }}</p>
+          {% if course.kelaswajib %} {# Assuming 'kelaswajib' attribute exists if it's KelasWajib #}
+          <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' course.id 'wajib' %}"
+            class="button button--small">Lihat Detail</a>
+          {% elif course.kelaspilihan %} {# Assuming 'kelaspilihan' attribute exists #}
+          <a href="{% url 'matakuliah:detail_matakuliah_mahasiswa' course.id 'pilihan' %}"
+            class="button button--small">Lihat Detail</a>
+          {% else %}
+          <span class="button button--small button--disabled">Detail Tidak Tersedia</span>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Anda belum mengambil mata kuliah apapun semester ini.</p>
+      <p><a href="{% url 'matakuliah:list_matakuliah_mahasiswa' %}" class="button">Cari & Daftar Mata Kuliah</a></p>
+      {% endif %}
+    </div>
+
+    <div class="dashboard-main-content__secondary-area">
+      <h6>Pengumuman & Informasi</h6>
+      <ul class="info-list">
+        <li>Tidak ada pengumuman baru saat ini.</li>
+        <li>Batas akhir pembayaran UKT: 15 Juli 2025.</li>
+        <li>Perkuliahan semester ganjil dimulai 1 September 2025.</li>
+      </ul>
+      <h6>Tugas & Ujian Mendatang</h6>
+      <ul class="info-list">
+        <li>Tugas Pemrograman Web Lanjut - Batas Waktu: 10 Juni 2025</li>
+        <li>Ujian Tengah Semester Jaringan Komputer: 20 Juni 2025</li>
+      </ul>
+      <p><a href="#" class="button button--small">Lihat Kalender Akademik</a></p>
+    </div>
+  </div>
+</section>
 {% endblock content %}

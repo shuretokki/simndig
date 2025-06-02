@@ -1,11 +1,30 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from datadiri.models import Dosen  # Import directly from datadiri
-from .forms import DosenInitialProfileForm, DosenAdvancedProfileForm
+from datadiri.models import Dosen  # Assumed import
+from .forms import DosenInitialProfileForm  # Assumed import
+# Keep if generate_dummy_courses uses them
 from matakuliah.models import MataKuliah, KelasWajib, KelasPilihan
 from django.contrib import messages
-import random
-from django.utils import timezone
+import random  # Keep if generate_dummy_courses uses it
+from django.utils import timezone  # Keep if generate_dummy_courses uses it
+
+
+def generate_unique_nip():
+    """Generates a random, unique 18-digit NIP."""
+    while True:
+        nip = f"{timezone.now().strftime('%Y%m%d')}{random.randint(1000000000, 9999999999)}"[
+            :18]
+        if not Dosen.objects.filter(nip=nip).exists():
+            return nip
+
+
+# Status choices are defined here for use in randomization
+DOSEN_STATUS_CHOICES = [
+    ('Aktif', 'Aktif'),
+    ('Cuti', 'Cuti'),
+    ('Studi Lanjut', 'Studi Lanjut'),
+    ('Pensiun', 'Pensiun'),
+]
 
 
 def generate_dummy_courses(dosen_profile):
@@ -19,8 +38,10 @@ def generate_dummy_courses(dosen_profile):
     user = dosen_profile.user
     base_kode_mk = f"DUMMY{user.id}-"
 
-    # Dummy Kelas Wajib
-    for i in range(1, random.randint(2, 4)):  # Generate 1 to 3 dummy wajib courses
+    # Ensure KelasWajib and KelasPilihan are imported if this function is used
+    # from matakuliah.models import KelasWajib, KelasPilihan
+
+    for i in range(1, random.randint(2, 4)):
         kode_mk = f"{base_kode_mk}W{i}"
         if not KelasWajib.objects.filter(kode_mk=kode_mk).exists():
             KelasWajib.objects.create(
@@ -29,13 +50,9 @@ def generate_dummy_courses(dosen_profile):
                 sks=random.choice([2, 3, 4]),
                 semester=random.randint(1, 8),
                 dosen=user,
-                _nim=f"NIM-MK-W{i}",  # Placeholder for MataKuliah._nim
-                # Placeholder for MataKuliah.email
-                email=f"mk-w{i}@example.com"
             )
 
-    # Dummy Kelas Pilihan
-    for i in range(1, random.randint(2, 3)):  # Generate 1 to 2 dummy pilihan courses
+    for i in range(1, random.randint(2, 3)):
         kode_mk = f"{base_kode_mk}P{i}"
         if not KelasPilihan.objects.filter(kode_mk=kode_mk).exists():
             KelasPilihan.objects.create(
@@ -44,9 +61,6 @@ def generate_dummy_courses(dosen_profile):
                 sks=random.choice([2, 3]),
                 semester=random.randint(3, 8),
                 dosen=user,
-                _nim=f"NIM-MK-P{i}",  # Placeholder for MataKuliah._nim
-                # Placeholder for MataKuliah.email
-                email=f"mk-p{i}@example.com"
             )
 
     dosen_profile.dummy_courses_generated = True
@@ -57,23 +71,17 @@ def generate_dummy_courses(dosen_profile):
 def dosen_home(request):
     try:
         dosen = Dosen.objects.get(user=request.user)
-        if not dosen.advanced_profile_completed:
-            # Check if initial profile step was done by checking a field like NIP
-            if not dosen.nip:  # Or another field from the initial form
-                messages.info(request, 'Silakan lengkapi profil awal Anda.')
-                return redirect('dosen:complete_initial_profile')
-            messages.info(request, 'Silakan lengkapi profil lanjutan Anda.')
-            return redirect('dosen:complete_advanced_profile')
+        if not dosen.initial_profile_completed:
+            messages.info(
+                request, 'Selamat datang! Mohon lengkapi profil awal Anda untuk melanjutkan.')
+            return redirect('dosen:complete_initial_profile')
     except Dosen.DoesNotExist:
         messages.info(
-            request, 'Selamat datang! Silakan lengkapi profil dosen Anda.')
+            request, 'Selamat datang! Silakan buat profil dosen Anda.')
         return redirect('dosen:complete_initial_profile')
 
-        # Generate dummy courses if profile is complete but courses not yet generated
-    if dosen.advanced_profile_completed and not dosen.dummy_courses_generated:
+    if not dosen.dummy_courses_generated:
         generate_dummy_courses(dosen)
-        # Refresh dosen object to get updated dummy_courses_generated status if needed,
-        # though generate_dummy_courses saves it.
 
     courses_taught = MataKuliah.objects.filter(
         dosen=dosen.user).select_related('kelaswajib', 'kelaspilihan')
@@ -81,37 +89,34 @@ def dosen_home(request):
     return render(request, 'dosen/home.html', {'dosen_profile': dosen, 'courses_taught': courses_taught})
 
 
-def detail_kelas(request, kelas_id):
-    kelas = get_object_or_404(MataKuliah, id=kelas_id)
-    return render(request, 'dosen/detail_kelas.html', {'kelas': kelas})
-
-
 @login_required
 def complete_initial_profile(request):
     try:
         dosen = Dosen.objects.get(user=request.user)
-        if dosen.advanced_profile_completed:
-            return redirect('dosen:dosen_home')
-        # If dosen exists but advanced is not complete, they might be here to update initial info
-        # or were redirected. Allow filling this form.
     except Dosen.DoesNotExist:
-        dosen = None  # Create a new Dosen profile instance
+        # If Dosen profile doesn't exist, we'll create a new one if the form is valid.
+        # Setting dosen to None is correct here.
+        dosen = None
 
     if request.method == 'POST':
-        form = DosenInitialProfileForm(request.POST, instance=dosen)
+        # Pass request.FILES to the form constructor for file uploads
+        form = DosenInitialProfileForm(
+            request.POST, request.FILES, instance=dosen)
         if form.is_valid():
             profile = form.save(commit=False)
             profile.user = request.user
-            # Ensure advanced_profile_completed is False until the next step is done
-            # This will be handled by the Dosen model's default or explicitly here if needed.
-            # profile.advanced_profile_completed = False
-            profile.save()
-            if not profile.dummy_courses_generated:  # Generate dummy courses upon full profile completion
+            profile.initial_profile_completed = True  # Explicitly set this flag
+            profile.save()  # This will save all fields, including the photo
+
+            # Call dummy course generation if needed (as in your original code)
+            if not profile.dummy_courses_generated:
                 generate_dummy_courses(profile)
-            messages.success(
-                request, 'Profil awal berhasil disimpan. Silakan lengkapi profil lanjutan.')
-            return redirect('dosen:complete_advanced_profile')
+
+            messages.success(request, 'Profil berhasil disimpan')
+            # Or 'dosen:dosen_home' if more appropriate
+            return redirect('home')
         else:
+            # If form is not valid, errors will be displayed in the template
             messages.error(request, 'Harap perbaiki kesalahan di bawah ini.')
     else:
         form = DosenInitialProfileForm(instance=dosen)
@@ -119,29 +124,6 @@ def complete_initial_profile(request):
     return render(request, 'dosen/complete_initial_profile.html', {'form': form})
 
 
-@login_required
-def complete_advanced_profile(request):
-    try:
-        dosen = Dosen.objects.get(user=request.user)
-        if dosen.advanced_profile_completed:
-            return redirect('dosen:dosen_home')
-    except Dosen.DoesNotExist:
-        messages.error(
-            request, 'Profil awal tidak ditemukan. Silakan lengkapi profil awal terlebih dahulu.')
-        return redirect('dosen:complete_initial_profile')
-
-    if request.method == 'POST':
-        form = DosenAdvancedProfileForm(
-            request.POST, request.FILES, instance=dosen)
-        if form.is_valid():
-            profile = form.save(commit=False)
-            profile.advanced_profile_completed = True
-            profile.save()
-            messages.success(request, 'Profil berhasil dilengkapi!')
-            return redirect('dosen:dosen_home')
-        else:
-            messages.error(request, 'Harap perbaiki kesalahan di bawah ini.')
-    else:
-        form = DosenAdvancedProfileForm(instance=dosen)
-
-    return render(request, 'dosen/complete_advanced_profile.html', {'form': form})
+def detail_kelas(request, kelas_id):
+    kelas = get_object_or_404(MataKuliah, id=kelas_id)
+    return render(request, 'dosen/detail_kelas.html', {'kelas': kelas})

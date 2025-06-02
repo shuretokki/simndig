@@ -3,12 +3,26 @@
 
 {% block title %}{{ mata_kuliah.nama }}{% endblock %}
 
+{% block navbar_links %}
+<li class="main-navbar__item">
+    <a href="{% url 'mahasiswa:mahasiswa_home' %}"
+        class="main-navbar__link {% if request.resolver_match.view_name == 'mahasiswa:mahasiswa_home' or request.resolver_match.url_name == 'mahasiswa_home' %}active{% endif %}">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+    <a href="{% url 'matakuliah:list_matakuliah_mahasiswa' %}"
+        class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:list_matakuliah_mahasiswa' %}active{% endif %}">Mata
+        Kuliah Saya</a>
+</li>
+{# Update placeholder URLs when these pages are implemented #}
+<li class="main-navbar__item"><a href="#" class="main-navbar__link">Jadwal Kuliah</a></li>
+{% endblock navbar_links %}
+
 {% block content %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>{{ mata_kuliah.nama }} 
+                <h2>{{ mata_kuliah.nama }}
                     <span class="badge badge-{% if jenis == 'wajib' %}primary{% else %}success{% endif %}">
                         {{ jenis|title }}
                     </span>
@@ -17,7 +31,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Tab Navigation -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
@@ -30,7 +44,7 @@
             <a class="nav-link" id="absensi-tab" data-toggle="tab" href="#absensi" role="tab">Absensi</a>
         </li>
     </ul>
-    
+
     <div class="tab-content" id="myTabContent">
         <!-- Tab Materi -->
         <div class="tab-pane fade show active" id="materi" role="tabpanel">
@@ -51,7 +65,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Tab Tugas -->
         <div class="tab-pane fade" id="tugas" role="tabpanel">
             <div class="card mt-3">
@@ -68,8 +82,8 @@
                                 </div>
                                 <div>
                                     <!-- Form Upload Tugas -->
-                                    <form method="post" action="{% url 'matakuliah:upload_tugas_mahasiswa' tugas.id %}" 
-                                          enctype="multipart/form-data" class="d-inline">
+                                    <form method="post" action="{% url 'matakuliah:upload_tugas_mahasiswa' tugas.id %}"
+                                        enctype="multipart/form-data" class="d-inline">
                                         {% csrf_token %}
                                         <div class="input-group input-group-sm">
                                             <input type="file" name="file_jawaban" class="form-control" required>
@@ -88,7 +102,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Tab Absensi -->
         <div class="tab-pane fade" id="absensi" role="tabpanel">
             <div class="card mt-3">
@@ -100,7 +114,7 @@
                             <button type="submit" class="btn btn-success">Absen Sekarang</button>
                         </form>
                     </div>
-                    
+
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -114,7 +128,8 @@
                                 <tr>
                                     <td>{{ absen.tanggal|date:"d M Y" }}</td>
                                     <td>
-                                        <span class="badge badge-{% if absen.status == 'hadir' %}success{% elif absen.status == 'izin' %}warning{% else %}danger{% endif %}">
+                                        <span
+                                            class="badge badge-{% if absen.status == 'hadir' %}success{% elif absen.status == 'izin' %}warning{% else %}danger{% endif %}">
                                             {{ absen.get_status_display }}
                                         </span>
                                     </td>

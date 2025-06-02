@@ -1,35 +1,25 @@
+import string
+import random
+from datetime import date
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
-from datetime import date
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nama = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    status = models.CharField(max_length=50)
+    nama = models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField(unique=True, blank=True, null=True)
+    status = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.nama} ({self.nim})"
+        # Use self.user.username as a fallback if self.nama is None or empty
+        return f"{self.nama or self.user.username} ({self.user.username})"
 
     class Meta:
         abstract = True
 
-    ################### Setter methods ###################
-    def set_nama(self, nama):
-        self.nama = nama
-        self.save()
-
-    def set_email(self, email):
-        self.email = email
-        self.save()
-
-    def set_status(self, status):
-        self.status = status
-        self.save()
-
-    ################### Getter methods ###################
     def get_nama(self):
         return self.nama
 
@@ -41,139 +31,91 @@ class Student(models.Model):
 
 
 class Mahasiswa(Student):
-    nim = models.CharField(max_length=20, unique=True)
-    kelas = models.CharField(max_length=50)
+    nim = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    kelas = models.CharField(max_length=50, blank=True, null=True)
     semester = models.PositiveIntegerField(blank=True, null=True)
     ipk = models.DecimalField(
         max_digits=4, decimal_places=2, blank=True, null=True)
     ukt = models.DecimalField(
         max_digits=9, decimal_places=2, blank=True, null=True)
     dpa = models.CharField(max_length=100, blank=True, null=True)
-    angkatan = models.PositiveIntegerField()
-    jurusan = models.CharField(max_length=100)
+    angkatan = models.PositiveIntegerField(blank=True, null=True)
+    jurusan = models.CharField(max_length=100, blank=True, null=True)
+    profile_photo = models.ImageField(
+        upload_to='mahasiswa_profile_photos/', blank=True, null=True)
+    initial_profile_completed = models.BooleanField(default=False)
 
-    def save(self, *args, **kwargs):
-        if self.angkatan:
+    # These methods MUST be indented to be part of the Mahasiswa class
+    def _generate_random_nim(self):  # Correctly indented
+        while True:
+            nim_value = ''.join(random.choices(string.digits, k=10))
+            if not Mahasiswa.objects.filter(nim=nim_value).exists():
+                return nim_value
+
+    def save(self, *args, **kwargs):  # Correctly indented
+        is_completing_initial_profile = kwargs.pop(
+            '_completing_initial_profile', False)
+
+        if is_completing_initial_profile and not self.initial_profile_completed:
+            if not self.nim:
+                self.nim = self._generate_random_nim()  # Call the method with self
+            if not self.status:
+                self.status = random.choice(
+                    ["Aktif", "Cuti Sementara", "Non-Aktif"])
+            if self.angkatan is None:  # Check for None, as 0 could be valid angkatan
+                current_year = date.today().year
+                self.angkatan = random.randint(
+                    current_year - 5, current_year - 1)
+            if not self.jurusan:
+                jurusan_list = ["Teknik Informatika", "Sistem Informasi", "Manajemen",
+                                "Akuntansi", "Desain Komunikasi Visual", "Ilmu Komunikasi"]
+                self.jurusan = random.choice(jurusan_list)
+            if not self.kelas:
+                jur_abbr = "".join(
+                    [word[0] for word in self.jurusan.split()]).upper() if self.jurusan else "XX"
+                # Ensure angkatan is not None before using for year_indicator
+                year_indicator_val = self.angkatan % 100 if self.angkatan is not None else random.randint(
+                    1, 4)
+                self.kelas = f"{jur_abbr}-{year_indicator_val}{random.choice(['A', 'B', 'C', 'Pagi', 'Malam'])}"
+
+        if self.angkatan is not None:  # Ensure angkatan has a value
             today = date.today()
             year_diff = today.year - self.angkatan
-            # Hitung semester berdasarkan bulan:
-            # Januari - Juli = semester genap (2*year_diff)
-            # Agustus - Desember = semester ganjil (2*year_diff + 1)
-            if today.month >= 8:
+            if today.month >= 7:  # Typically, new academic year/odd semester starts around July/August
                 self.semester = year_diff * 2 + 1
-            else:
+            else:  # Even semester
                 self.semester = year_diff * 2
-            if self.semester < 1:
+
+            if self.semester < 1:  # Ensure semester is at least 1
                 self.semester = 1
+            elif self.semester > 14:  # Example cap for S1
+                self.semester = 14
+
+        # This will now call Student.save() or Model.save() correctly
         super().save(*args, **kwargs)
 
-    # Setter
-    def set_nim(self, nim):
-        self.nim = nim
-        self.save()
-
-    def set_kelas(self, kelas):
-        self.kelas = kelas
-        self.save()
-
-    def set_angkatan(self, angkatan):
-        self.angkatan = angkatan
-        self.save()
-
-    def set_jurusan(self, jurusan):
-        self.jurusan = jurusan
-        self.save()
-
-    def set_dpa(self, dpa):
-        self.dpa = dpa
-        self.save()
-
-    def set_semester(self, semester):
-        self.semester = semester
-        self.save()
-
-    def set_ipk(self, ipk):
-        self.ipk = ipk
-        self.save()
-
-    def set_ukt(self, ukt):
-        self.ukt = ukt
-        self.save()
-
-    ################### Getter Methods ###################
-    def get_dpa(self):
-        return self.dpa
-
-    def get_nim(self):
-        return self.nim
-
-    def get_kelas(self):
-        return self.kelas
-
-    def get_angkatan(self):
-        return self.angkatan
-
-    def get_jurusan(self):
-        return self.jurusan
-
-    def get_semester(self):
-        return self.semester
-
-    def get_ipk(self):
-        return self.ipk
-
-    def get_ukt(self):
-        return self.ukt
-
-    def ambilKelas(self):
-
-        return ["Matematika", "Fisika", "Pemrograman", "Basis Data", "PBO"]
-
-    def absen(self):
-
-        return 92.5
-
-    def KHS(self):
-        return {
-            "Matematika": "A",
-            "Fisika": "B+",
-            "Pemrograman": "A-",
-            "Basis Data": "B",
-        }
-
-    def bayar_ukt(self):
-
-        return 2500000.00
-
-    def lunas_ukt(self):
-
-        return self.bayar_ukt() >= self.ukt
-    # field khusus mahasiswa
+    def __str__(self):  # Correctly indented
+        # Use self.nama or self.user.username as fallback if nama is not set
+        # Use self.nim or 'N/A' as fallback if nim is not set
+        return f"{self.nama or self.user.username} ({self.nim or 'N/A'})"
 
 
 class Dosen(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='dosen_profile')
-    # Will be filled in advanced step
     nama = models.CharField(max_length=255, blank=True, null=True)
     nip = models.CharField(max_length=20, unique=True,
-                           blank=True, null=True)  # Filled in initial step
-    # Specific work email, filled in initial step
+                           blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
-    # e.g., 'Aktif', 'Cuti', filled in initial step
     status = models.CharField(max_length=50, blank=True, null=True)
     tanggal_mulai_kerja = models.DateField(
-        blank=True, null=True)  # Filled in initial step
+        blank=True, null=True)
     current_semester = models.IntegerField(
-        blank=True, null=True)  # Filled in initial step
-
-    # Fields for advanced profile
+        blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
     profile_photo = models.ImageField(
         upload_to='dosen_profile_photos/', blank=True, null=True)
-
-    # Flag to track profile completion
-    advanced_profile_completed = models.BooleanField(default=False)
+    initial_profile_completed = models.BooleanField(default=False)
     dummy_courses_generated = models.BooleanField(default=False)
 
     def __str__(self):
