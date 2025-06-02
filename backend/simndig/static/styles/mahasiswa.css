@@ -1,104 +1,188 @@
-/** @format */
+/** @format **/
 
-.dashboard-title {
-  font-size: 2.2rem;
-  color: #101d2c;
-  margin-bottom: 1.5rem;
-  text-align: center;
+@import url('styles.css');
+
+/* Profile Section Styling (Adopt from dosen.css if suitable) */
+.profile.mahasiswa-profile {
+  display: flex;
+  align-items: flex-start; /* Align items to the start for better text flow */
+  background-color: var(--color-background-card-white, #fff);
+  padding: var(--spacing-unit-lg, 1.5rem);
+  margin-bottom: var(--spacing-unit-xl, 2rem);
+  border-radius: var(
+    --border-radius-main,
+    8px
+  ); /* Use consistent border-radius */
+  border: 1px solid var(--color-border-default, #e9ecef);
+  gap: var(--spacing-unit-lg, 1.5rem);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-/* Cards for content sections */
-.content-card {
-  background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  margin-bottom: 2rem;
+.profile__avatar-container {
+  flex-shrink: 0;
+  margin-top: var(
+    --spacing-unit-xs
+  ); /* Align avatar nicely if info text wraps */
 }
 
-.content-card h5 {
-  /* Card Title */
-  font-size: 1.4rem;
-  color: #101d2c;
-  margin-top: 0;
-  margin-bottom: 1rem;
+.profile__avatar-img {
+  width: 100px; /* Slightly larger avatar for profile section */
+  height: 100px;
+  border-radius: var(--border-radius-round, 50%);
+  object-fit: cover;
+  border: 3px solid var(--color-background-body, #f5f5f5);
 }
 
-.content-card p.card-text {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(
+    --spacing-unit-sm,
+    0.5rem
+  ); /* Increased gap for better readability */
+  flex-grow: 1;
 }
 
-.content-card h6 {
-  font-size: 1.2rem;
-  color: #333;
-  margin-top: 1.5rem;
-  margin-bottom: 0.8rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.4rem;
+.profile-name-container {
+  display: flex;
+  align-items: center; /* Vertically center name and status */
+  flex-wrap: wrap;
+  gap: var(--spacing-unit-md, 1rem); /* Space between name and status */
+  margin-bottom: var(--spacing-unit-xs, 0.25rem);
 }
 
+.profile__name {
+  font-size: var(--font-size-xxl); /* Uses updated global variable */
+  color: var(--color-text-headings);
+  font-weight: 600;
+  margin: 0;
+}
+
+.profile__status {
+  font-size: var(--font-size-sm); /* Uses updated global variable */
+  font-weight: 500;
+  color: var(--color-secondary-accent);
+  background-color: rgba(0, 86, 179, 0.1); /* Example accent background */
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius-main);
+  margin: 0;
+}
+
+.profile__meta {
+  font-size: var(--font-size-base); /* Uses updated global variable */
+  color: var(--color-text-default);
+  margin: 0;
+  line-height: 1.5;
+}
+.profile__meta strong {
+  font-weight: 500;
+  color: var(--color-text-headings);
+}
+
+.profile__edit-button {
+  /* Specific styling for edit button in profile context */
+  align-self: flex-start; /* Align to left */
+}
+
+/* Dashboard Main Content (Adopt from dosen.css for consistency) */
+.dashboard-main-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-unit-lg);
+}
+
+.dashboard-main-content__primary-area {
+  flex: 3 1 600px; /* Main content area (e.g., courses) */
+  min-width: 300px;
+}
+.dashboard-main-content__secondary-area {
+  flex: 2 1 300px; /* Sidebar-like area (e.g., announcements) */
+  min-width: 280px;
+}
+
+/* Course List Styling (Adopt from dosen.css) */
+.course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-unit-lg) 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-unit-md);
+}
+
+.course-list__item {
+  background-color: var(--color-background-card-light);
+  padding: var(--spacing-unit-md);
+  border-radius: var(--border-radius-main);
+  border: 1px solid var(--color-border-default);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+.course-list__item:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+.course-list__item strong {
+  font-size: var(--font-size-md); /* Uses updated global variable */
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: var(--spacing-unit-xs);
+}
+.course-list__item p {
+  font-size: var(--font-size-base); /* Uses updated global variable */
+  color: var(--color-text-default);
+  margin-top: var(--spacing-unit-xs);
+  margin-bottom: var(--spacing-unit-md);
+  line-height: 1.5;
+  flex-grow: 1; /* Allows button to stick to bottom if content varies */
+}
+.course-list__item .button {
+  margin-top: auto;
+  width: 100%; /* Make button full width of card */
+}
+
+/* Info List Styling (Adopt from dosen.css) */
 .info-list {
   list-style: none;
   padding: 0;
+  margin-top: 0;
 }
-
 .info-list li {
-  padding: 0.4rem 0;
-  font-size: 0.95rem;
-  border-bottom: 1px solid #f0f0f0;
+  padding: var(--spacing-unit-sm) 0;
+  font-size: var(--font-size-base); /* Uses updated global variable */
+  color: var(--color-text-default);
+  border-bottom: 1px solid var(--color-border-light);
 }
 .info-list li:last-child {
   border-bottom: none;
 }
 
-/* Form Styling */
-form p {
-  /* Targets Django's form.as_p output */
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-form label {
-  margin-bottom: 0.3rem;
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-form input[type='text'],
-form input[type='email'],
-form input[type='number'],
-form select,
-form textarea {
-  width: 100%;
-  padding: 0.7rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-form button[type='submit'] {
-  background-color: #007bff; /* Primary blue */
-  color: white;
-  padding: 0.7rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-form button[type='submit']:hover {
-  background-color: #0056b3; /* Darker blue */
-}
-
-/* Responsive Adjustments */
+/* Existing .dashboard-title, .content-card h5, h6 will use new global font sizes */
+/* Add responsive adjustments similar to dosen.css if needed */
 @media (max-width: 768px) {
-  /* Navbar responsive adjustments are now handled by global navbar.css */
-
-  .dashboard-title {
-    font-size: 1.8rem;
+  .profile.mahasiswa-profile {
+    flex-direction: column;
+    align-items: center; /* Center content on mobile */
+    text-align: center;
+  }
+  .profile__avatar-img {
+    width: 80px; /* Adjust avatar for mobile */
+    height: 80px;
+  }
+  .profile-name-container {
+    justify-content: center; /* Center name and status */
+  }
+  .profile__edit-button {
+    align-self: center; /* Center edit button */
+    width: auto;
+    min-width: 150px;
+  }
+  .dashboard-main-content {
+    flex-direction: column;
+  }
+  .dashboard-main-content__primary-area,
+  .dashboard-main-content__secondary-area {
+    flex: 1 1 100%;
   }
 }
