@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 CSS Tricks</title>
+  <style>
+    html{
+      font-family: Poppins;
+      font-size: 14pt;
+    }
+    body{
+      min-height: 100vh;
+      display: grid;
+      place-content: center;
+      background-color: #ececec;
+    }
+    .element{
+      padding: 3em;
+      border-radius: 4px;
+      box-shadow: none;
+      transition: 300ms ease;
+    }
+    .element:hover{
+      box-shadow: 12px 12px 32px rgba(0, 0, 0, 0.1),
+      -5px -5px 15px #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="element">
+    <h1>Hover Me!</h1>
+  </div>
+</body>
+</html>

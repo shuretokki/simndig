@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR</title>
-</head>
-<body>
-    <h1>ERROR #404</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profil Tidak Ditemukan{% endblock title %}
+
+{% block content %}
+<div class="content-card" style="text-align: center; padding: var(--spacing-unit-xl) var(--spacing-unit-md);">
+    <h1 class="mb-4" style="color: var(--color-text-headings); font-size: var(--font-size-xxl);">Profil Tidak Ditemukan
+    </h1>
+    <p style="font-size: var(--font-size-lg); color: var(--color-text-default);">Maaf, profil yang Anda cari tidak dapat
+        ditemukan.</p>
+    <p style="margin-top: var(--spacing-unit-lg);">
+        <a href="{% url 'home' %}" class="button">Kembali ke Dashboard</a>
+    </p>
+</div>
+{% endblock %}

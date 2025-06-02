@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Pseudo-Elements</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    body{
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      background-color: #0F1016;
+      color: white;
+      font-family: Poppins;
+    }
+    .product{
+      padding: 2em;
+      width: 350px;
+      background-color: #272935;
+      border-radius: .3em;
+      display: grid;
+      gap: 1em;
+      text-align: center;
+      position: relative;
+    } 
+    h2{
+      font-size: 2rem;
+      text-align: center;
+    }
+    img{
+      border-radius: .3em;
+    }
+    .product::before{
+      content: attr(data-label);
+      position: absolute;
+      top: 0;
+      left: 50%;
+      translate: -50% -50%;
+      background-color: #ffdd0035;
+      border: 1px solid #ffdd00;
+      color: #ffdd00;
+      padding: .5em 2em;
+      border-radius: 100px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div data-label="free" class="product">
+    <h2>HTML Course</h2>
+    <p>Learn the basics of web development with HTML5 as beginner-friendly as possible.</p>
+  </div>
+  <div data-label="best selling" class="product">
+    <h2>HTML & CSS Course</h2>
+    <p>Learn HTML5 and CSS3 in 7 Days completely from scratch.</p>
+  </div>
+  <div data-label="coming soon" class="product">
+    <h2>JavaScript Course</h2>
+    <p>Learn the JavaScript Basics and Advanced Concepts by completing practical projects.</p>
+  </div>
+
+</body>
+
+</html>

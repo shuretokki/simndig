@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Dropdown</title>
+  <link rel="stylesheet" href="basic-styles.css">
+  <style>
+    .container{
+      margin: 0 auto;
+      width: min(500px, 100%);
+      padding: 1.5em;
+
+      background-color: #2a2f3d;
+      color: white;
+      cursor: pointer;
+      transition: 150ms ease;
+
+      display: grid;
+      grid-template-rows: 1.5em 0fr;
+    }
+    .open{
+      grid-template-rows: 1.5em 1fr;
+    }
+    p{
+      margin-top: 2.5em;
+    }
+    .hidden{
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="summary">
+      Hello World
+    </div>
+    <div class="hidden">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita est ea ipsa possimus corporis harum, obcaecati recusandae optio, dolore, maxime quibusdam eaque iure corrupti laboriosam laborum. Atque, explicabo maiores! Omnis, quaerat nihil repellendus impedit obcaecati iusto mollitia! Praesentium excepturi ipsa atque natus eum libero cum, omnis minus id veritatis necessitatibus quis tenetur, soluta quo commodi! Adipisci sapiente unde consequatur natus quas sequi numquam dolores atque temporibus! Labore assumenda laudantium earum doloribus nam tempore rerum maxime ut? Rem consequuntur laborum magnam voluptatibus quidem ullam fuga repellendus aliquid. Accusamus et officia saepe pariatur, iste autem. Ipsa qui amet sequi, officia quia eaque.</p>
+    </div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.container')
+    container.addEventListener('click', () => {
+      container.classList.toggle('open')
+    })
+  </script>
+</body>
+</html>

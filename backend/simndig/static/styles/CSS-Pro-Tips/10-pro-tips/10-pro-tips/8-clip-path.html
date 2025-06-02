@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clip Path</title>
+  <style>
+    input[type="checkbox"]{
+      height: 20px;
+      width: 20px;
+      clip-path: circle(50%);
+      accent-color: #9443d7;
+      appearance: none;
+      background: #cacaca;
+    }
+    input[type="checkbox"]:checked{
+      appearance: auto;
+    }
+    img{
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+  </style>
+</head>
+<body>
+  <img height="200px" src="landscape.jpg" alt="">
+  <input type="checkbox">
+</body>
+</html>

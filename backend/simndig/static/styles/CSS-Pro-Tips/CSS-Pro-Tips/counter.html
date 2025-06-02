@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      padding: 50px;
+      background-color: #0f0f1c;
+      color: white;
+      font-family: Poppins;
+    }
+    :root{
+      counter-reset: headings;
+    }
+    h2{
+      counter-increment: headings;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    h2::before{
+      content: counter(headings);
+      background-color: #0071FF;
+      border-radius: 2px;
+      padding: .15em 0;
+      width: 40px;
+      text-align: center;
+    }
+
+    p{
+      max-width: 500px;
+      color: #bfc7d2;
+    }
+  </style>
+</head>
+<body>
+  <h2>Introduction</h2>
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero quia corporis porro nihil ut ducimus maxime iure, reiciendis, unde eligendi explicabo. Harum impedit illo quasi non tempore consequuntur optio explicabo.</p>
+  <h2>Preparations</h2>
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero quia corporis porro nihil ut ducimus maxime iure, reiciendis, unde eligendi explicabo. Harum impedit illo quasi non tempore consequuntur optio explicabo.</p>
+  <h2>Ingredients</h2>
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero quia corporis porro nihil ut ducimus maxime iure, reiciendis, unde eligendi explicabo. Harum impedit illo quasi non tempore consequuntur optio explicabo.</p>
+  <h2>Common Mistakes</h2>
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero quia corporis porro nihil ut ducimus maxime iure, reiciendis, unde eligendi explicabo. Harum impedit illo quasi non tempore consequuntur optio explicabo.</p>
+</body>
+</html>

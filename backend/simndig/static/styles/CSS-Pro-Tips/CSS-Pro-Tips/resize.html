@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      display: flex;
+      gap: 30px
+    }
+    .container{
+      height: 300px;
+      width: 300px;
+      background-color: #0071FF;
+      font-family: Poppins;
+      color: white;
+      font-size: 2rem;
+      border-radius: 10px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .container span{
+      margin-left: 15px;
+      color: rgb(255, 191, 52);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container" style="resize: vertical">
+    resize:  <span> vertical</span>;
+  </div>
+  <div class="container" style="resize: horizontal">
+    resize:  <span> horizontal</span>;
+  </div>
+  <div class="container" style="resize: both">
+    resize:  <span>both</span>;
+  </div>
+</body>
+</html>
