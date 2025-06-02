@@ -35,49 +35,52 @@ def mahasiswa_home(request):
 
 @login_required
 def complete_profile(request):
-    # Try to get the Mahasiswa instance linked to the logged-in user
-    # If dosen argument is not provided, instance will be None
-    # mahasiswa, created = Mahasiswa.objects.get_or_create(user=request.user)
-    # The above line might prematurely create a Mahasiswa object.
-    # Better to fetch or set to None for the form.
-    try:
-        mahasiswa = Mahasiswa.objects.get(user=request.user)
-        # If profile is already completed, optionally redirect or allow editing
-        # Prevent re-completing if already done, unless editing
-        if mahasiswa.initial_profile_completed and request.method == 'GET':
-            # messages.info(request, "Profil Anda sudah lengkap. Anda dapat mengeditnya di sini.")
-            pass  # Allow editing
-    except Mahasiswa.DoesNotExist:
-        mahasiswa = None  # No profile exists yet
+    mahasiswa_instance, created = Mahasiswa.objects.get_or_create(
+        user=request.user)
+
+    if mahasiswa_instance.initial_profile_completed and not created and request.method == 'GET':
+        # Profile is complete, but user is back on this page. Allow editing of displayed fields.
+        messages.info(
+            request, "Anda dapat mengedit detail profil Anda di sini.")
+        pass
 
     if request.method == 'POST':
-        # If mahasiswa is None, a new Mahasiswa instance will be created by the form
-        # If mahasiswa exists, it will be updated
         form = CompleteMahasiswa(
-            request.POST, request.FILES, instance=mahasiswa)
+            request.POST, request.FILES, instance=mahasiswa_instance)
         if form.is_valid():
             profile = form.save(commit=False)
-            profile.user = request.user  # Ensure user is set, especially for new instances
-            profile.initial_profile_completed = True
-            profile.save()
+            profile.user = request.user
+
+            is_first_completion = False
+            if not profile.initial_profile_completed:  # Check current state before setting to True
+                is_first_completion = True
+
+            profile.initial_profile_completed = True  # Mark as complete now
+
+            # Call save with the custom flag to trigger randomization if it's the first completion
+            profile.save(_completing_initial_profile=is_first_completion)
+
             messages.success(request, 'Profil berhasil disimpan!')
             return redirect('mahasiswa:mahasiswa_home')
         else:
             messages.error(
-                request, 'Terdapat kesalahan pada form. Mohon periksa kembali.')
+                request, 'Terdapat kesalahan pada form. Mohon periksa kembali isian Anda.')
     else:
-        # For a GET request, if a Mahasiswa instance exists, pass it to the form.
-        # If it doesn't (mahasiswa is None), an unbound form for a new Mahasiswa will be created.
         initial_data = {}
-        if not mahasiswa and request.user:  # Pre-fill for new profile from User object
-            initial_data['nama'] = request.user.get_full_name(
-            ) or request.user.username
-            initial_data['email'] = request.user.email
-        form = CompleteMahasiswa(instance=mahasiswa, initial=initial_data)
+        # Pre-fill 'nama' and 'email' for new/empty profiles from the User object
+        if (created or not mahasiswa_instance.nama) and request.user:
+            first_name = getattr(request.user, 'first_name', '')
+            last_name = getattr(request.user, 'last_name', '')
+            full_name_value = f"{first_name} {last_name}".strip()
+            initial_data['nama'] = full_name_value or request.user.username
+
+        if (created or not mahasiswa_instance.email) and request.user:  # Also pre-fill email
+            initial_data['email'] = getattr(request.user, 'email', '')
+
+        form = CompleteMahasiswa(
+            instance=mahasiswa_instance, initial=initial_data if initial_data else None)
 
     return render(request, 'mahasiswa/complete_profile.html', {'form': form})
-
-# detail_kelas view can remain as is unless it needs specific student context not already present
 
 
 @login_required
