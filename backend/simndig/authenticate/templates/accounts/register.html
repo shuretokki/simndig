@@ -10,10 +10,36 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href=" {% static 'styles/styles.css' %}"
+      href=" {% static 'styles/auth.css' %}"
     />
   </head>
   <body>
+    <!-- ============================================ -->
+    <!--                     CTA                      -->
+    <!-- ============================================ -->
+    <section id="cta">
+      <!-- Background Image -->
+      <picture>
+        <!-- Mobile Image -->
+        <source
+          media="(max-width: 600px)"
+          srcset="{% static 'img/bg.webp' %}"
+        />
+        <!-- Desktop Image -->
+        <source media="(min-width: 601px)" srcset="{% static 'img/bg.jpg' %}" />
+        <!-- Fallback Image -->
+        <img
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          src="https://w.wallhaven.cc/full/jx/wallhaven-jx61j5.png"
+          alt=""
+          width="1920"
+          height="1280"
+        />
+      </picture>
+    </section>
+
     <div class="container">
       <h2>Register</h2>
       <form method="POST" action="{% url 'register' %}">
