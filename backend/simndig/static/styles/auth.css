@@ -1,0 +1,256 @@
+/** @format */
+
+#cta picture,
+#cta picture img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+body,
+form {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 100%;
+}
+::after,
+::before {
+  box-sizing: border-box;
+}
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Arial,
+    sans-serif;
+  font-size: 1rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+#cta picture {
+  z-index: -2;
+}
+#cta picture img {
+  object-fit: cover;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  padding: 75px;
+  border-radius: 0;
+  border: 1px solid #000;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  padding-top: 0;
+  text-align: center;
+  color: #000;
+  font-size: 4rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+.error,
+label,
+p {
+  font-size: 0.9rem;
+}
+p {
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+.form-group {
+  display: flex;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: initial;
+  justify-content: center;
+}
+.password-group {
+  display: flex;
+  margin-bottom: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+label {
+  display: block;
+  color: gray;
+  margin-bottom: 0.25rem;
+}
+input[type='password'],
+input[type='text'] {
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  border-radius: 0;
+}
+button {
+  background: #101d2c;
+  color: #fff;
+  border: none;
+  margin-top: 1.5rem;
+  width: 100%;
+  font-size: 2rem;
+  padding: 20px;
+  cursor: pointer;
+  border-radius: 0;
+}
+button:hover {
+  background: #0056b3;
+}
+select#id_role {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid gray;
+}
+span#id_username_helptext.helptext {
+  font-size: 0.8rem;
+  color: gray;
+  margin: 0.25rem 0 0;
+  padding: 0;
+}
+.error {
+  color: red;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+@media (max-height: 768px) {
+  body {
+    font-size: 1.125rem;
+  }
+  .container {
+    margin: 1rem;
+    padding: 25px;
+    max-width: 500px;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  input[type='text'],
+  input[type='password'],
+  button,
+  select#id_role {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 1.125rem;
+  }
+  .container {
+    margin: 1.5rem auto;
+    padding: 40px;
+    max-width: 500px;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  button,
+  input[type='password'],
+  input[type='text'],
+  select#id_role {
+    font-size: 1.1rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .container {
+    padding: 2rem;
+    max-width: 450px;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  input[type='text'],
+  input[type='password'],
+  select#id_role,
+  button {
+    padding: 0.875rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Medium devices (tablets, >768px) */
+@media (min-width: 768px) {
+  .container {
+    padding: 2.5rem;
+    max-width: 500px;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  input[type='text'],
+  input[type='password'],
+  select#id_role,
+  button {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+}
+
+/* Large devices (laptops/desktops, >1024px) */
+@media (min-width: 1024px) {
+  .container {
+    padding: 3rem;
+    max-width: 500px;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  input[type='text'],
+  input[type='password'],
+  select#id_role,
+  button {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 500px;
+  }
+
+  h2 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .container {
+    border: 1px solid rgba(0, 0, 0, 0.3); /* Sharper borders */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button,
+  input,
+  select {
+    transition: none;
+  }
+}
