@@ -48,8 +48,14 @@
             <div class="main-navbar__profile-dropdown" id="profile-dropdown-menu" hidden>
               {% if request.user.is_authenticated %}
               <div class="dropdown-header">
-                <strong class="username">{{ request.user.get_full_name|default:request.user.username
-                  }}</strong>
+                <strong class="username">
+                  {% if request.user.first_name or request.user.last_name %}
+                  {{ request.user.first_name }}
+                  {{ request.user.last_name }}
+                  {% else %}
+                  {{ request.user.username }}
+                  {% endif %}
+                </strong>
                 <small class="email">{{ request.user.email }}</small>
               </div>
               <a href="#" class="dropdown-item">
