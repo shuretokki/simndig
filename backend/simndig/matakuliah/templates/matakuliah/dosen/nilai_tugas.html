@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Penilaian Tugas - {{ tugas.judul }}{% endblock %}
+
+{% block navbar_links %}
+<li class="main-navbar__item">
+    <a href="{% url 'home' %}"
+        class="main-navbar__link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+    <a href="{% url 'matakuliah:catalog_kelas_dosen' %}"
+        class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:catalog_kelas_dosen' %}active{% endif %}">Mata
+        Kuliah Saya</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Penilaian Tugas: {{ tugas.judul }}</h2>
+    <p><strong>Mata Kuliah:</strong> {{ tugas.mata_kuliah.nama }}</p>
+    <p><strong>Tenggat:</strong> {{ tugas.tenggat|date:"d M Y H:i" }}</p>
+    <a href="{% url 'matakuliah:kelola_matakuliah_dosen' tugas.mata_kuliah.id jenis %}" class="btn btn-secondary mb-3">Kembali ke Kelola Mata Kuliah</a>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Mahasiswa</th>
+                    <th>File Jawaban</th>
+                    <th>Tanggal Upload</th>
+                    <th>Nilai</th>
+                    <th>Feedback</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pengumpulan in pengumpulan_list %}
+                <tr>
+                    <td>{{ pengumpulan.mahasiswa.get_full_name|default:pengumpulan.mahasiswa.username }}</td>
+                    <td>
+                        {% if pengumpulan.file_jawaban %}
+                        <a href="{{ pengumpulan.file_jawaban.url }}" target="_blank">Download</a>
+                        {% else %}
+                        <span class="text-muted">Belum upload</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ pengumpulan.tanggal_upload|date:"d M Y H:i" }}</td>
+                    <td>
+                        {% if pengumpulan.nilai %}
+                            {{ pengumpulan.nilai }}
+                        {% else %}
+                            <span class="text-muted">Belum dinilai</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if pengumpulan.feedback %}
+                            {{ pengumpulan.feedback }}
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="post" class="form-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="pengumpulan_id" value="{{ pengumpulan.id }}">
+                            <input type="number" name="nilai" class="form-control mb-2 mr-sm-2" placeholder="Nilai" min="0" max="100" value="{{ pengumpulan.nilai|default_if_none:'' }}" required>
+                            <input type="text" name="feedback" class="form-control mb-2 mr-sm-2" placeholder="Feedback" value="{{ pengumpulan.feedback|default_if_none:'' }}">
+                            <button type="submit" class="btn btn-primary mb-2">Simpan</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">Belum ada pengumpulan tugas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

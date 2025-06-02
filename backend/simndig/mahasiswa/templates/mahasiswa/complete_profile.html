@@ -1,0 +1,81 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles/auth.css' %}" />
+
+<div class="container content-card"> {# Using content-card for a consistent look #}
+    <div class="auth-style-form-wrapper"> {# Consistent with dosen profile form #}
+        <h2 class="form-title">Lengkapi Profil Mahasiswa</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="form-non-field-errors">
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.name == 'profile_photo' %}
+                <img id="profile_photo_preview"
+                    src="{% if form.instance.profile_photo %}{{ form.instance.profile_photo.url }}{% else %}{% static 'img/default_profile.png' %}{% endif %}"
+                    alt="Profile photo preview"
+                    style="max-width: 150px; max-height: 150px; margin-top: 10px; display: block; border-radius: 50%; object-fit: cover; border: 2px solid #eee;" />
+                {% endif %}
+                {% if field.help_text %}
+                <small class="form-text helptext">{{ field.help_text|safe }}</small>
+                {% endif %}
+                {% if field.errors %}
+                <ul class="errorlist field-errors">
+                    {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="button">Simpan Profil</button> {# Used .button class from base.css #}
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Default ID for 'profile_photo' field in a Django form is 'id_profile_photo'
+        const photoInput = document.getElementById('id_profile_photo');
+        const photoPreview = document.getElementById('profile_photo_preview');
+        const defaultProfileImage = "{% static 'img/default_profile.png' %}";
+
+        if (photoInput && photoPreview) {
+            photoInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    photoPreview.src = URL.createObjectURL(file);
+                } else {
+                    {% if form.instance.profile_photo and form.instance.profile_photo.url %}
+                    photoPreview.src = "{{ form.instance.profile_photo.url }}";
+                    {% else %}
+                    photoPreview.src = defaultProfileImage;
+                    {% endif %}
+                }
+            });
+
+            // Ensure an image is shown on load if one exists or fallback to default
+            // This logic might be redundant if the initial src in <img> tag is correctly set.
+            // However, this ensures a default is set if the src is somehow empty or broken.
+            if (!photoPreview.src || photoPreview.src === window.location.href || photoPreview.naturalWidth === 0) {
+                {% if form.instance.profile_photo and form.instance.profile_photo.url %}
+                // photoPreview.src = "{{ form.instance.profile_photo.url }}"; // Already set by template
+                {% else %}
+                photoPreview.src = defaultProfileImage;
+                {% endif %}
+            }
+        }
+    });
+</script>

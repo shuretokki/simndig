@@ -1,0 +1,169 @@
+/** @format */
+
+@import url(styles.css);
+body,
+select {
+  background-repeat: no-repeat;
+}
+#cta picture,
+#cta picture img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+body,
+form {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 90%;
+}
+::after,
+::before {
+  box-sizing: border-box;
+}
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Arial,
+    sans-serif;
+  font-size: var(--font-size-lg);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+#cta picture {
+  z-index: -2;
+}
+#cta picture img {
+  object-fit: cover;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  padding: 75px;
+  border-radius: 0;
+  border: 1px solid #000;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  padding-top: 0;
+  text-align: center;
+  color: #000;
+  font-size: 4rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+.error,
+label,
+p {
+  font-size: 0.9rem;
+}
+p {
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+.form-group {
+  display: flex;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: initial;
+  justify-content: center;
+}
+.password-group {
+  display: flex;
+  margin-bottom: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+label {
+  display: block;
+  color: gray;
+  margin-bottom: 0.25rem;
+}
+input[type='date'],
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='text'],
+select {
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  border-radius: 0;
+  background-color: #fff;
+  color: #333;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-position: right 1rem center;
+  background-size: 1.5em 1.5em;
+  padding-right: 3rem;
+}
+button {
+  background: #101d2c;
+  color: #fff;
+  border: none;
+  margin-top: 1.5rem;
+  width: 100%;
+  font-size: 2rem;
+  padding: 20px;
+  cursor: pointer;
+  border-radius: 0;
+}
+button:hover {
+  background: #0056b3;
+}
+span#id_username_helptext.helptext {
+  font-size: 0.8rem;
+  color: gray;
+  margin: 0.25rem 0 0;
+  padding: 0;
+}
+.error {
+  color: red;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+@media (max-width: 768px) {
+  body {
+    font-size: 1.125rem;
+  }
+  .container {
+    margin: 1.5rem auto;
+    padding: 40px;
+    max-width: 500px;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  button,
+  input[type='date'],
+  input[type='email'],
+  input[type='number'],
+  input[type='password'],
+  input[type='text'],
+  select {
+    font-size: 1.1rem;
+    padding: 0.75rem;
+  }
+}

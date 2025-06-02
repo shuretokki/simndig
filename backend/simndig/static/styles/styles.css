@@ -1,0 +1,128 @@
+/** @format */
+
+:root {
+  --color-primary: #101d2c;
+  --color-primary-hover: #0056b3;
+  --color-secondary-accent: #0056b3;
+  --color-text-default: #555;
+  --color-text-headings: #101d2c;
+  --color-text-light: #fff;
+  --color-background-body: #f5f5f5;
+  --color-background-card-light: #f8f9fa;
+  --color-background-card-white: #fff;
+  --color-border-default: #e9ecef;
+  --color-border-medium: #dee2e6;
+  --color-border-light: #f0f0f0;
+  --color-button-disabled-bg: #6c757d;
+  --color-button-disabled-text: #ccc;
+
+  --border-radius-main: 0px;
+  --border-radius-round: 50%;
+
+  --spacing-unit-xs: 0.25rem;
+  --spacing-unit-sm: 0.5rem;
+  --spacing-unit-md: 1rem;
+  --spacing-unit-lg: 1.5rem;
+  --spacing-unit-xl: 2rem;
+
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1.1rem;
+  --font-size-md: 1.25rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 1.85rem;
+  --font-size-xxl: 2.3rem;
+}
+
+:root {
+  --fc-border-color: var(--color-border-medium);
+  --fc-page-bg-color: var(--color-background-card-white);
+  --fc-neutral-bg-color: var(--color-background-card-light);
+  --fc-list-event-hover-bg-color: var(--color-background-card-light);
+
+  --fc-button-text-color: var(--color-primary);
+  --fc-button-bg-color: var(--color-background-card-white);
+  --fc-button-border-color: var(--color-border-medium);
+  --fc-button-hover-bg-color: var(--color-background-card-light);
+  --fc-button-hover-border-color: var(--color-border-medium);
+  --fc-button-active-bg-color: var(--color-border-light);
+  --fc-button-active-border-color: var(--color-border-medium);
+
+  --fc-today-bg-color: rgba(var(--color-secondary-accent-rgb, 0, 86, 179), 0.1);
+
+  --fc-event-bg-color: var(--color-secondary-accent);
+  --fc-event-border-color: var(--color-secondary-accent);
+  --fc-event-text-color: var(--color-text-light);
+  --fc-event-selected-opacity: 1;
+}
+
+.fc {
+  font-size: var(--font-size-base);
+  color: var(--color-text-default);
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: var(--spacing-unit-md);
+  padding: var(--spacing-unit-sm) 0;
+}
+
+.fc .fc-toolbar-title {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-headings);
+  font-weight: 600;
+}
+
+.fc .fc-col-header-cell-cushion {
+  padding: var(--spacing-unit-sm) var(--spacing-unit-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-default);
+  text-decoration: none;
+}
+
+.fc .fc-daygrid-day-number {
+  padding: var(--spacing-unit-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-default);
+  text-decoration: none;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.fc .fc-button {
+  font-size: var(--font-size-sm);
+
+  border-radius: var(--border-radius-main);
+}
+.fc .fc-button .fc-icon {
+  font-size: var(--font-size-base);
+}
+
+.fc-event {
+  border-radius: calc(var(--border-radius-main) + 2px);
+  padding: 2px var(--spacing-unit-xs);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 768px) {
+  .fc .fc-toolbar.fc-header-toolbar {
+    font-size: 0.75em;
+    flex-direction: column;
+    align-items: center;
+  }
+  .fc .fc-toolbar .fc-toolbar-chunk {
+    margin-bottom: var(--spacing-unit-xs);
+  }
+  .fc .fc-toolbar-title {
+    font-size: 1.2em;
+    margin-bottom: var(--spacing-unit-xs);
+  }
+  .fc .fc-button {
+    padding: var(--spacing-unit-xs) var(--spacing-unit-sm);
+  }
+  .fc-event {
+    font-size: calc(var(--font-size-sm) - 0.1rem);
+  }
+}

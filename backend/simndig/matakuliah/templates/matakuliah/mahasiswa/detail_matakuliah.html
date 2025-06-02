@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ mata_kuliah.nama }}{% endblock %}
+
+{% block navbar_links %}
+<li class="main-navbar__item">
+    <a href="{% url 'mahasiswa:mahasiswa_home' %}"
+        class="main-navbar__link {% if request.resolver_match.view_name == 'mahasiswa:mahasiswa_home' or request.resolver_match.url_name == 'mahasiswa_home' %}active{% endif %}">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+    <a href="{% url 'matakuliah:list_matakuliah_mahasiswa' %}"
+        class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:list_matakuliah_mahasiswa' %}active{% endif %}">Mata
+        Kuliah Saya</a>
+</li>
+{# Update placeholder URLs when these pages are implemented #}
+<li class="main-navbar__item"><a href="#" class="main-navbar__link">Jadwal Kuliah</a></li>
+{% endblock navbar_links %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>{{ mata_kuliah.nama }}
+                    <span class="badge badge-{% if jenis == 'wajib' %}primary{% else %}success{% endif %}">
+                        {{ jenis|title }}
+                    </span>
+                </h2>
+                <a href="{% url 'matakuliah:list_matakuliah_mahasiswa' %}" class="btn btn-secondary">Kembali</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="materi-tab" data-toggle="tab" href="#materi" role="tab">Materi</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tugas-tab" data-toggle="tab" href="#tugas" role="tab">Tugas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="absensi-tab" data-toggle="tab" href="#absensi" role="tab">Absensi</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        <!-- Tab Materi -->
+        <div class="tab-pane fade show active" id="materi" role="tabpanel">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Daftar Materi</h5>
+                    {% for materi in materi_list %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-title">Pertemuan {{ materi.pertemuan_ke }}: {{ materi.judul }}</h6>
+                            <p class="card-text">{{ materi.ringkasan }}</p>
+                            <small class="text-muted">{{ materi.tanggal|date:"d M Y" }}</small>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted">Belum ada materi yang tersedia.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Tugas -->
+        <div class="tab-pane fade" id="tugas" role="tabpanel">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Daftar Tugas</h5>
+                    {% for tugas in tugas_list %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="card-title">{{ tugas.judul }}</h6>
+                                    <p class="card-text">{{ tugas.deskripsi }}</p>
+                                    <small class="text-danger">Tenggat: {{ tugas.tenggat|date:"d M Y H:i" }}</small>
+                                </div>
+                                <div>
+                                    <!-- Form Upload Tugas -->
+                                    <form method="post" action="{% url 'matakuliah:upload_tugas_mahasiswa' tugas.id %}"
+                                        enctype="multipart/form-data" class="d-inline">
+                                        {% csrf_token %}
+                                        <div class="input-group input-group-sm">
+                                            <input type="file" name="file_jawaban" class="form-control" required>
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted">Belum ada tugas yang tersedia.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Absensi -->
+        <div class="tab-pane fade" id="absensi" role="tabpanel">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title">Riwayat Absensi</h5>
+                        <form method="post" action="{% url 'matakuliah:absensi_mahasiswa' mata_kuliah.id jenis %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Absen Sekarang</button>
+                        </form>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for absen in absensi_list %}
+                                <tr>
+                                    <td>{{ absen.tanggal|date:"d M Y" }}</td>
+                                    <td>
+                                        <span
+                                            class="badge badge-{% if absen.status == 'hadir' %}success{% elif absen.status == 'izin' %}warning{% else %}danger{% endif %}">
+                                            {{ absen.get_status_display }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted">Belum ada riwayat absensi.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

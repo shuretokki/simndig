@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dosen',
     'mahasiswa',
+    'atmin',
     'authenticate',
+    'matakuliah',
+    'datadiri',
 ]
 
 MIDDLEWARE = [
@@ -56,22 +60,17 @@ ROOT_URLCONF = 'simndig.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'simndig' / 'templates'],  
-        'APP_DIRS': True,  
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',  
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.template.context_processors.csrf',
-                'django.template.context_processors.static',
-                'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'simndig.wsgi.application'
 
@@ -122,6 +121,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / "static",
+)
+
+LOGIN_URL = '/accounts/login/'  # or your actual login URL path
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

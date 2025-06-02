@@ -1,0 +1,93 @@
+<!-- @format -->
+
+{% extends "base.html" %} {% load static %} {% block title %}Detail Kelas - {{
+kelas.nama }}{% endblock title %} {% block head_extra %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/dosen.css' %}" />
+{% endblock head_extra %}
+
+{% block navbar_links %}
+<li class="main-navbar__item">
+  <a href="{% url 'home' %}"
+    class="main-navbar__link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+  <a href="{% url 'matakuliah:catalog_kelas_dosen' %}"
+    class="main-navbar__link {% if request.resolver_match.namespace == 'matakuliah' %}active{% endif %}">Mata Kuliah
+    Saya</a>
+</li>
+{% endblock navbar_links %}
+
+{% block content %}
+<div class="content-card">
+  {# Re-use content-card for consistent styling #}
+  <h1 class="mb-4">{{ kelas.nama }}</h1>
+  {# Utility class for margin, or define in CSS #}
+
+  <div class="class-meta mb-4">
+    <p><strong>Dosen:</strong> {{ kelas.dosen.username }}</p>
+    <p><strong>Kode MK:</strong> {{ kelas.kode_mk }}</p>
+    <p><strong>Semester:</strong> {{ kelas.semester }}</p>
+  </div>
+
+  <section class="class-section">
+    <h2>Materi Perkuliahan</h2>
+    {% if materi_list %}
+    <div class="table-responsive">
+      {# Wrapper for responsiveness on small screens #}
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Pertemuan</th>
+            <th>Judul</th>
+            <th>Tanggal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for materi in materi_list %}
+          <tr>
+            <td data-label="Pertemuan">{{ materi.pertemuan_ke }}</td>
+            <td data-label="Judul">{{ materi.judul }}</td>
+            <td data-label="Tanggal">{{ materi.tanggal|date:"d M Y" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted">Tidak ada materi yang tersedia untuk kelas ini.</p>
+    {# Utility class or define #} {% endif %}
+  </section>
+
+  <section class="class-section">
+    <h2>Daftar Tugas</h2>
+    {% if tugas_list %}
+    <div class="table-responsive">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Judul</th>
+            <th>Tenggat Waktu</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tugas in tugas_list %}
+          <tr>
+            <td data-label="Judul">{{ tugas.judul }}</td>
+            <td data-label="Tenggat">{{ tugas.tenggat|date:"d M Y H:i" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted">Tidak ada tugas yang diberikan untuk kelas ini.</p>
+    {% endif %}
+  </section>
+  {# Example: Link back to course catalog or dashboard #}
+  <div class="mt-4">
+    {# Utility margin top #}
+    <a href="{% url 'matakuliah:catalog_kelas_dosen' %}" class="button button--secondary">Kembali ke Mata Kuliah
+      Saya</a>
+  </div>
+</div>
+{% endblock %}

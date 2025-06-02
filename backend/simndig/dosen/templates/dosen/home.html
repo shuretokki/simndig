@@ -1,0 +1,125 @@
+<!-- @format -->
+
+{% extends "base.html" %} {% load static %} {% block title %}Dashboard Dosen -
+{{ request.user.first_name|default:request.user.username }}{% endblock title %}
+{% block head_extra %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+<link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/dosen.css' %}" />
+{% endblock head_extra %} {% block navbar_links %}
+<li class="main-navbar__item">
+  <a href="{% url 'dosen:dosen_home' %}"
+    class="main-navbar__link {% if request.resolver_match.url_name == 'dosen_home' %}active{% endif %}">Dashboard</a>
+</li>
+<li class="main-navbar__item">
+  <a href="{% url 'matakuliah:catalog_kelas_dosen' %}"
+    class="main-navbar__link {% if request.resolver_match.view_name == 'matakuliah:catalog_kelas_dosen' %}active{% endif %}">Mata
+    Kuliah Saya</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<section class="profile">
+  <div class="profile__avatar-container">
+    {% if dosen_profile.profile_photo %}
+    <img src="{{ dosen_profile.profile_photo.url }}" alt="Foto Profil {{ dosen_profile.nama|default:'Dosen' }}"
+      class="profile__avatar-img">
+    {% else %}
+    <img src="{% static 'img/default_profile.png' %}" alt="Default Profile" class="profile__avatar-img">
+    {% endif %}
+  </div>
+
+  <div class="profile__info">
+    <div class="profile-name-container">
+      <h2 class="profile__name">
+        {{ dosen_profile.nama|default:request.user.get_full_name|default:request.user.username }}</h2>
+      {% if dosen_profile.status %}
+      <p class="profile__status">{{ dosen_profile.status }}</p>
+      {% endif %}
+    </div>
+    {% if dosen_profile.email %}
+    <p class="profile__email">
+      {{ dosen_profile.email }}
+    </p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="content-card">
+  <div class="dashboard-main-content">
+    <div class="dashboard-main-content__calendar-area">
+      <div id='calendar-container'>
+        <div id='calendar'>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-main-content__courses-area">
+      <h6>Mata Kuliah yang Diampu</h6>
+      {% if courses_taught %}
+      <ul class="course-list">
+        {% for course in courses_taught %}
+        <li class="course-list__item">
+          <strong>{{ course.nama }}</strong> ({{ course.kode_mk }})
+          <p>SKS: {{ course.sks }} - Semester: {{ course.semester }}</p>
+          {% comment %} The URL for kelola_matakuliah_dosen needs 'jenis'. We determine 'jenis' based on the course
+          type.
+          This assumes your matakuliah:kelola_matakuliah_dosen URL pattern is like:
+          path('d/<int:mk_id>/<str:jenis>/', views.kelola_matakuliah_dosen, name='kelola_matakuliah_dosen')
+              {% endcomment %}
+              {% if course.kelaswajib %}
+              <a href="{% url 'matakuliah:kelola_matakuliah_dosen' course.id 'wajib' %}"
+                class="button button--small">Lihat Detail (Wajib)</a>
+              {% elif course.kelaspilihan %}
+              <a href="{% url 'matakuliah:kelola_matakuliah_dosen' course.id 'pilihan' %}"
+                class="button button--small">Lihat Detail (Pilihan)</a>
+              {% else %}
+              <span class="button button--small button--disabled">Detail Tidak Tersedia</span>
+              {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Anda saat ini tidak mengampu mata kuliah apapun.</p>
+      {% endif %}
+      <h6>Pengumuman atau Tugas Penting</h6>
+      {% if upcoming_tasks %}
+      <ul class="info-list">
+        {% for task in upcoming_tasks %}
+        <li>{{ task.title }} - Batas Waktu: {{ task.due_date }}</li>
+        {# Adjust date formatting if due_date is a date object #} {% endfor %}
+      </ul>
+      {% else %}
+      <p>Tidak ada pengumuman atau tugas penting saat ini.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth', // Display month view initially
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      },
+      // You can add more FullCalendar options here
+      // For example, to add events:
+      events: [
+        {
+          title: 'Gooning',
+          start: '2025-06-10'
+        },
+        {
+          title: 'Rapat',
+          start: '2025-06-12T10:30'
+        }
+      ]
+    });
+    calendar.render();
+  });
+</script>
+{%endblock%}

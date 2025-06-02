@@ -1,0 +1,74 @@
+<!-- @format -->
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles/auth.css' %}"
+    />
+  </head>
+  <body>
+    <!-- ============================================ -->
+    <!--                     CTA                      -->
+    <!-- ============================================ -->
+    <section id="cta">
+      <!-- Background Image -->
+      <picture>
+        <!-- Mobile Image -->
+        <source
+          media="(max-width: 600px)"
+          srcset="{% static 'img/bg.webp' %}"
+        />
+        <!-- Desktop Image -->
+        <source media="(min-width: 601px)" srcset="{% static 'img/bg.jpg' %}" />
+        <!-- Fallback Image -->
+        <img
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          src="https://w.wallhaven.cc/full/jx/wallhaven-jx61j5.png"
+          alt=""
+          width="1920"
+          height="1280"
+        />
+      </picture>
+    </section>
+
+    <div class="container">
+      <h2>Sign in</h2>
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" required />
+        </div>
+        <div class="form-group">
+          <div class="password-group">
+            <label for="password">Password</label>
+            <a href="{% url 'register' %}">Forgot password?</a>
+          </div>
+          <input type="password" name="password" id="password" required />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
+      <p>
+        Don't have an account? <a href="{% url 'register' %}">Register here</a>
+      </p>
+      <!-- <div class="third-party">
+        <button class="google"></button>
+        <button class="sso"></button>
+        <button class="facebook"></button>
+      </div> -->
+    </div>
+  </body>
+</html>

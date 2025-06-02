@@ -1,35 +1,218 @@
+<!-- @format -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Mahasiswa App{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-        <a class="navbar-brand" href="#">SIM Mahasiswa</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <span class="nav-link text-light">Halo, {{ request.user.username }}</span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="{% url 'logout' %}">Logout</a>
-                </li>
-            </ul>
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      {% block title %}SIMNDIG{% endblock %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    {% block head_extra %}
+    {% endblock head_extra %}
+  </head>
+
+  <body>
+    <header class="site-header">
+      <nav class="main-navbar">
+        <div class="main-navbar__brand">
+          <a href="{% url 'home' %}" title="SIMNDIG Home">
+            <span class="logotype-placeholder" <picture>
+              <img src="{% static 'img/simnau-light.svg' %}" alt="SIMNDIG Logo" />
+              </picture>
+            </span>
+          </a>
         </div>
-    </nav>
+        <input type="checkbox" id="navbar-toggle" class="main-navbar__toggler" />
+        <label for="navbar-toggle" class="main-navbar__toggle-label">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </label>
+        <ul class="main-navbar__menu">
+          {% block navbar_links %}
+          {% endblock navbar_links %}
+        </ul>
+        <div class="main-navbar__actions">
+          <div class="main-navbar__user-profile">
+            <button type="button" class="main-navbar__profile-toggle" id="profile-toggle-button" aria-expanded="false"
+              aria-controls="profile-dropdown-menu" title="User menu">
+              <i class="fas fa-user-circle profile-icon" aria-hidden="true"></i>
+              <span class="profile-toggle-username sr-only">{{
+                default:'Dosen'|default:request.user.username
+              }}</span>
+            </button>
+            <div class="main-navbar__profile-dropdown" id="profile-dropdown-menu" hidden>
+              {% if request.user.is_authenticated %}
+              <div class="dropdown-header">
+                <strong class="username">
+                  {% if request.user.first_name or request.user.last_name %}
+                  {{ request.user.first_name }}
+                  {{ request.user.last_name }}
+                  {% else %}
+                  {{ request.user.username }}
+                  {% endif %}
+                </strong>
+                <small class="email">{{ request.user.email }}</small>
+              </div>
+              <a href="#" class="dropdown-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="icon-left"
+                  aria-hidden="true" fill="currentColor">
+                  <circle cx="12" cy="6" r="4" />
+                  <path d="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5Z" />
+                </svg>
+                My Profile
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-cog icon-left" aria-hidden="true"></i> Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item dropdown-item--button">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="icon-left"
+                    aria-hidden="true" fill="currentColor">
+                    <path fill="#FF0000" d="M5 5h7V3H3v18h9v-2H5z" stroke-width="2" stroke="#FF0000" />
+                    <path fill="#FF0000" d="m21 12l-4-4v3H9v2h8v3z" stroke-width="2" stroke="#FF0000" />
+                  </svg>
+                  Logout
+                </button>
+              </form>
+              {% else %}
+              <a href="{% url 'login' %}" class="dropdown-item">
+                <i class="fas fa-sign-in-alt icon-left" aria-hidden="true"></i>
+                Login
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="page-container">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-column footer-about">
+          <h4 class="footer-heading">SIMNDIG</h4>
+          <p>
+            SIMNDIG dirancang untuk beroperasi dalam ekosistem teknologi yang telah ada di universitas, memanfaatkan
+            kerangka kerja
+            dan protokol yang kompatibel dengan platform SINDIG.
+          </p>
+        </div>
+        <div class="footer-column footer-links">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul>
+            <li>
+              <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>
+              <a href="#">All Courses</a>
+            </li>
+            <li>
+              <a href="#">About Us</a>
+            </li>
+            <li>
+              <a href="#">Contact</a>
+            </li>
+            <li>
+              <a href="#">FAQ</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-column footer-contact">
+          <h4 class="footer-heading">Contact Us</h4>
+          <p>
+            <i class="fas fa-envelope icon-left" aria-hidden="true"></i> Email:
+            <a href="mailto:support@simndig.com">support@simndig.com</a>
+          </p>
+          <p>
+            <i class="fas fa-phone icon-left" aria-hidden="true"></i> Phone:
+            <a href="tel:+621234567890">+62 123-456-7890</a>
+          </p>
+          <p>
+            <i class="fas fa-map-marker-alt icon-left" aria-hidden="true"></i>
+            Address: Jl. Gatot Subroto No.1, RT.1/RW.3, Senayan, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah
+            Khusus Ibukota Jakarta
+            10270
+          </p>
+        </div>
+        <div class="footer-column footer-social">
+          <h4 class="footer-heading">Follow Us</h4>
+          <div class="social-icons">
+            <a href="#" title="Facebook" aria-label="SIMNDIG Facebook page"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" title="Twitter" aria-label="SIMNDIG Twitter profile"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="Instagram" aria-label="SIMNDIG Instagram profile"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="LinkedIn" aria-label="SIMNDIG LinkedIn profile"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; {% now "Y" %} SIMNDIG. All rights reserved.
+          <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+        </p>
+      </div>
+    </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const profileToggle = document.getElementById('profile-toggle-button');
+        const profileDropdown = document.getElementById(
+          'profile-dropdown-menu',
+        );
 
-    
-    <div class="container mt-4">
-        {% block content %}
-        {% endblock %}
-    </div>
+        if (profileToggle && profileDropdown) {
+          profileToggle.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const isExpanded =
+              profileToggle.getAttribute('aria-expanded') === 'true';
+            profileToggle.setAttribute('aria-expanded', !isExpanded);
+            profileDropdown.hidden = isExpanded;
+          });
 
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+          document.addEventListener('click', function (event) {
+            if (
+              !profileDropdown.contains(event.target) &&
+              !profileToggle.contains(event.target)
+            ) {
+              if (profileToggle.getAttribute('aria-expanded') === 'true') {
+                profileToggle.setAttribute('aria-expanded', 'false');
+                profileDropdown.hidden = true;
+              }
+            }
+          });
+        }
+
+        const navbarToggleCheckbox = document.getElementById('navbar-toggle');
+        const mainNavbarMenu = document.querySelector('.main-navbar__menu');
+        // If profile dropdown should close when hamburger opens, or vice-versa
+        if (navbarToggleCheckbox && profileToggle) {
+          navbarToggleCheckbox.addEventListener('change', function () {
+            if (
+              this.checked &&
+              profileToggle.getAttribute('aria-expanded') === 'true'
+            ) {
+              profileToggle.click(); // Close profile dropdown if open
+            }
+          });
+          profileToggle.addEventListener('click', function () {
+            if (
+              this.getAttribute('aria-expanded') === 'true' &&
+              navbarToggleCheckbox.checked
+            ) {
+              // navbarToggleCheckbox.click(); // Close hamburger if open - decide on behavior
+            }
+          });
+        }
+      });
+    </script>
+    {% block body_extra_js %}
+    {% endblock body_extra_js %}
+  </body>
+
 </html>
