@@ -57,6 +57,9 @@ body {
   max-width: 500px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+a {
+  font-size: 0.9rem;
+}
 h2 {
   padding-top: 0;
   text-align: center;
